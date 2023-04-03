@@ -1,25 +1,32 @@
 ﻿using kmfe.core;
 using kmfe.core.types;
+using kmfe.core.xmlHelper;
+using kmfe.editor.scenarioConfig.editDialog;
+using System.Windows.Forms;
 
-namespace kmfe.editor
+namespace kmfe.editor.scenarioConfig.editDialog
 {
-    public partial class CityLikeNeighborEdit : Form
+    public partial class CityLikeNeighborEdit : BaseEditDialog
     {
+        public delegate void SaveHandle(List<int>? updatedIdList);
+        public event SaveHandle? OnSave;
+
         ComboBox[] neighbors = Array.Empty<ComboBox>();
         ComboBox[] routes = Array.Empty<ComboBox>();
         ComboBox[] adjacentCities = Array.Empty<ComboBox>();
 
         ScenarioData? scenarioData;
+        CityLike? cityLike;
 
         public CityLikeNeighborEdit()
         {
             InitializeComponent();
         }
 
-        public void Init(ScenarioData scenarioData)
+        public override void Init(ScenarioData scenarioData)
         {
+            if (Initialized) return;
             this.scenarioData = scenarioData;
-
             neighbors = new ComboBox[] { neighbor0, neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6 };
             foreach (ComboBox combo in neighbors)
             {
@@ -40,10 +47,12 @@ namespace kmfe.editor
                 combo.Items.AddRange(scenarioData.GetAllCityNames());
                 combo.Items.Add("--");
             }
+            Initialized = true;
         }
 
         public void Setup(CityLike cityLike)
         {
+            this.cityLike = cityLike;
             cityName.Text = cityLike.name;
             // 相邻据点
             int count = 0;
@@ -73,21 +82,24 @@ namespace kmfe.editor
                 }
                 foreach (ComboBox combo in adjacentCities)
                 {
-                    combo.Enabled = true;
+                    combo.Visible = true;
                 }
+                label_adjCity.Visible = true;
             }
             else
             {
                 foreach (ComboBox combo in adjacentCities)
                 {
-                    combo.Enabled = false;
+                    combo.Visible = false;
                 }
+                label_adjCity.Visible = false;
             }
         }
 
-        public void Save(CityLike cityLike)
+        public override void Save()
         {
             if (scenarioData == null) return;
+            if (cityLike == null) return;
             // 读取界面数据
             HashSet<Neighbor> neighborSet = new();
             for (int i = 0; i < CityLike.neighborMax; i++)
@@ -103,6 +115,8 @@ namespace kmfe.editor
                     continue;
                 adjacentCityIdSet.Add(adjacentCities[i].SelectedIndex);
             }
+            List<int> updatedIdList = new();
+            updatedIdList.Add(cityLike.id);
             // 相邻据点检验
             // 新增的相邻据点
             var neighborAdd = neighborSet.Except(cityLike.neighborSet);
@@ -113,6 +127,7 @@ namespace kmfe.editor
                 if (neighborCityLike.neighborSet.Count < CityLike.neighborMax)
                 {
                     neighborCityLike.neighborSet.Add(new Neighbor(cityLike.id, neighbor.Route));
+                    updatedIdList.Add(neighborCityLike.id);
                 }
                 else
                 {
@@ -129,6 +144,7 @@ namespace kmfe.editor
                 // 相邻关系被取消，则该相邻据点也取消相邻关系
                 CityLike neighborCityLike = scenarioData.GetCityLike(neighbor.CityId);
                 neighborCityLike.neighborSet.Remove(new Neighbor(cityLike.id, neighbor.Route));
+                updatedIdList.Add(neighborCityLike.id);
             }
             // 保存
             cityLike.neighborSet = neighborSet;
@@ -145,6 +161,7 @@ namespace kmfe.editor
                     if (adjCity.adjacentCityIdSet.Count < City.adjacentCityMax)
                     {
                         adjCity.adjacentCityIdSet.Add(city.id);
+                        updatedIdList.Add(cityId);
                     }
                     else
                     {
@@ -162,20 +179,23 @@ namespace kmfe.editor
                     // 相邻关系被取消，则该相邻城市也取消相邻关系
                     City adjCity = scenarioData.cityArray[cityId];
                     adjCity.adjacentCityIdSet.Remove(city.id);
+                    updatedIdList.Add(cityId);
                 }
                 // 保存
                 city.adjacentCityIdSet = adjacentCityIdSet;
             }
+
+            OnSave?.Invoke(updatedIdList);
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            Confirm();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            Cancel();
         }
     }
 }

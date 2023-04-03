@@ -1,14 +1,7 @@
 ﻿using kmfe.core.types;
-using kmfe.s11.globalScenario;
-using kmfe.utils;
 using System.Xml;
 
-using S11City = kmfe.s11.globalScenario.City;
-using S11GatePort = kmfe.s11.globalScenario.GatePort;
-using City = kmfe.core.types.City;
-using GatePort = kmfe.core.types.GatePort;
-
-namespace kmfe.core
+namespace kmfe.core.xmlHelper
 {
     public class PathXmlHelper
     {

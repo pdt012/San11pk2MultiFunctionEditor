@@ -1,4 +1,4 @@
-﻿using kmfe.editor;
+﻿using kmfe.editor.scenarioConfig;
 using kmfe.utils;
 
 namespace kmfe

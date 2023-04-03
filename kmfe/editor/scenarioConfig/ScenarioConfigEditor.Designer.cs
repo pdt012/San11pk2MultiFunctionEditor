@@ -1,4 +1,4 @@
-﻿namespace kmfe.editor
+﻿namespace kmfe.editor.scenarioConfig
 {
     partial class ScenarioConfigEditor
     {
