@@ -82,7 +82,7 @@ public class Province : IBytesConvertable
 {
     public readonly byte[] name = new byte[5];      // (dec)
     public readonly byte[] read = new byte[13];     // 5
-    public readonly byte[] __12 = new byte[12];            // 18
+    public readonly byte[] __12 = new byte[12];     // 18
     public readonly byte[] desc = new byte[8];      // 30
     public int8 region;                             // 38
     public readonly int8[] adjacent = new int8[5];  // 39
@@ -145,93 +145,298 @@ public class Region : IBytesConvertable
     }
 }
 
-#region TODO
-#if false
-// 设施
-struct Facility
+/// <summary>
+/// 设施
+/// </summary>
+public class Facility: IBytesConvertable /*todo*/
 {
-    fixed byte name[9];
-    fixed byte _padding[180];
+    public readonly byte[] name = new byte[9];
+    readonly byte[] __todo = new byte[180];
 
-};
-// 兵器
-struct Weapon
-{
-    fixed byte _padding[150];
+    public const int Size = 189;
 
-};
-// 爵位
-struct Title
-{
-    fixed byte name[11];
-    fixed byte _ip_b[31];
-    uint16_t command;
-};
-// 官职
-struct Rank
-{
-    fixed byte name[9];
-    fixed byte read[25];
-    fixed byte _ip_22[6];
-    uint16_t command;
-    uint8_t stat;
-    uint8_t increase;
-    uint8_t salary;
-    uint8_t rank;
-};
-// 特技
-struct Skill
-{
-    fixed byte name[5];
-    fixed byte _padding[88];
+    int IBytesConvertable.Size => Size;
 
-};
-// 科技
-struct Technology
-{
-    fixed byte name[9];
-    fixed byte read[33];
-    fixed byte desc[41];
-    uint8_t type;           // 类型
-    uint8_t level;          // 等级
-    uint16_t gold_cost;     // 金钱消耗
-    uint16_t tp_cost;       // 技巧消耗
-    uint8_t period;         // 研究时间
-    fixed byte _ip_5a;
-    int8_t necessary_tech;  // 必要前置科技
-};
-// 战法
-struct Tactic
-{
-    fixed byte name[9];
-    fixed byte _padding[47];
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
 
-};
-// 地形
-struct Terrain
-{
-    fixed byte name[5];
-    fixed byte read[9];
-    fixed byte _padding[8];
-    char _ip_16;
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+}
 
-};
-// 姓氏
-struct Family
+/// <summary>
+/// 兵器
+/// </summary>
+public class Weapon : IBytesConvertable /*todo*/
 {
-    fixed byte name[3];
-    fixed byte read[7];
-    uint8_t _ip_a;
-};
-// 能力
-struct Ability
-{
-    fixed byte _padding[74];
+    readonly byte[] __todo = new byte[150];
+
+    public const int Size = 150;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
 
 };
 
-#endif
-#endregion
+/// <summary>
+/// 爵位
+/// </summary>
+public class Title : IBytesConvertable /*todo*/
+{
+    public readonly byte[] name = new byte[11];
+    readonly byte[] __b = new byte[31];
+    uint16 command;
+
+    public const int Size = 44;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+/// <summary>
+/// 官职
+/// </summary>
+public class Rank : IBytesConvertable
+{
+    public readonly byte[] name = new byte[9];
+    public readonly byte[] read = new byte[25];
+    public readonly byte[] __22 = new byte[6];
+    public uint16 command;
+    public uint8 stat;
+    public uint8 increase;
+    public uint8 salary;
+    public uint8 rank;
+
+    public const int Size = 46;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Read(name);
+        converter.Read(read);
+        converter.Read(__22);
+        converter.Read(out command);
+        converter.Read(out stat);
+        converter.Read(out increase);
+        converter.Read(out salary);
+        converter.Read(out rank);
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Write(name);
+        converter.Write(read);
+        converter.Write(__22);
+        converter.Write(command);
+        converter.Write(stat);
+        converter.Write(increase);
+        converter.Write(salary);
+        converter.Write(rank);
+    }
+}
+
+/// <summary>
+/// 特技
+/// </summary>
+public class Skill : IBytesConvertable /*todo*/
+{
+    public readonly byte[] name = new byte[5];
+    public readonly byte[] __todo = new byte[88];
+
+    public const int Size = 93;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+};
+
+/// <summary>
+/// 科技
+/// </summary>
+public class Technology : IBytesConvertable
+{
+    public readonly byte[] name = new byte[9];  // (dec) 名称
+    public readonly byte[] read = new byte[33]; // 9 读音
+    public readonly byte[] desc = new byte[41]; // 42 介绍
+    public uint8 type;                          // 83 类型
+    public uint8 level;                         // 84 等级
+    public uint16 gold_cost;                    // 85 金钱消耗
+    public uint16 tp_cost;                      // 87 技巧消耗
+    public uint8 period;                        // 89 研究时间
+    public int8 __5a;                           // 90
+    public int8 necessaryech;                 // 91 必要前置科技
+
+    public const int Size = 92;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Read(name);
+        converter.Read(read);
+        converter.Read(desc);
+        converter.Read(out type);
+        converter.Read(out level);
+        converter.Read(out gold_cost);
+        converter.Read(out tp_cost);
+        converter.Read(out period);
+        converter.Read(out __5a);
+        converter.Read(out necessaryech);
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Write(name);
+        converter.Write(read);
+        converter.Write(desc);
+        converter.Write(type);
+        converter.Write(level);
+        converter.Write(gold_cost);
+        converter.Write(tp_cost);
+        converter.Write(period);
+        converter.Write(__5a);
+        converter.Write(necessaryech);
+
+    }
+};
+
+/// <summary>
+/// 战法
+/// </summary>
+public class Tactic : IBytesConvertable /*todo*/
+{
+    public readonly byte[] name = new byte[9];
+    public readonly byte[] __todo = new byte[47];
+
+    public const int Size = 56;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+};
+
+/// <summary>
+/// 地形
+/// </summary>
+public class Terrain : IBytesConvertable /*todo*/
+{
+    public readonly byte[] name = new byte[5];
+    public readonly byte[] read = new byte[9];
+    public readonly byte[] __todo = new byte[8];
+    public int8 __16;
+
+    public const int Size = 23;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+};
+
+/// <summary>
+/// 姓氏
+/// </summary>
+public class Family : IBytesConvertable /*todo*/
+{
+    public readonly byte[] name = new byte[3];
+    public readonly byte[] read = new byte[7];
+    public uint8 __a;
+
+    public const int Size = 11;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+};
+
+/// <summary>
+/// 能力
+/// </summary>
+public class Ability : IBytesConvertable /*todo*/
+{
+    public readonly byte[] __todo = new byte[74];
+
+    public const int Size = 74;
+
+    int IBytesConvertable.Size => Size;
+
+    public void FromBytes(byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ToBytes(ref byte[] array)
+    {
+        throw new NotImplementedException();
+    }
+
+};
+
 
 /// <summary>
 /// 全局设置 Scenario.s11
@@ -244,20 +449,20 @@ public class GlobalScenario : IBytesConvertable
     int __1c;                                               // 1c 未知
     public readonly byte[] __20 = new byte[56];             // 20 未知
     int16 __58;                                             // 58 未知
-    public readonly City[] cityArray = new City[42];             // 5a 城市
-    public readonly GatePort[] gatePortArray = new GatePort[45]; // 474 关隘  // 578 港口
-    public readonly Province[] provinceArray = new Province[12]; // 906 州
-    public readonly Region[] regionArray = new Region[6];        // b16 地方
-    //public readonly Facility[] facilityArray = new Facility[64];      // b82 设施
-    //public readonly Weapon[] weaponArray = new Weapon[12];          // 3ac2 兵器
-    //public readonly Title[] titleArray = new Title[10];            // 41ca 爵位
-    //public readonly Rank rankArray = new Rank[81];              // 4382 官职
-    //public readonly Skill skillArray = new Skill[100];           // 5210 特技
-    //public readonly Technology techArray = new Technology[36]; // 7664 科技
-    //public readonly Tactic tacticArray = new Tactic[32];          // 8354 战法
-    //public readonly Terrain terrainArray = new Terrain[32];        // 8a54 地形
-    //public readonly Family familyArray = new Family[400];         // 8d34 姓氏
-    //public readonly Ability abilityArray = new Ability[98];        // 9e64 能力
+    public readonly City[] cityArray = new City[42];                // 5a 城市
+    public readonly GatePort[] gatePortArray = new GatePort[45];    // 474 关隘  // 578 港口
+    public readonly Province[] provinceArray = new Province[12];    // 906 州
+    public readonly Region[] regionArray = new Region[6];           // b16 地方
+    public readonly Facility[] facilityArray = new Facility[64];    // b82 设施
+    public readonly Weapon[] weaponArray = new Weapon[12];          // 3ac2 兵器
+    public readonly Title[] titleArray = new Title[10];             // 41ca 爵位
+    public readonly Rank[] rankArray = new Rank[81];                // 4382 官职
+    public readonly Skill[] skillArray = new Skill[100];            // 5210 特技
+    public readonly Technology[] techArray = new Technology[36];    // 7664 科技
+    public readonly Tactic[] tacticArray = new Tactic[32];          // 8354 战法
+    public readonly Terrain[] terrainArray = new Terrain[32];       // 8a54 地形
+    public readonly Family[] familyArray = new Family[400];         // 8d34 姓氏
+    public readonly Ability[] abilityArray = new Ability[98];       // 9e64 能力
 
     public const int Size = 0xBAB8;  // 47800
 
@@ -271,6 +476,26 @@ public class GlobalScenario : IBytesConvertable
             provinceArray[i] = new();
         for (int i = 0; i < regionArray.Length; i++)
             regionArray[i] = new();
+        for (int i = 0; i < facilityArray.Length; i++)
+            facilityArray[i] = new();
+        for (int i = 0; i < weaponArray.Length; i++)
+            weaponArray[i] = new();
+        for (int i = 0; i < titleArray.Length; i++)
+            titleArray[i] = new();
+        for (int i = 0; i < rankArray.Length; i++)
+            rankArray[i] = new();
+        for (int i = 0; i < skillArray.Length; i++)
+            skillArray[i] = new();
+        for (int i = 0; i < techArray.Length; i++)
+            techArray[i] = new();
+        for (int i = 0; i < tacticArray.Length; i++)
+            tacticArray[i] = new();
+        for (int i = 0; i < terrainArray.Length; i++)
+            terrainArray[i] = new();
+        for (int i = 0; i < familyArray.Length; i++)
+            familyArray[i] = new();
+        for (int i = 0; i < abilityArray.Length; i++)
+            abilityArray[i] = new();
     }
 
     int IBytesConvertable.Size => Size;
@@ -285,22 +510,17 @@ public class GlobalScenario : IBytesConvertable
         converter.Read(out __1c);
         converter.Read(__20);
         converter.Read(out __58);
-        foreach (City city in cityArray)
-        {
-            converter.Read(city);
-        }
-        foreach (GatePort port in gatePortArray)
-        {
-            converter.Read(port);
-        }
-        foreach (Province province in provinceArray)
-        {
-            converter.Read(province);
-        }
-        foreach (Region region in regionArray)
-        {
-            converter.Read(region);
-        }
+
+        converter.Read(cityArray);
+        converter.Read(gatePortArray);
+        converter.Read(provinceArray);
+        converter.Read(regionArray);
+
+        converter.Seek(0x4382, SeekOrigin.Begin);
+        converter.Read(rankArray);
+
+        converter.Seek(0x7664, SeekOrigin.Begin);
+        converter.Read(techArray);
     }
 
     public void ToBytes(ref byte[] array)
@@ -313,21 +533,16 @@ public class GlobalScenario : IBytesConvertable
         converter.Write(__1c);
         converter.Write(__20);
         converter.Write(__58);
-        foreach (City city in cityArray)
-        {
-            converter.Write(city);
-        }
-        foreach (GatePort gate in gatePortArray)
-        {
-            converter.Write(gate);
-        }
-        foreach (Province province in provinceArray)
-        {
-            converter.Write(province);
-        }
-        foreach (Region region in regionArray)
-        {
-            converter.Write(region);
-        }
+
+        converter.Write(cityArray);
+        converter.Write(gatePortArray);
+        converter.Write(provinceArray);
+        converter.Write(regionArray);
+
+        converter.Seek(0x4382, SeekOrigin.Begin);
+        converter.Write(rankArray);
+
+        converter.Seek(0x7664, SeekOrigin.Begin);
+        converter.Write(techArray);
     }
 }

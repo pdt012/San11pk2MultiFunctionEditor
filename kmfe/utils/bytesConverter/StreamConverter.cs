@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace kmfe.utils.bytesConverter
+﻿namespace kmfe.utils.bytesConverter
 {
     public class StreamConverter
     {
@@ -51,6 +49,11 @@ namespace kmfe.utils.bytesConverter
             BytesConverter.FromBytes(buffer, index, out target);
             index += sizeof(ushort);
         }
+        public void Read(out bool target)
+        {
+            BytesConverter.FromBytes(buffer, index, out target);
+            index += sizeof(bool);
+        }
         public void Read(out sbyte target)
         {
             BytesConverter.FromBytes(buffer, index, out target);
@@ -76,6 +79,13 @@ namespace kmfe.utils.bytesConverter
             BytesConverter.FromBytes(buffer, index, target);
             index += target.Size;
         }
+        public void Read(IBytesConvertable[] array)
+        {
+            foreach (IBytesConvertable item in array)
+            {
+                Read(item);
+            }
+        }
 
         public void Write(int value)
         {
@@ -96,6 +106,11 @@ namespace kmfe.utils.bytesConverter
         {
             BytesConverter.ToBytes(buffer, index, value);
             index += sizeof(ushort);
+        }
+        public void Write(bool value)
+        {
+            BytesConverter.ToBytes(buffer, index, value);
+            index += sizeof(bool);
         }
         public void Write(sbyte value)
         {
@@ -121,6 +136,13 @@ namespace kmfe.utils.bytesConverter
         {
             BytesConverter.ToBytes(buffer, index, value);
             index += value.Size;
+        }
+        public void Write(IBytesConvertable[] array)
+        {
+            foreach (IBytesConvertable item in array)
+            {
+                Write(item);
+            }
         }
     }
 }

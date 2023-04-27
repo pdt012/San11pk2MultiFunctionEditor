@@ -18,17 +18,41 @@ namespace kmfe.editor.scenarioConfig.helper
         public abstract void InitListView(ListView listView);
 
         /// <summary>
-        /// 更新表格内容
+        /// 生成表格内容
         /// </summary>
         /// <param name="listView"></param>
         public abstract void UpdateListView(ListView listView);
 
         /// <summary>
-        /// 更新表格内容
+        /// 更新表格一行内容
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="item">需要更新的行对象</param>
+        public abstract void UpdateRow(ListViewItem item);
+
+        /// <summary>
+        /// 更新表格一行内容
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="row">需要更新的行号</param>
+        public void UpdateRow(ListView listView, int row)
+        {
+            ListViewItem item = listView.Items[row];
+            UpdateRow(item);
+        }
+
+        /// <summary>
+        /// 更新表格多行内容
         /// </summary>
         /// <param name="listView"></param>
         /// <param name="rows">需要更新的行号</param>
-        public abstract void UpdateListView(ListView listView, List<int> rows);
+        public void UpdateRows(ListView listView, List<int> rows)
+        {
+            foreach (int row in rows)
+            {
+                UpdateRow(listView, row);
+            }
+        }
 
     }
 }

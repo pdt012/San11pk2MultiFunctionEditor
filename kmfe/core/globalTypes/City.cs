@@ -1,6 +1,6 @@
 ﻿using kmfe.utils;
 
-namespace kmfe.core.types
+namespace kmfe.core.globalTypes
 {
     public class City : CityLike
     {

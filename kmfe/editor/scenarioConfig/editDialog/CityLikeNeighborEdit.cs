@@ -1,8 +1,7 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
+using kmfe.core.globalTypes;
 using kmfe.core.xmlHelper;
-using kmfe.editor.scenarioConfig.editDialog;
-using System.Windows.Forms;
+using kmfe.s11.enums;
 
 namespace kmfe.editor.scenarioConfig.editDialog
 {
@@ -38,7 +37,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             foreach (ComboBox combo in routes)
             {
                 combo.Items.Clear();
-                combo.Items.AddRange(PathXmlHelper.GetAllRouteNames());
+                combo.Items.AddRange(Enum.GetNames<RouteType>());
             }
             adjacentCities = new ComboBox[] { neiCity0, neiCity1, neiCity2, neiCity3, neiCity4, neiCity5 };
             foreach (ComboBox combo in adjacentCities)
@@ -59,7 +58,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             foreach (Neighbor neighbor in cityLike.neighborSet)
             {
                 neighbors[count].SelectedIndex = neighbor.CityId;
-                routes[count].SelectedIndex = neighbor.Route;
+                routes[count].SelectedIndex = (int)neighbor.Route;
                 count++;
             }
             for (int i = count; i < CityLike.neighborMax; i++)  // 其余设为空
@@ -106,7 +105,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             {
                 if (neighbors[i].SelectedIndex == neighbors[i].Items.Count - 1)
                     continue;
-                neighborSet.Add(new Neighbor(neighbors[i].SelectedIndex, routes[i].SelectedIndex));
+                neighborSet.Add(new Neighbor(neighbors[i].SelectedIndex, (RouteType)routes[i].SelectedIndex));
             }
             HashSet<int> adjacentCityIdSet = new();
             for (int i = 0; i < City.adjacentCityMax; i++)
@@ -116,7 +115,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 adjacentCityIdSet.Add(adjacentCities[i].SelectedIndex);
             }
             List<int> updatedIdList = new();
-            updatedIdList.Add(cityLike.id);
+            updatedIdList.Add(cityLike.Id);
             // 相邻据点检验
             // 新增的相邻据点
             var neighborAdd = neighborSet.Except(cityLike.neighborSet);
@@ -126,8 +125,8 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 // 相邻的据点也添加相邻关系
                 if (neighborCityLike.neighborSet.Count < CityLike.neighborMax)
                 {
-                    neighborCityLike.neighborSet.Add(new Neighbor(cityLike.id, neighbor.Route));
-                    updatedIdList.Add(neighborCityLike.id);
+                    neighborCityLike.neighborSet.Add(new Neighbor(cityLike.Id, neighbor.Route));
+                    updatedIdList.Add(neighborCityLike.Id);
                 }
                 else
                 {
@@ -143,8 +142,8 @@ namespace kmfe.editor.scenarioConfig.editDialog
             {
                 // 相邻关系被取消，则该相邻据点也取消相邻关系
                 CityLike neighborCityLike = scenarioData.GetCityLike(neighbor.CityId);
-                neighborCityLike.neighborSet.Remove(new Neighbor(cityLike.id, neighbor.Route));
-                updatedIdList.Add(neighborCityLike.id);
+                neighborCityLike.neighborSet.Remove(new Neighbor(cityLike.Id, neighbor.Route));
+                updatedIdList.Add(neighborCityLike.Id);
             }
             // 保存
             cityLike.neighborSet = neighborSet;
@@ -160,7 +159,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                     // 相邻的城市也添加相邻关系
                     if (adjCity.adjacentCityIdSet.Count < City.adjacentCityMax)
                     {
-                        adjCity.adjacentCityIdSet.Add(city.id);
+                        adjCity.adjacentCityIdSet.Add(city.Id);
                         updatedIdList.Add(cityId);
                     }
                     else
@@ -178,7 +177,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 {
                     // 相邻关系被取消，则该相邻城市也取消相邻关系
                     City adjCity = scenarioData.cityArray[cityId];
-                    adjCity.adjacentCityIdSet.Remove(city.id);
+                    adjCity.adjacentCityIdSet.Remove(city.Id);
                     updatedIdList.Add(cityId);
                 }
                 // 保存

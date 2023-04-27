@@ -1,46 +1,81 @@
-﻿using kmfe.core.types;
-using kmfe.s11.globalScenario;
+﻿using kmfe.core.globalTypes;
 using kmfe.utils;
-using System.Xml.Linq;
-using City = kmfe.core.types.City;
-using GatePort = kmfe.core.types.GatePort;
-using Province = kmfe.core.types.Province;
-using Region = kmfe.core.types.Region;
+using Region = kmfe.core.globalTypes.Region;
 
 namespace kmfe.core
 {
     public class ScenarioData
     {
         public const int cityCount = 42;
-        public const int gatePortCount = 45;
-        public const int cityLikeCount = cityCount + gatePortCount;
+        public const int townCount = 45;
+        public const int cityLikeCount = cityCount + townCount;
         public const int provinceCount = 12;
         public const int regionCount = 6;
+        public const int facilityCount = 64;
+        public const int weaponCount = 12;
+        public const int titleCount = 10;
+        public const int rankCount = 81;
+        public const int skillCount = 100;
+        public const int techCount = 36;
+        public const int tacticCount = 32;
+        public const int terrainCount = 32;
+        public const int familyCount = 400;
+        public const int abilityCount = 98;
 
         public readonly City[] cityArray = new City[42];
-        public readonly GatePort[] gatePortArray = new GatePort[45];
+        public readonly Town[] townArray = new Town[45];
         public readonly Province[] provinceArray = new Province[12];
         public readonly Region[] regionArray = new Region[6];
+        /*public readonly Facility[] facilityArray = new Facility[64];
+        public readonly Weapon[] weaponArray = new Weapon[12];
+        public readonly Title[] titleArray = new Title[10];
+        public readonly Rank[] rankArray = new Rank[81];*/
+        public readonly Skill[] skillArray = new Skill[255];
+        /*public readonly Technology[] techArray = new Technology[36];
+        public readonly Tactic[] tacticArray = new Tactic[32];
+        public readonly Terrain[] terrainArray = new Terrain[32];
+        public readonly Family[] familyArray = new Family[400];
+        public readonly Ability[] abilityArray = new Ability[98];*/
 
         public ScenarioData()
         {
             for (int id = 0; id < cityArray.Length; id++)
                 cityArray[id] = new(id);
-            for (int id = 0; id < gatePortArray.Length; id++)
-                gatePortArray[id] = new(id + cityCount);
+            for (int id = 0; id < townArray.Length; id++)
+                townArray[id] = new(id + cityCount);
             for (int id = 0; id < provinceArray.Length; id++)
                 provinceArray[id] = new(id);
             for (int id = 0; id < regionArray.Length; id++)
                 regionArray[id] = new(id);
+            /*for (int id = 0; id < facilityArray.Length; id++)
+                facilityArray[id] = new();
+            for (int id = 0; id < weaponArray.Length; id++)
+                weaponArray[id] = new();
+            for (int id = 0; id < titleArray.Length; id++)
+                titleArray[id] = new();
+            for (int id = 0; id < rankArray.Length; id++)
+                rankArray[id] = new(id);*/
+            for (int id = 0; id < skillArray.Length; id++)
+                skillArray[id] = new(id);
+            /*for (int id = 0; id < techArray.Length; id++)
+                techArray[id] = new();
+            for (int id = 0; id < tacticArray.Length; id++)
+                tacticArray[id] = new();
+            for (int id = 0; id < terrainArray.Length; id++)
+                terrainArray[id] = new();
+            for (int id = 0; id < familyArray.Length; id++)
+                familyArray[id] = new();
+            for (int id = 0; id < abilityArray.Length; id++)
+                abilityArray[id] = new();*/
         }
 
         public void LoadFromGlobalScenario(string scenarioPath)
         {
-            byte[] data = new byte[GlobalScenario.Size];
+            byte[] data = new byte[s11.globalScenario.GlobalScenario.Size];
             FileStream fs = new(scenarioPath, FileMode.Open, FileAccess.Read);
             fs.Read(data);
             fs.Close();
-            GlobalScenario globalScenario = new();
+            s11.globalScenario.GlobalScenario globalScenario = new();
             globalScenario.FromBytes(data);
 
             for (int id = 0; id < cityCount; id++)
@@ -54,11 +89,11 @@ namespace kmfe.core
                         city.adjacentCityIdSet.Add(adj);
                 }
             }
-            for (int id = 0; id < gatePortCount; id++)
+            for (int id = 0; id < townCount; id++)
             {
                 s11.globalScenario.GatePort s11Port = globalScenario.gatePortArray[id];
-                GatePort gatePort = gatePortArray[id];
-                gatePort.name = CodeConvertHelper.Pk2Str(s11Port.name);
+                Town town = townArray[id];
+                town.name = CodeConvertHelper.Pk2Str(s11Port.name);
             }
             for (int id = 0; id < provinceCount; id++)
             {
@@ -85,11 +120,11 @@ namespace kmfe.core
 
         public void SaveToGlobalScenario(string scenarioPath)
         {
-            byte[] data = new byte[GlobalScenario.Size];
+            byte[] data = new byte[s11.globalScenario.GlobalScenario.Size];
             FileStream fs = new(scenarioPath, FileMode.Open, FileAccess.Read);
             fs.Read(data);
             fs.Close();
-            GlobalScenario globalScenario = new();
+            s11.globalScenario.GlobalScenario globalScenario = new();
             globalScenario.FromBytes(data);
 
             for (int id = 0; id < cityCount; id++)
@@ -99,11 +134,11 @@ namespace kmfe.core
                 CodeConvertHelper.Str2Pk(city.name, s11City.name);
                 city.GetAdjacentArray().CopyTo(s11City.adjacent, 0);
             }
-            for (int i = 0; i < gatePortCount; i++)
+            for (int i = 0; i < townCount; i++)
             {
                 s11.globalScenario.GatePort s11GatePort = globalScenario.gatePortArray[i];
-                GatePort gatePort = gatePortArray[i];
-                CodeConvertHelper.Str2Pk(gatePort.name, s11GatePort.name);
+                Town town = townArray[i];
+                CodeConvertHelper.Str2Pk(town.name, s11GatePort.name);
             }
             for (int id = 0; id < provinceCount; id++)
             {
@@ -137,9 +172,9 @@ namespace kmfe.core
             }
             else if (id >= 0 && id < cityLikeCount)
             {
-                return gatePortArray[id - cityCount];
+                return townArray[id - cityCount];
             }
-            throw new IndexOutOfRangeException($"Id of CityLike should in range [0-{cityCount + gatePortCount}). Current id is {id}");
+            throw new IndexOutOfRangeException($"Id of CityLike should in range [0-{cityCount + townCount}). Current id is {id}");
         }
 
         public string[] GetAllCityLikeNames()
@@ -162,12 +197,12 @@ namespace kmfe.core
             return names;
         }
 
-        public string[] GetAllGatePortNames()
+        public string[] GetAllTownNames()
         {
-            string[] names = new string[gatePortCount];
+            string[] names = new string[townCount];
             for (int i = 0; i < cityCount; i++)
             {
-                names[i] = gatePortArray[i].name;
+                names[i] = townArray[i].name;
             }
             return names;
         }

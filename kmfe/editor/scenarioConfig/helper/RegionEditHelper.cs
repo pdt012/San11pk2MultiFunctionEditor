@@ -1,6 +1,6 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
-using Region = kmfe.core.types.Region;
+using kmfe.core.globalTypes;
+using Region = kmfe.core.globalTypes.Region;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
@@ -22,13 +22,14 @@ namespace kmfe.editor.scenarioConfig.helper
                 ListViewItem item = new()
                 {
                     Tag = region,
-                    Text = region.id.ToString()
+                    Text = region.Id.ToString()
                 };
                 item.SubItems.Add(region.name);
                 listView.Items.Add(item);
             }
         }
-        public override void UpdateListView(ListView listView, List<int> rows)
+
+        public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
         }

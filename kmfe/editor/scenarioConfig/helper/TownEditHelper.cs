@@ -1,11 +1,11 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
+using kmfe.core.globalTypes;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
-    internal class GatePortEditHelper : BaseEditorHelper
+    internal class TownEditHelper : BaseEditorHelper
     {
-        public GatePortEditHelper(ScenarioData scenarioData) : base(scenarioData)
+        public TownEditHelper(ScenarioData scenarioData) : base(scenarioData)
         {
         }
 
@@ -17,19 +17,19 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView(ListView listView)
         {
-            foreach (GatePort gatePort in scenarioData.gatePortArray)
+            foreach (Town town in scenarioData.townArray)
             {
                 ListViewItem item = new()
                 {
-                    Tag = gatePort,
-                    Text = (gatePort.id).ToString()
+                    Tag = town,
+                    Text = town.Id.ToString()
                 };
-                item.SubItems.Add(gatePort.name);
+                item.SubItems.Add(town.name);
                 listView.Items.Add(item);
             }
         }
 
-        public override void UpdateListView(ListView listView, List<int> rows)
+        public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
         }

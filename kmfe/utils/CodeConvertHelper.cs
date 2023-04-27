@@ -21,13 +21,13 @@ namespace kmfe.utils
             XmlDocument doc = new();
             doc.Load(configPath);
             XmlElement? root = doc.DocumentElement;
-            XmlNodeList? scNodeList = root?.SelectNodes("sc");
+            XmlNodeList? scNodeList = root?.SelectNodes("ch");
             if (scNodeList is null)
                 return;
             foreach (XmlNode scNode in scNodeList)
             {
-                string? k = scNode.Attributes?["k"]?.Value;
-                string v = scNode.Attributes?["v"]?.Value ?? "";
+                string? k = scNode.Attributes?["key"]?.Value;
+                string v = scNode.Attributes?["value"]?.Value ?? "";
                 if (k is null)
                     continue;
                 ushort jisCode = Convert.ToUInt16(k, 16);

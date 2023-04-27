@@ -1,5 +1,5 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
+using kmfe.core.globalTypes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace kmfe.editor.scenarioConfig.helper
@@ -20,12 +20,32 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView(ListView listView)
         {
+#if true
             foreach (City city in scenarioData.cityArray)
             {
                 ListViewItem item = new()
                 {
                     Tag = city,
-                    Text = city.id.ToString()
+                };
+                UpdateRow(item);
+                listView.Items.Add(item);
+            }
+            foreach (Town town in scenarioData.townArray)
+            {
+                ListViewItem item = new()
+                {
+                    Tag = town,
+                };
+                UpdateRow(item);
+                listView.Items.Add(item);
+            }
+#else
+            foreach (City city in scenarioData.cityArray)
+            {
+                ListViewItem item = new()
+                {
+                    Tag = city,
+                    Text = city.Id.ToString()
                 };
                 item.SubItems.Add(city.name);
                 List<string> neighborNames = scenarioData.GetNeighborNames(city);
@@ -34,37 +54,35 @@ namespace kmfe.editor.scenarioConfig.helper
                 item.SubItems.Add(string.Join(", ", adjacentCityNames));
                 listView.Items.Add(item);
             }
-            foreach (GatePort gatePort in scenarioData.gatePortArray)
+            foreach (Town town in scenarioData.townArray)
             {
                 ListViewItem item = new()
                 {
-                    Tag = gatePort,
-                    Text = gatePort.id.ToString()
+                    Tag = town,
+                    Text = town.Id.ToString()
                 };
-                item.SubItems.Add(gatePort.name);
-                List<string> neighborNames = scenarioData.GetNeighborNames(gatePort);
+                item.SubItems.Add(town.name);
+                List<string> neighborNames = scenarioData.GetNeighborNames(town);
                 item.SubItems.Add(string.Join(", ", neighborNames));
                 listView.Items.Add(item);
             }
+#endif
         }
 
-        public override void UpdateListView(ListView listView, List<int> rows)
+        public override void UpdateRow(ListViewItem item)
         {
-            foreach (int id in rows)
+            if (item.Tag is not CityLike cityLike) return;
+
+            item.SubItems.Clear();
+            item.Tag = cityLike;
+            item.Text = cityLike.Id.ToString();
+            item.SubItems.Add(cityLike.name);
+            List<string> neighborNames = scenarioData.GetNeighborNames(cityLike);
+            item.SubItems.Add(string.Join(", ", neighborNames));
+            if (cityLike is City city)
             {
-                CityLike cityLike = scenarioData.GetCityLike(id);
-                ListViewItem item = listView.Items[id];
-                item.SubItems.Clear();
-                item.Tag = cityLike;
-                item.Text = cityLike.id.ToString();
-                item.SubItems.Add(cityLike.name);
-                List<string> neighborNames = scenarioData.GetNeighborNames(cityLike);
-                item.SubItems.Add(string.Join(", ", neighborNames));
-                if (cityLike is City city)
-                {
-                    List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
-                    item.SubItems.Add(string.Join(", ", adjacentCityNames));
-                }
+                List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
+                item.SubItems.Add(string.Join(", ", adjacentCityNames));
             }
         }
     }

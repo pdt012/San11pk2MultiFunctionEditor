@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace kmfe.utils.bytesConverter
+﻿namespace kmfe.utils.bytesConverter
 {
     public static class BytesConverter
     {
@@ -24,6 +17,10 @@ namespace kmfe.utils.bytesConverter
         public static void FromBytes(byte[] buffer, int startIndex, out ushort target)
         {
             target = BitConverter.ToUInt16(buffer, startIndex);
+        }
+        public static void FromBytes(byte[] buffer, int startIndex, out bool target)
+        {
+            target = BitConverter.ToBoolean(buffer, startIndex);
         }
         public static void FromBytes(byte[] buffer, int startIndex, out sbyte target)
         {
@@ -60,6 +57,10 @@ namespace kmfe.utils.bytesConverter
             BitConverter.GetBytes(value).CopyTo(buffer, startIndex);
         }
         public static void ToBytes(byte[] buffer, int startIndex, ushort value)
+        {
+            BitConverter.GetBytes(value).CopyTo(buffer, startIndex);
+        }
+        public static void ToBytes(byte[] buffer, int startIndex, bool value)
         {
             BitConverter.GetBytes(value).CopyTo(buffer, startIndex);
         }

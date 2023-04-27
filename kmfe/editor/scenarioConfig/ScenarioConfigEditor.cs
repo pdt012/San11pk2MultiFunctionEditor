@@ -1,5 +1,5 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
+using kmfe.core.globalTypes;
 using kmfe.core.xmlHelper;
 using kmfe.editor.scenarioConfig.helper;
 using kmfe.editor.scenarioConfig.editDialog;
@@ -11,10 +11,11 @@ namespace kmfe.editor.scenarioConfig
     {
         None,
         City,
-        GatePort,
+        Town,
         CityLikeDistance,
         Province,
-        Region
+        Region,
+        Skill,
     }
 
     public partial class ScenarioConfigEditor : Form
@@ -26,22 +27,25 @@ namespace kmfe.editor.scenarioConfig
 
         readonly Dictionary<EditType, BaseEditorHelper> editHelperDict;
         readonly Dictionary<EditType, BaseEditDialog> editDialogDict;
+
         public ScenarioConfigEditor()
         {
             InitializeComponent();
 
             CityEditHelper cityEditHelper = new(scenarioData);
-            GatePortEditHelper gatePortEditHelper = new(scenarioData);
+            TownEditHelper townEditHelper = new(scenarioData);
             CityLikeNeighborHelper cityLikeNeighborHelper = new(scenarioData);
             ProvinceEditHelper provinceEditHelper = new(scenarioData);
             RegionEditHelper regionEditHelper = new(scenarioData);
+            SkillEditHelper skillEditHelper = new(scenarioData);
             editHelperDict = new()
             {
                 { EditType.City, cityEditHelper },
-                { EditType.GatePort, gatePortEditHelper },
+                { EditType.Town, townEditHelper },
                 { EditType.CityLikeDistance, cityLikeNeighborHelper },
                 { EditType.Province, provinceEditHelper },
                 { EditType.Region, regionEditHelper },
+                { EditType.Skill, skillEditHelper },
             };
 
             cityLikeNeighborEdit = new CityLikeNeighborEdit();
@@ -57,7 +61,7 @@ namespace kmfe.editor.scenarioConfig
             if (updatedIdList == null)
                 editHelperDict[EditType.CityLikeDistance].UpdateListView(listView);
             else
-                editHelperDict[EditType.CityLikeDistance].UpdateListView(listView, updatedIdList);
+                editHelperDict[EditType.CityLikeDistance].UpdateRows(listView, updatedIdList);
         }
 
         void SetCurrentEditType(EditType editType)
@@ -99,7 +103,7 @@ namespace kmfe.editor.scenarioConfig
             {
                 case EditType.City:
                     break;
-                case EditType.GatePort:
+                case EditType.Town:
                     break;
                 case EditType.CityLikeDistance:
                     CityLike cityLike = (CityLike)listViewItem.Tag;
@@ -128,6 +132,8 @@ namespace kmfe.editor.scenarioConfig
                 scenarioData.LoadFromGlobalScenario("./PK/Media/scenario/scenario.s11");
                 PathXmlHelper pathXmlHelper = new(scenarioData);
                 pathXmlHelper.Load("./pk2.2/data/01 path.xml");
+                SkillXmlHelper skillXmlHelper = new(scenarioData);
+                skillXmlHelper.Load("./pk2.2/data/19 skill.xml");
                 foreach (BaseEditDialog editDialog in editDialogDict.Values)
                 {
                     editDialog.Initialized = false;
@@ -149,6 +155,8 @@ namespace kmfe.editor.scenarioConfig
                 scenarioData.SaveToGlobalScenario("./PK/Media/scenario/scenario.s11");
                 PathXmlHelper pathXmlHelper = new(scenarioData);
                 pathXmlHelper.Save("./pk2.2/data/01 path.xml");
+                SkillXmlHelper skillXmlHelper = new(scenarioData);
+                skillXmlHelper.Save("./pk2.2/data/19 skill.xml");
             }
             catch (Exception exc)
             {
@@ -166,7 +174,7 @@ namespace kmfe.editor.scenarioConfig
 
         private void 港关ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetCurrentEditType(EditType.GatePort);
+            SetCurrentEditType(EditType.Town);
             statusLabel_currentType.Text = "港关";
         }
 
@@ -186,6 +194,12 @@ namespace kmfe.editor.scenarioConfig
         {
             SetCurrentEditType(EditType.Region);
             statusLabel_currentType.Text = "地区";
+        }
+
+        private void 特技ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetCurrentEditType(EditType.Skill);
+            statusLabel_currentType.Text = "特技";
         }
     }
 }

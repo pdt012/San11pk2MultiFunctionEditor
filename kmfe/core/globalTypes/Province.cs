@@ -1,10 +1,9 @@
-﻿namespace kmfe.core.types
+﻿namespace kmfe.core.globalTypes
 {
-    public class Province
+    public class Province : BaseType
     {
         public const int adjacentProvinceMax = 5;
 
-        public int id;
         public string name = "";
         public string read = "";
         public string __12 = "";
@@ -12,9 +11,8 @@
         public int regionId = 0;
         public HashSet<int> adjacentProvinceIdSet = new();
 
-        public Province(int id)
+        public Province(int id) : base(id)
         {
-            this.id = id;
         }
 
         public sbyte[] GetAdjacentArray()

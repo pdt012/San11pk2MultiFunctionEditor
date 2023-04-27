@@ -1,5 +1,5 @@
 ﻿using kmfe.core;
-using kmfe.core.types;
+using kmfe.core.globalTypes;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
@@ -27,7 +27,7 @@ namespace kmfe.editor.scenarioConfig.helper
                 ListViewItem item = new()
                 {
                     Tag = province,
-                    Text = province.id.ToString()
+                    Text = province.Id.ToString()
                 };
                 item.SubItems.Add(province.name);
                 item.SubItems.Add(province.read);
@@ -40,7 +40,7 @@ namespace kmfe.editor.scenarioConfig.helper
             }
         }
 
-        public override void UpdateListView(ListView listView, List<int> rows)
+        public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
         }

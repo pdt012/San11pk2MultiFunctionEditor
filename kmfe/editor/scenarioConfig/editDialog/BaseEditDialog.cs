@@ -2,7 +2,7 @@
 
 namespace kmfe.editor.scenarioConfig.editDialog
 {
-    public abstract class BaseEditDialog : Form
+    public class BaseEditDialog : Form
     {
         public BaseEditDialog()
         {
@@ -23,9 +23,13 @@ namespace kmfe.editor.scenarioConfig.editDialog
             }
         }
 
-        public abstract void Init(ScenarioData scenarioData);
+        public virtual void Init(ScenarioData scenarioData)
+        {
+        }
 
-        public abstract void Save();
+        public virtual void Save()
+        {
+        }
 
         protected void Confirm()
         {

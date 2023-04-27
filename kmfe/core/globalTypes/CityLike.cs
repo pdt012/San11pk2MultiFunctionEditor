@@ -1,22 +1,21 @@
-﻿namespace kmfe.core.types
+﻿using kmfe.s11.enums;
+
+namespace kmfe.core.globalTypes
 {
-    public abstract class CityLike
+    public abstract class CityLike : BaseType
     {
         public const int neighborMax = 7;
 
-        public int id;
         public string name = "";
         public string read = "";
         public HashSet<Neighbor> neighborSet = new();  // 用HashSet以保证Neighbor的Id不会重复
 
-
-        public CityLike(int id)
+        public CityLike(int id) : base(id)
         {
-            this.id = id;
         }
     }
 
-    public record struct Neighbor(int CityId, int Route)
+    public record struct Neighbor(int CityId, RouteType Route)
     {
         public override int GetHashCode()
         {
