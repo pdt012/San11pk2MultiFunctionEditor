@@ -5,18 +5,18 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class CityEditHelper : BaseEditorHelper
     {
-        public CityEditHelper(ScenarioData scenarioData) : base(scenarioData)
+        public CityEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
         {
         }
 
-        public override void InitListView(ListView listView)
+        public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
             listView.Columns.Add("名称", 60);
             listView.Columns.Add("相邻城市", 300);
         }
 
-        public override void UpdateListView(ListView listView)
+        public override void UpdateListView()
         {
             foreach (City city in scenarioData.cityArray)
             {
@@ -35,6 +35,26 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
+        }
+
+        public override void OnDoubleClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnRightClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnLoaded()
+        {
+            ;
+        }
+
+        public override void OnSaved()
+        {
+            ;
         }
     }
 }

@@ -6,16 +6,16 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class RegionEditHelper : BaseEditorHelper
     {
-        public RegionEditHelper(ScenarioData scenarioData) : base(scenarioData)
+        public RegionEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
         {
         }
 
-        public override void InitListView(ListView listView)
+        public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
             listView.Columns.Add("名称", 60);
         }
-        public override void UpdateListView(ListView listView)
+        public override void UpdateListView()
         {
             foreach (Region region in scenarioData.regionArray)
             {
@@ -32,6 +32,26 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
+        }
+
+        public override void OnDoubleClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnRightClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnLoaded()
+        {
+            ;
+        }
+
+        public override void OnSaved()
+        {
+            ;
         }
     }
 }

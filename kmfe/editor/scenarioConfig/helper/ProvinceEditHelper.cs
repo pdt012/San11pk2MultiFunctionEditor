@@ -5,11 +5,11 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class ProvinceEditHelper : BaseEditorHelper
     {
-        public ProvinceEditHelper(ScenarioData scenarioData) : base(scenarioData)
+        public ProvinceEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
         {
         }
 
-        public override void InitListView(ListView listView)
+        public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
             listView.Columns.Add("名称", 60);
@@ -20,7 +20,7 @@ namespace kmfe.editor.scenarioConfig.helper
             listView.Columns.Add("相邻州", 300);
         }
 
-        public override void UpdateListView(ListView listView)
+        public override void UpdateListView()
         {
             foreach (Province province in scenarioData.provinceArray)
             {
@@ -43,6 +43,26 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void UpdateRow(ListViewItem item)
         {
             throw new NotImplementedException();
+        }
+
+        public override void OnDoubleClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnRightClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnLoaded()
+        {
+            ;
+        }
+
+        public override void OnSaved()
+        {
+            ;
         }
     }
 }

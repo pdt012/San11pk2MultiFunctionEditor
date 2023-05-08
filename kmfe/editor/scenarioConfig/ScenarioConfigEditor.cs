@@ -23,45 +23,30 @@ namespace kmfe.editor.scenarioConfig
         EditType currentEditType = EditType.None;
         public readonly ScenarioData scenarioData = new();
 
-        readonly CityLikeNeighborEdit cityLikeNeighborEdit;
-
         readonly Dictionary<EditType, BaseEditorHelper> editHelperDict;
-        readonly Dictionary<EditType, BaseEditDialog> editDialogDict;
 
         public ScenarioConfigEditor()
         {
             InitializeComponent();
+            保存修改ToolStripMenuItem.Enabled = false;
+            全局修改ToolStripMenuItem.Enabled = false;
+            剧本修改ToolStripMenuItem.Enabled = false;
 
-            CityEditHelper cityEditHelper = new(scenarioData);
-            TownEditHelper townEditHelper = new(scenarioData);
-            CityLikeNeighborHelper cityLikeNeighborHelper = new(scenarioData);
-            ProvinceEditHelper provinceEditHelper = new(scenarioData);
-            RegionEditHelper regionEditHelper = new(scenarioData);
-            SkillEditHelper skillEditHelper = new(scenarioData);
+            CityEditHelper cityEditHelper = new(scenarioData, listView);
+            TownEditHelper townEditHelper = new(scenarioData, listView);
+            NeighborEditHelper neighborEditHelper = new(scenarioData, listView);
+            ProvinceEditHelper provinceEditHelper = new(scenarioData, listView);
+            RegionEditHelper regionEditHelper = new(scenarioData, listView);
+            SkillEditHelper skillEditHelper = new(scenarioData, listView);
             editHelperDict = new()
             {
                 { EditType.City, cityEditHelper },
                 { EditType.Town, townEditHelper },
-                { EditType.CityLikeDistance, cityLikeNeighborHelper },
+                { EditType.CityLikeDistance, neighborEditHelper },
                 { EditType.Province, provinceEditHelper },
                 { EditType.Region, regionEditHelper },
                 { EditType.Skill, skillEditHelper },
             };
-
-            cityLikeNeighborEdit = new CityLikeNeighborEdit();
-            cityLikeNeighborEdit.OnSave += CityLikeNeighborEdit_OnSave;
-            editDialogDict = new()
-            {
-                { EditType.CityLikeDistance, cityLikeNeighborEdit },
-            };
-        }
-
-        private void CityLikeNeighborEdit_OnSave(List<int>? updatedIdList)
-        {
-            if (updatedIdList == null)
-                editHelperDict[EditType.CityLikeDistance].UpdateListView(listView);
-            else
-                editHelperDict[EditType.CityLikeDistance].UpdateRows(listView, updatedIdList);
         }
 
         void SetCurrentEditType(EditType editType)
@@ -77,7 +62,7 @@ namespace kmfe.editor.scenarioConfig
             if (editType == EditType.None) return;
             listView.Clear();
             listView.View = View.Details;
-            editHelperDict[editType].InitListView(listView);
+            editHelperDict[editType].InitListView();
         }
 
         void UpdateListView(EditType editType)
@@ -85,44 +70,39 @@ namespace kmfe.editor.scenarioConfig
             if (editType == EditType.None) return;
             listView.BeginUpdate();
             listView.Items.Clear();
-            editHelperDict[editType].UpdateListView(listView);
+            editHelperDict[editType].UpdateListView();
             listView.EndUpdate();
         }
 
-        private void listViewMouseDoubleClick(object sender, MouseEventArgs e)
+        private void listView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 #if DEBUG
             Stopwatch sw = new();
             sw.Start();
 #endif
+            if (e.Button != MouseButtons.Left)
+                return;
             ListView listViewCityPathData = (ListView)sender;
             ListViewItem? listViewItem = listViewCityPathData.GetItemAt(e.X, e.Y);
             if (listViewItem == null)
                 return;
-            switch (currentEditType)
-            {
-                case EditType.City:
-                    break;
-                case EditType.Town:
-                    break;
-                case EditType.CityLikeDistance:
-                    CityLike cityLike = (CityLike)listViewItem.Tag;
-                    cityLikeNeighborEdit.Init(scenarioData);
-                    cityLikeNeighborEdit.Setup(cityLike);
-                    cityLikeNeighborEdit.Show(this);
-                    break;
-                case EditType.Province:
-                    break;
-                case EditType.Region:
-                    break;
-                default:
-                    break;
-            }
+            editHelperDict[currentEditType].OnDoubleClicked(this, listViewItem);
 #if DEBUG
             sw.Stop();
             TimeSpan ts = sw.Elapsed;
             Console.WriteLine($"<listViewMouseDoubleClick> {ts.TotalMilliseconds}ms.");
 #endif
+        }
+
+        private void listView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+                return;
+            ListView listViewCityPathData = (ListView)sender;
+            ListViewItem? listViewItem = listViewCityPathData.GetItemAt(e.X, e.Y);
+            if (listViewItem == null)
+                return;
+            editHelperDict[currentEditType].OnRightClicked(this, listViewItem);
         }
 
         private void 载入ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,9 +114,9 @@ namespace kmfe.editor.scenarioConfig
                 pathXmlHelper.Load("./pk2.2/data/01 path.xml");
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
                 skillXmlHelper.Load("./pk2.2/data/19 skill.xml");
-                foreach (BaseEditDialog editDialog in editDialogDict.Values)
+                foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
                 {
-                    editDialog.Initialized = false;
+                    editorHelper.OnLoaded();
                 }
             }
             catch (Exception exc)
@@ -146,6 +126,8 @@ namespace kmfe.editor.scenarioConfig
             }
             statusLabel_currentType.Text = "载入成功";
             UpdateListView(currentEditType);
+            保存修改ToolStripMenuItem.Enabled = true;
+            全局修改ToolStripMenuItem.Enabled = true;
         }
 
         private void 保存修改ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -157,6 +139,10 @@ namespace kmfe.editor.scenarioConfig
                 pathXmlHelper.Save("./pk2.2/data/01 path.xml");
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
                 skillXmlHelper.Save("./pk2.2/data/19 skill.xml");
+                foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
+                {
+                    editorHelper.OnSaved();
+                }
             }
             catch (Exception exc)
             {

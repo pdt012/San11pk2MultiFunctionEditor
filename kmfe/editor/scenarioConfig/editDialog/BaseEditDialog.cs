@@ -2,8 +2,11 @@
 
 namespace kmfe.editor.scenarioConfig.editDialog
 {
-    public class BaseEditDialog : Form
+    public class BaseEditDialog : Form  /*不能定义为abstract类，会导致设计器出错*/
     {
+        public delegate void ApplyHandle(List<int>? updatedRowList);
+        protected ScenarioData? scenarioData;
+
         public BaseEditDialog()
         {
             FormClosing += BaseEditDialog_FormClosing;
@@ -23,17 +26,23 @@ namespace kmfe.editor.scenarioConfig.editDialog
             }
         }
 
+        /// <summary>
+        /// 初始化对话框，如果已经初始化过则自动跳过
+        /// </summary>
+        /// <param name="scenarioData"></param>
         public virtual void Init(ScenarioData scenarioData)
         {
+            if (Initialized) return;
+            this.scenarioData = scenarioData;
         }
 
-        public virtual void Save()
+        public virtual void Apply()
         {
         }
 
         protected void Confirm()
         {
-            Save();
+            Apply();
             Hide();
         }
 
@@ -42,13 +51,16 @@ namespace kmfe.editor.scenarioConfig.editDialog
             Hide();
         }
 
-        public void Show(Form parent)
+        public void Show(Form? parent)
         {
             if (!Visible)
             {
-                StartPosition = FormStartPosition.Manual;
-                Location = new Point(parent.Location.X + parent.Width / 2 - Width / 2,
-                        parent.Location.Y + parent.Height / 2 - Height / 2);
+                if (parent != null)  // 居中显示
+                {
+                    StartPosition = FormStartPosition.Manual;
+                    Location = new Point(parent.Location.X + parent.Width / 2 - Width / 2,
+                            parent.Location.Y + parent.Height / 2 - Height / 2);
+                }
                 Show();
             }
             else

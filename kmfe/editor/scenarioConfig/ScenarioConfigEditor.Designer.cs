@@ -39,24 +39,24 @@
             据点距离ToolStripMenuItem = new ToolStripMenuItem();
             州ToolStripMenuItem = new ToolStripMenuItem();
             地区ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            爵位ToolStripMenuItem = new ToolStripMenuItem();
+            官职ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
+            特技ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            适性ToolStripMenuItem = new ToolStripMenuItem();
+            地形ToolStripMenuItem = new ToolStripMenuItem();
+            设施ToolStripMenuItem = new ToolStripMenuItem();
+            兵器ToolStripMenuItem = new ToolStripMenuItem();
+            战法ToolStripMenuItem = new ToolStripMenuItem();
+            技术ToolStripMenuItem = new ToolStripMenuItem();
+            能力ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
+            宝物ToolStripMenuItem = new ToolStripMenuItem();
             剧本修改ToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             statusLabel_currentType = new ToolStripStatusLabel();
-            toolStripSeparator1 = new ToolStripSeparator();
-            特技ToolStripMenuItem = new ToolStripMenuItem();
-            爵位ToolStripMenuItem = new ToolStripMenuItem();
-            官职ToolStripMenuItem = new ToolStripMenuItem();
-            宝物ToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator2 = new ToolStripSeparator();
-            toolStripSeparator3 = new ToolStripSeparator();
-            战法ToolStripMenuItem = new ToolStripMenuItem();
-            技术ToolStripMenuItem = new ToolStripMenuItem();
-            兵器ToolStripMenuItem = new ToolStripMenuItem();
-            设施ToolStripMenuItem = new ToolStripMenuItem();
-            地形ToolStripMenuItem = new ToolStripMenuItem();
-            能力ToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator4 = new ToolStripSeparator();
-            适性ToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -66,13 +66,14 @@
             listView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listView.FullRowSelect = true;
             listView.Location = new Point(15, 36);
-            listView.Margin = new Padding(4, 4, 4, 4);
+            listView.Margin = new Padding(4);
             listView.Name = "listView";
             listView.Size = new Size(997, 529);
             listView.TabIndex = 0;
             listView.UseCompatibleStateImageBehavior = false;
             listView.View = View.Details;
-            listView.MouseDoubleClick += listViewMouseDoubleClick;
+            listView.MouseClick += listView_MouseClick;
+            listView.MouseDoubleClick += listView_MouseDoubleClick;
             // 
             // menuStrip1
             // 
@@ -116,37 +117,124 @@
             // 城市ToolStripMenuItem
             // 
             城市ToolStripMenuItem.Name = "城市ToolStripMenuItem";
-            城市ToolStripMenuItem.Size = new Size(224, 26);
+            城市ToolStripMenuItem.Size = new Size(152, 26);
             城市ToolStripMenuItem.Text = "城市";
             城市ToolStripMenuItem.Click += 城市ToolStripMenuItem_Click;
             // 
             // 港关ToolStripMenuItem
             // 
             港关ToolStripMenuItem.Name = "港关ToolStripMenuItem";
-            港关ToolStripMenuItem.Size = new Size(224, 26);
+            港关ToolStripMenuItem.Size = new Size(152, 26);
             港关ToolStripMenuItem.Text = "港关";
             港关ToolStripMenuItem.Click += 港关ToolStripMenuItem_Click;
             // 
             // 据点距离ToolStripMenuItem
             // 
             据点距离ToolStripMenuItem.Name = "据点距离ToolStripMenuItem";
-            据点距离ToolStripMenuItem.Size = new Size(224, 26);
+            据点距离ToolStripMenuItem.Size = new Size(152, 26);
             据点距离ToolStripMenuItem.Text = "据点相邻";
             据点距离ToolStripMenuItem.Click += 据点距离ToolStripMenuItem_Click;
             // 
             // 州ToolStripMenuItem
             // 
             州ToolStripMenuItem.Name = "州ToolStripMenuItem";
-            州ToolStripMenuItem.Size = new Size(224, 26);
+            州ToolStripMenuItem.Size = new Size(152, 26);
             州ToolStripMenuItem.Text = "州";
             州ToolStripMenuItem.Click += 州ToolStripMenuItem_Click;
             // 
             // 地区ToolStripMenuItem
             // 
             地区ToolStripMenuItem.Name = "地区ToolStripMenuItem";
-            地区ToolStripMenuItem.Size = new Size(224, 26);
+            地区ToolStripMenuItem.Size = new Size(152, 26);
             地区ToolStripMenuItem.Text = "地区";
             地区ToolStripMenuItem.Click += 地区ToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(149, 6);
+            // 
+            // 爵位ToolStripMenuItem
+            // 
+            爵位ToolStripMenuItem.Name = "爵位ToolStripMenuItem";
+            爵位ToolStripMenuItem.Size = new Size(152, 26);
+            爵位ToolStripMenuItem.Text = "爵位";
+            // 
+            // 官职ToolStripMenuItem
+            // 
+            官职ToolStripMenuItem.Name = "官职ToolStripMenuItem";
+            官职ToolStripMenuItem.Size = new Size(152, 26);
+            官职ToolStripMenuItem.Text = "官职";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(149, 6);
+            // 
+            // 特技ToolStripMenuItem
+            // 
+            特技ToolStripMenuItem.Name = "特技ToolStripMenuItem";
+            特技ToolStripMenuItem.Size = new Size(152, 26);
+            特技ToolStripMenuItem.Text = "特技";
+            特技ToolStripMenuItem.Click += 特技ToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(149, 6);
+            // 
+            // 适性ToolStripMenuItem
+            // 
+            适性ToolStripMenuItem.Name = "适性ToolStripMenuItem";
+            适性ToolStripMenuItem.Size = new Size(152, 26);
+            适性ToolStripMenuItem.Text = "适性";
+            // 
+            // 地形ToolStripMenuItem
+            // 
+            地形ToolStripMenuItem.Name = "地形ToolStripMenuItem";
+            地形ToolStripMenuItem.Size = new Size(152, 26);
+            地形ToolStripMenuItem.Text = "地形";
+            // 
+            // 设施ToolStripMenuItem
+            // 
+            设施ToolStripMenuItem.Name = "设施ToolStripMenuItem";
+            设施ToolStripMenuItem.Size = new Size(152, 26);
+            设施ToolStripMenuItem.Text = "设施";
+            // 
+            // 兵器ToolStripMenuItem
+            // 
+            兵器ToolStripMenuItem.Name = "兵器ToolStripMenuItem";
+            兵器ToolStripMenuItem.Size = new Size(152, 26);
+            兵器ToolStripMenuItem.Text = "兵器";
+            // 
+            // 战法ToolStripMenuItem
+            // 
+            战法ToolStripMenuItem.Name = "战法ToolStripMenuItem";
+            战法ToolStripMenuItem.Size = new Size(152, 26);
+            战法ToolStripMenuItem.Text = "战法";
+            // 
+            // 技术ToolStripMenuItem
+            // 
+            技术ToolStripMenuItem.Name = "技术ToolStripMenuItem";
+            技术ToolStripMenuItem.Size = new Size(152, 26);
+            技术ToolStripMenuItem.Text = "技术";
+            // 
+            // 能力ToolStripMenuItem
+            // 
+            能力ToolStripMenuItem.Name = "能力ToolStripMenuItem";
+            能力ToolStripMenuItem.Size = new Size(152, 26);
+            能力ToolStripMenuItem.Text = "能力";
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(149, 6);
+            // 
+            // 宝物ToolStripMenuItem
+            // 
+            宝物ToolStripMenuItem.Name = "宝物ToolStripMenuItem";
+            宝物ToolStripMenuItem.Size = new Size(152, 26);
+            宝物ToolStripMenuItem.Text = "宝物";
             // 
             // 剧本修改ToolStripMenuItem
             // 
@@ -171,93 +259,6 @@
             statusLabel_currentType.Size = new Size(39, 20);
             statusLabel_currentType.Text = "首页";
             // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(221, 6);
-            // 
-            // 特技ToolStripMenuItem
-            // 
-            特技ToolStripMenuItem.Name = "特技ToolStripMenuItem";
-            特技ToolStripMenuItem.Size = new Size(224, 26);
-            特技ToolStripMenuItem.Text = "特技";
-            特技ToolStripMenuItem.Click += 特技ToolStripMenuItem_Click;
-            // 
-            // 爵位ToolStripMenuItem
-            // 
-            爵位ToolStripMenuItem.Name = "爵位ToolStripMenuItem";
-            爵位ToolStripMenuItem.Size = new Size(224, 26);
-            爵位ToolStripMenuItem.Text = "爵位";
-            // 
-            // 官职ToolStripMenuItem
-            // 
-            官职ToolStripMenuItem.Name = "官职ToolStripMenuItem";
-            官职ToolStripMenuItem.Size = new Size(224, 26);
-            官职ToolStripMenuItem.Text = "官职";
-            // 
-            // 宝物ToolStripMenuItem
-            // 
-            宝物ToolStripMenuItem.Name = "宝物ToolStripMenuItem";
-            宝物ToolStripMenuItem.Size = new Size(224, 26);
-            宝物ToolStripMenuItem.Text = "宝物";
-            // 
-            // toolStripSeparator2
-            // 
-            toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(221, 6);
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(221, 6);
-            // 
-            // 战法ToolStripMenuItem
-            // 
-            战法ToolStripMenuItem.Name = "战法ToolStripMenuItem";
-            战法ToolStripMenuItem.Size = new Size(224, 26);
-            战法ToolStripMenuItem.Text = "战法";
-            // 
-            // 技术ToolStripMenuItem
-            // 
-            技术ToolStripMenuItem.Name = "技术ToolStripMenuItem";
-            技术ToolStripMenuItem.Size = new Size(224, 26);
-            技术ToolStripMenuItem.Text = "技术";
-            // 
-            // 兵器ToolStripMenuItem
-            // 
-            兵器ToolStripMenuItem.Name = "兵器ToolStripMenuItem";
-            兵器ToolStripMenuItem.Size = new Size(224, 26);
-            兵器ToolStripMenuItem.Text = "兵器";
-            // 
-            // 设施ToolStripMenuItem
-            // 
-            设施ToolStripMenuItem.Name = "设施ToolStripMenuItem";
-            设施ToolStripMenuItem.Size = new Size(224, 26);
-            设施ToolStripMenuItem.Text = "设施";
-            // 
-            // 地形ToolStripMenuItem
-            // 
-            地形ToolStripMenuItem.Name = "地形ToolStripMenuItem";
-            地形ToolStripMenuItem.Size = new Size(224, 26);
-            地形ToolStripMenuItem.Text = "地形";
-            // 
-            // 能力ToolStripMenuItem
-            // 
-            能力ToolStripMenuItem.Name = "能力ToolStripMenuItem";
-            能力ToolStripMenuItem.Size = new Size(224, 26);
-            能力ToolStripMenuItem.Text = "能力";
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(221, 6);
-            // 
-            // 适性ToolStripMenuItem
-            // 
-            适性ToolStripMenuItem.Name = "适性ToolStripMenuItem";
-            适性ToolStripMenuItem.Size = new Size(224, 26);
-            适性ToolStripMenuItem.Text = "适性";
-            // 
             // ScenarioConfigEditor
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -267,7 +268,7 @@
             Controls.Add(listView);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "ScenarioConfigEditor";
             Text = "剧本及全局配置修改器 - by 氕氘氚";
             menuStrip1.ResumeLayout(false);

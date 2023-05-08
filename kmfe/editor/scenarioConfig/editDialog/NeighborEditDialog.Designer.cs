@@ -1,6 +1,6 @@
 ﻿namespace kmfe.editor.scenarioConfig.editDialog
 {
-    partial class CityLikeNeighborEdit
+    partial class NeighborEditDialog
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -211,7 +211,7 @@
             buttonSave.TabIndex = 17;
             buttonSave.Text = "保存";
             buttonSave.UseVisualStyleBackColor = true;
-            buttonSave.Click += buttonSave_Click;
+            buttonSave.Click += buttonApply_Click;
             // 
             // buttonCancel
             // 

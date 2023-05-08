@@ -1,31 +1,27 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
-using kmfe.core.xmlHelper;
 using kmfe.s11.enums;
 
 namespace kmfe.editor.scenarioConfig.editDialog
 {
-    public partial class CityLikeNeighborEdit : BaseEditDialog
+    public partial class NeighborEditDialog : BaseEditDialog
     {
-        public delegate void SaveHandle(List<int>? updatedIdList);
-        public event SaveHandle? OnSave;
+        public event ApplyHandle? OnApply;
 
         ComboBox[] neighbors = Array.Empty<ComboBox>();
         ComboBox[] routes = Array.Empty<ComboBox>();
         ComboBox[] adjacentCities = Array.Empty<ComboBox>();
 
-        ScenarioData? scenarioData;
         CityLike? cityLike;
 
-        public CityLikeNeighborEdit()
+        public NeighborEditDialog()
         {
             InitializeComponent();
         }
 
         public override void Init(ScenarioData scenarioData)
         {
-            if (Initialized) return;
-            this.scenarioData = scenarioData;
+            base.Init(scenarioData);
             neighbors = new ComboBox[] { neighbor0, neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6 };
             foreach (ComboBox combo in neighbors)
             {
@@ -95,7 +91,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             }
         }
 
-        public override void Save()
+        public override void Apply()
         {
             if (scenarioData == null) return;
             if (cityLike == null) return;
@@ -184,10 +180,10 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 city.adjacentCityIdSet = adjacentCityIdSet;
             }
 
-            OnSave?.Invoke(updatedIdList);
+            OnApply?.Invoke(updatedIdList);
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void buttonApply_Click(object sender, EventArgs e)
         {
             Confirm();
         }

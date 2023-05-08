@@ -1,16 +1,21 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using kmfe.editor.scenarioConfig.editDialog;
+using System.Windows.Forms;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
-    internal class CityLikeNeighborHelper : BaseEditorHelper
+    internal class NeighborEditHelper : BaseEditorHelper
     {
-        public CityLikeNeighborHelper(ScenarioData scenarioData) : base(scenarioData)
+        public readonly NeighborEditDialog editDialog;
+
+        public NeighborEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
         {
+            editDialog = new();
+            editDialog.OnApply += OnItemsApplyCallback;
         }
 
-        public override void InitListView(ListView listView)
+        public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
             listView.Columns.Add("据点名", 80);
@@ -18,9 +23,8 @@ namespace kmfe.editor.scenarioConfig.helper
             listView.Columns.Add("相邻城市", 300);
         }
 
-        public override void UpdateListView(ListView listView)
+        public override void UpdateListView()
         {
-#if true
             foreach (City city in scenarioData.cityArray)
             {
                 ListViewItem item = new()
@@ -39,34 +43,6 @@ namespace kmfe.editor.scenarioConfig.helper
                 UpdateRow(item);
                 listView.Items.Add(item);
             }
-#else
-            foreach (City city in scenarioData.cityArray)
-            {
-                ListViewItem item = new()
-                {
-                    Tag = city,
-                    Text = city.Id.ToString()
-                };
-                item.SubItems.Add(city.name);
-                List<string> neighborNames = scenarioData.GetNeighborNames(city);
-                item.SubItems.Add(string.Join(", ", neighborNames));
-                List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
-                item.SubItems.Add(string.Join(", ", adjacentCityNames));
-                listView.Items.Add(item);
-            }
-            foreach (Town town in scenarioData.townArray)
-            {
-                ListViewItem item = new()
-                {
-                    Tag = town,
-                    Text = town.Id.ToString()
-                };
-                item.SubItems.Add(town.name);
-                List<string> neighborNames = scenarioData.GetNeighborNames(town);
-                item.SubItems.Add(string.Join(", ", neighborNames));
-                listView.Items.Add(item);
-            }
-#endif
         }
 
         public override void UpdateRow(ListViewItem item)
@@ -84,6 +60,29 @@ namespace kmfe.editor.scenarioConfig.helper
                 List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
                 item.SubItems.Add(string.Join(", ", adjacentCityNames));
             }
+        }
+
+        public override void OnDoubleClicked(Form parentForm, ListViewItem item)
+        {
+            CityLike cityLike = (CityLike)item.Tag;
+            editDialog.Init(scenarioData);
+            editDialog.Setup(cityLike);
+            editDialog.Show(parentForm);
+        }
+
+        public override void OnRightClicked(Form parentForm, ListViewItem item)
+        {
+            ;
+        }
+
+        public override void OnLoaded()
+        {
+            editDialog.Initialized = false;
+        }
+
+        public override void OnSaved()
+        {
+            ;
         }
     }
 }
