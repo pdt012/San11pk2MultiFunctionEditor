@@ -4,6 +4,7 @@ using kmfe.core.xmlHelper;
 using kmfe.editor.scenarioConfig.helper;
 using kmfe.editor.scenarioConfig.editDialog;
 using System.Diagnostics;
+using kmfe.common;
 
 namespace kmfe.editor.scenarioConfig
 {
@@ -109,11 +110,11 @@ namespace kmfe.editor.scenarioConfig
         {
             try
             {
-                scenarioData.LoadFromGlobalScenario("./PK/Media/scenario/scenario.s11");
+                scenarioData.LoadFromGlobalScenario(Path.Combine(Settings.PkPath, "Media/scenario/scenario.s11"));
                 PathXmlHelper pathXmlHelper = new(scenarioData);
-                pathXmlHelper.Load("./pk2.2/data/01 path.xml");
+                pathXmlHelper.Load(Path.Combine(Settings.Pk2Path, "data/01 path.xml"));
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
-                skillXmlHelper.Load("./pk2.2/data/19 skill.xml");
+                skillXmlHelper.Load(Path.Combine(Settings.Pk2Path, "data/19 skill.xml"));
                 foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
                 {
                     editorHelper.OnLoaded();
@@ -134,11 +135,11 @@ namespace kmfe.editor.scenarioConfig
         {
             try
             {
-                scenarioData.SaveToGlobalScenario("./PK/Media/scenario/scenario.s11");
+                scenarioData.SaveToGlobalScenario(Path.Combine(Settings.PkPath, "Media/scenario/scenario.s11"));
                 PathXmlHelper pathXmlHelper = new(scenarioData);
-                pathXmlHelper.Save("./pk2.2/data/01 path.xml");
+                pathXmlHelper.Save(Path.Combine(Settings.Pk2Path, "data/01 path.xml"));
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
-                skillXmlHelper.Save("./pk2.2/data/19 skill.xml");
+                skillXmlHelper.Save(Path.Combine(Settings.Pk2Path, "data/19 skill.xml"));
                 foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
                 {
                     editorHelper.OnSaved();
@@ -150,6 +151,13 @@ namespace kmfe.editor.scenarioConfig
                 return;
             }
             MessageBox.Show("保存完毕！", "保存完毕");
+        }
+
+        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsDialog settingsDialog = SettingsDialog.GetInstance();
+            settingsDialog.Setup();
+            settingsDialog.ShowDialog();
         }
 
         private void 城市ToolStripMenuItem_Click(object sender, EventArgs e)

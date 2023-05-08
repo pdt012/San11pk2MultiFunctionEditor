@@ -1,4 +1,5 @@
-﻿using kmfe.editor.scenarioConfig;
+﻿using kmfe.common;
+using kmfe.editor.scenarioConfig;
 using kmfe.utils;
 
 namespace kmfe
@@ -11,10 +12,11 @@ namespace kmfe
         [STAThread]
         static void Main()
         {
+            Settings.Load();
+            CodeConvertHelper.Init("enc_3.xml");
+
             #region test before start
 
-
-            CodeConvertHelper.Init("enc_3.xml");
             string s = CodeConvertHelper.Pk2Str(new byte[] { 0x92, 0xa5, 0x93, 0x8c, 0x8c, 0x01 });
             Console.WriteLine(s);
 

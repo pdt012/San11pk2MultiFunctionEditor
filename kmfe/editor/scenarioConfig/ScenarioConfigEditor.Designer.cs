@@ -57,6 +57,8 @@
             剧本修改ToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             statusLabel_currentType = new ToolStripStatusLabel();
+            设置ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator5 = new ToolStripSeparator();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -88,7 +90,7 @@
             // 
             // 菜单ToolStripMenuItem
             // 
-            菜单ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 载入ToolStripMenuItem, 保存修改ToolStripMenuItem });
+            菜单ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 载入ToolStripMenuItem, 保存修改ToolStripMenuItem, toolStripSeparator5, 设置ToolStripMenuItem });
             菜单ToolStripMenuItem.Name = "菜单ToolStripMenuItem";
             菜单ToolStripMenuItem.Size = new Size(53, 24);
             菜单ToolStripMenuItem.Text = "菜单";
@@ -96,14 +98,14 @@
             // 载入ToolStripMenuItem
             // 
             载入ToolStripMenuItem.Name = "载入ToolStripMenuItem";
-            载入ToolStripMenuItem.Size = new Size(152, 26);
+            载入ToolStripMenuItem.Size = new Size(224, 26);
             载入ToolStripMenuItem.Text = "载入";
             载入ToolStripMenuItem.Click += 载入ToolStripMenuItem_Click;
             // 
             // 保存修改ToolStripMenuItem
             // 
             保存修改ToolStripMenuItem.Name = "保存修改ToolStripMenuItem";
-            保存修改ToolStripMenuItem.Size = new Size(152, 26);
+            保存修改ToolStripMenuItem.Size = new Size(224, 26);
             保存修改ToolStripMenuItem.Text = "保存修改";
             保存修改ToolStripMenuItem.Click += 保存修改ToolStripMenuItem_Click;
             // 
@@ -259,6 +261,18 @@
             statusLabel_currentType.Size = new Size(39, 20);
             statusLabel_currentType.Text = "首页";
             // 
+            // 设置ToolStripMenuItem
+            // 
+            设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
+            设置ToolStripMenuItem.Size = new Size(224, 26);
+            设置ToolStripMenuItem.Text = "设置";
+            设置ToolStripMenuItem.Click += 设置ToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(221, 6);
+            // 
             // ScenarioConfigEditor
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -310,5 +324,7 @@
         private ToolStripMenuItem 技术ToolStripMenuItem;
         private ToolStripMenuItem 能力ToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator4;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripMenuItem 设置ToolStripMenuItem;
     }
 }
