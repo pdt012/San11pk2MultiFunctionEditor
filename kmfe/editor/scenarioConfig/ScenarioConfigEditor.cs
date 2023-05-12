@@ -17,6 +17,7 @@ namespace kmfe.editor.scenarioConfig
         Province,
         Region,
         Skill,
+        ArmyLevel,
     }
 
     public partial class ScenarioConfigEditor : Form
@@ -39,6 +40,7 @@ namespace kmfe.editor.scenarioConfig
             ProvinceEditHelper provinceEditHelper = new(scenarioData, listView);
             RegionEditHelper regionEditHelper = new(scenarioData, listView);
             SkillEditHelper skillEditHelper = new(scenarioData, listView);
+            ArmyLevelEditHelper armyLevelEditHelper = new(scenarioData, listView);
             editHelperDict = new()
             {
                 { EditType.City, cityEditHelper },
@@ -47,6 +49,7 @@ namespace kmfe.editor.scenarioConfig
                 { EditType.Province, provinceEditHelper },
                 { EditType.Region, regionEditHelper },
                 { EditType.Skill, skillEditHelper },
+                { EditType.ArmyLevel, armyLevelEditHelper },
             };
         }
 
@@ -115,6 +118,8 @@ namespace kmfe.editor.scenarioConfig
                 pathXmlHelper.Load(Path.Combine(Settings.Pk2Path, "data/01 path.xml"));
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
                 skillXmlHelper.Load(Path.Combine(Settings.Pk2Path, "data/19 skill.xml"));
+                ArmyLevelXmlHelper armyLevelXmlHelper = new(scenarioData);
+                armyLevelXmlHelper.Load(Path.Combine(Settings.Pk2Path, "data/07 tekisei.xml"));
                 foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
                 {
                     editorHelper.OnLoaded();
@@ -140,6 +145,8 @@ namespace kmfe.editor.scenarioConfig
                 pathXmlHelper.Save(Path.Combine(Settings.Pk2Path, "data/01 path.xml"));
                 SkillXmlHelper skillXmlHelper = new(scenarioData);
                 skillXmlHelper.Save(Path.Combine(Settings.Pk2Path, "data/19 skill.xml"));
+                ArmyLevelXmlHelper armyLevelXmlHelper = new(scenarioData);
+                armyLevelXmlHelper.Save(Path.Combine(Settings.Pk2Path, "data/07 tekisei.xml"));
                 foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
                 {
                     editorHelper.OnSaved();
@@ -194,6 +201,12 @@ namespace kmfe.editor.scenarioConfig
         {
             SetCurrentEditType(EditType.Skill);
             statusLabel_currentType.Text = "特技";
+        }
+
+        private void 适性ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetCurrentEditType(EditType.ArmyLevel);
+            statusLabel_currentType.Text = "适性";
         }
     }
 }
