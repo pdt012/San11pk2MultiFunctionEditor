@@ -2,7 +2,6 @@
 {
     public partial class ChooseBox : UserControl
     {
-        uint maximum = 0;
         List<IntString> allChoices = new();  // 所有选项
         bool isSearching = false;  // 是否正在搜索
         List<int> selected = new();  // 已选项列表
@@ -20,23 +19,26 @@
             set { close_btn.Visible = value; }
         }
 
-        public void SetChoices(List<IntString> allChoices, int maximum = -1)
+        public int MaxSelections { set; get; } = -1;
+
+        public List<IntString> Choices
         {
-            this.maximum = (uint)(maximum >= 0 ? maximum : allChoices.Count);
-            this.allChoices = allChoices;
-            SetSelected(new List<int>());  // 初始化
+            set
+            {
+                allChoices = value;
+                SetSelected(Array.Empty<int>());  // 初始化
+            }
+            get
+            {
+                return allChoices;
+            }
         }
 
-        public List<IntString> GetChoices()
+        public void SetSelected(int[] array)
         {
-            return allChoices;
-        }
-
-        public void SetSelected(List<int> selected)
-        {
-            this.selected = selected;
+            selected = array.ToList(); ;
             UpdateSelected();
-            this.unselected.Clear();
+            unselected.Clear();
             foreach (IntString tag in allChoices)
             {
                 if (selected.IndexOf(tag.Num) == -1)    // 已选中没有
@@ -45,9 +47,9 @@
             UpdateUnselected();
         }
 
-        public List<int> GetSelected()
+        public int[] GetSelected()
         {
-            return selected;
+            return selected.ToArray();
         }
 
         private void UpdateSelected()
@@ -126,7 +128,7 @@
 
         private void SelectItem(int index)
         {
-            if (selected.Count >= maximum)
+            if (selected.Count >= MaxSelections && MaxSelections >= 0)
                 return;
             int id;
             if (isSearching)

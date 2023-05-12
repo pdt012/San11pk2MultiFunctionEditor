@@ -10,6 +10,9 @@ namespace kmfe.editor.scenarioConfig.editDialog
     {
         public event ApplyHandle? OnApply;
 
+        Skill? skill;
+        int row = -1;
+
         public SkillEditDialog()
         {
             InitializeComponent();
@@ -18,24 +21,45 @@ namespace kmfe.editor.scenarioConfig.editDialog
         public override void Init(ScenarioData scenarioData)
         {
             base.Init(scenarioData);
-            skillType.Items.Clear();
-            skillType.Items.AddRange(Enum.GetNames<SkillType>());
-            skillBinds.SetChoices(GetEnabledSkillNames(), 8);
+            text_type.Items.Clear();
+            text_type.Items.AddRange(Enum.GetNames<SkillType>());
+            skill_binds.Choices = GetEnabledSkillNames();
+            skill_binds.MaxSelections = 8;
         }
 
-        public void Setup(Skill skill)
+        public void Setup(Skill skill, int row)
         {
-            skillId.Text = skill.Id.ToString();
-            skillName.Text = skill.name;
-            skillType.SelectedIndex = (int)skill.type;
-            skillLevel.Value = skill.level;
-            skillDesc.Text = skill.desc;
-            skillBinds.SetSelected(skill.bindSkillList);
+            this.skill = skill;
+            this.row = row;
+            text_id.Text = skill.Id.ToString();
+            text_name.Text = skill.name;
+            text_type.SelectedIndex = (int)skill.type;
+            value_level.Value = skill.level;
+            text_desc.Text = skill.desc;
+            skill_binds.SetSelected(skill.bindSkillList.ToArray());
         }
 
-        public override void Apply()
+        public override bool Apply()
         {
+            if (skill == null) return false;
+            if (text_name.Text.Length == 0)
+            {
+                MessageBox.Show("名称不可以为空.");
+                return false;
+            }
+            if (text_desc.Text.Length == 0)
+            {
+                MessageBox.Show("描述不可以为空.");
+                return false;
+            }
+            skill.name = text_name.Text;
+            skill.desc = text_desc.Text;
+            skill.type = (SkillType)text_type.SelectedIndex;
+            skill.level = (int)value_level.Value;
+            skill.bindSkillList = skill_binds.GetSelected().ToList();
 
+            OnApply?.Invoke(new List<int>() { row });
+            return true;
         }
 
         private List<IntString> GetEnabledSkillNames()
@@ -51,12 +75,13 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            Confirm();
+            if (Apply())
+                DialogResult = DialogResult.OK;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            Cancel();
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

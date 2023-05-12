@@ -1,4 +1,6 @@
-﻿namespace kmfe.editor.scenarioConfig.editDialog
+﻿using kmfe.forms;
+
+namespace kmfe.editor.scenarioConfig.editDialog
 {
     partial class SkillEditDialog
     {
@@ -28,21 +30,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SkillEditDialog));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            skillName = new TextBox();
-            skillDesc = new TextBox();
-            skillType = new ComboBox();
-            skillBinds = new forms.ChooseBox();
+            text_name = new TextBox();
+            text_desc = new TextBox();
+            text_type = new ComboBox();
+            skill_binds = new ChooseBox();
             label6 = new Label();
             buttonCancel = new Button();
             buttonApply = new Button();
-            skillLevel = new NumericUpDown();
-            skillId = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)skillLevel).BeginInit();
+            value_level = new DecimalBox();
+            text_id = new Label();
+            ((System.ComponentModel.ISupportInitialize)value_level).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -90,105 +93,109 @@
             label5.TabIndex = 4;
             label5.Text = "描述";
             // 
-            // skillName
+            // text_name
             // 
-            skillName.BorderStyle = BorderStyle.FixedSingle;
-            skillName.Location = new Point(65, 48);
-            skillName.Name = "skillName";
-            skillName.Size = new Size(60, 27);
-            skillName.TabIndex = 6;
+            text_name.BorderStyle = BorderStyle.FixedSingle;
+            text_name.Location = new Point(65, 48);
+            text_name.Name = "text_name";
+            text_name.Size = new Size(60, 27);
+            text_name.TabIndex = 2;
             // 
-            // skillDesc
+            // text_desc
             // 
-            skillDesc.BorderStyle = BorderStyle.FixedSingle;
-            skillDesc.Location = new Point(65, 81);
-            skillDesc.Multiline = true;
-            skillDesc.Name = "skillDesc";
-            skillDesc.Size = new Size(287, 48);
-            skillDesc.TabIndex = 8;
+            text_desc.BorderStyle = BorderStyle.FixedSingle;
+            text_desc.Location = new Point(65, 81);
+            text_desc.Multiline = true;
+            text_desc.Name = "text_desc";
+            text_desc.Size = new Size(287, 48);
+            text_desc.TabIndex = 5;
             // 
-            // skillType
+            // text_type
             // 
-            skillType.FormattingEnabled = true;
-            skillType.Location = new Point(176, 48);
-            skillType.Name = "skillType";
-            skillType.Size = new Size(65, 28);
-            skillType.TabIndex = 9;
+            text_type.FormattingEnabled = true;
+            text_type.Location = new Point(176, 48);
+            text_type.Name = "text_type";
+            text_type.Size = new Size(65, 28);
+            text_type.TabIndex = 3;
             // 
-            // skillBinds
+            // skill_binds
             // 
-            skillBinds.Location = new Point(65, 155);
-            skillBinds.Margin = new Padding(3, 4, 3, 4);
-            skillBinds.Name = "skillBinds";
-            skillBinds.ShowCloseBtn = false;
-            skillBinds.Size = new Size(287, 141);
-            skillBinds.TabIndex = 10;
+            skill_binds.Location = new Point(119, 136);
+            skill_binds.Margin = new Padding(3, 4, 3, 4);
+            skill_binds.MaxSelections = -1;
+            skill_binds.Name = "skill_binds";
+            skill_binds.ShowCloseBtn = false;
+            skill_binds.Size = new Size(233, 141);
+            skill_binds.TabIndex = 6;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(65, 132);
+            label6.Location = new Point(20, 142);
             label6.Name = "label6";
-            label6.Size = new Size(153, 20);
+            label6.Size = new Size(93, 40);
             label6.TabIndex = 11;
-            label6.Text = "特技组合（最多8个）";
+            label6.Text = "特技组合\r\n（最多8个）";
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(256, 305);
+            buttonCancel.Location = new Point(293, 286);
             buttonCancel.Margin = new Padding(4, 5, 4, 5);
             buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(96, 39);
-            buttonCancel.TabIndex = 20;
+            buttonCancel.Size = new Size(96, 33);
+            buttonCancel.TabIndex = 0;
             buttonCancel.Text = "取消";
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += buttonCancel_Click;
             // 
             // buttonApply
             // 
-            buttonApply.Location = new Point(65, 305);
+            buttonApply.Location = new Point(189, 286);
             buttonApply.Margin = new Padding(4, 5, 4, 5);
             buttonApply.Name = "buttonApply";
-            buttonApply.Size = new Size(96, 39);
-            buttonApply.TabIndex = 19;
+            buttonApply.Size = new Size(96, 33);
+            buttonApply.TabIndex = 1;
             buttonApply.Text = "保存";
             buttonApply.UseVisualStyleBackColor = true;
             buttonApply.Click += buttonApply_Click;
             // 
-            // skillLevel
+            // value_level
             // 
-            skillLevel.BorderStyle = BorderStyle.FixedSingle;
-            skillLevel.Location = new Point(292, 48);
-            skillLevel.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
-            skillLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            skillLevel.Name = "skillLevel";
-            skillLevel.Size = new Size(60, 27);
-            skillLevel.TabIndex = 22;
-            skillLevel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            value_level.BorderStyle = BorderStyle.FixedSingle;
+            value_level.Location = new Point(292, 48);
+            value_level.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
+            value_level.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            value_level.Name = "value_level";
+            value_level.Size = new Size(60, 27);
+            value_level.TabIndex = 4;
+            value_level.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // skillId
+            // text_id
             // 
-            skillId.BorderStyle = BorderStyle.FixedSingle;
-            skillId.Enabled = false;
-            skillId.Location = new Point(65, 14);
-            skillId.Name = "skillId";
-            skillId.Size = new Size(60, 27);
-            skillId.TabIndex = 5;
+            text_id.AutoSize = true;
+            text_id.BackColor = SystemColors.Control;
+            text_id.BorderStyle = BorderStyle.FixedSingle;
+            text_id.Location = new Point(65, 14);
+            text_id.MinimumSize = new Size(60, 27);
+            text_id.Name = "text_id";
+            text_id.Size = new Size(60, 27);
+            text_id.TabIndex = 27;
+            text_id.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // SkillEditDialog
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(417, 353);
-            Controls.Add(skillLevel);
+            ClientSize = new Size(402, 333);
+            Controls.Add(text_id);
+            Controls.Add(value_level);
             Controls.Add(buttonCancel);
             Controls.Add(buttonApply);
             Controls.Add(label6);
-            Controls.Add(skillBinds);
-            Controls.Add(skillType);
-            Controls.Add(skillDesc);
-            Controls.Add(skillName);
-            Controls.Add(skillId);
+            Controls.Add(skill_binds);
+            Controls.Add(text_type);
+            Controls.Add(text_desc);
+            Controls.Add(text_name);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -196,7 +203,7 @@
             Controls.Add(label1);
             Name = "SkillEditDialog";
             Text = "特技编辑";
-            ((System.ComponentModel.ISupportInitialize)skillLevel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)value_level).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -208,14 +215,14 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private TextBox skillName;
-        private TextBox skillDesc;
-        private ComboBox skillType;
-        private forms.ChooseBox skillBinds;
+        private TextBox text_name;
+        private TextBox text_desc;
+        private ComboBox text_type;
+        private forms.ChooseBox skill_binds;
         private Label label6;
         private Button buttonCancel;
         private Button buttonApply;
-        private NumericUpDown skillLevel;
-        private TextBox skillId;
+        private DecimalBox value_level;
+        private Label text_id;
     }
 }

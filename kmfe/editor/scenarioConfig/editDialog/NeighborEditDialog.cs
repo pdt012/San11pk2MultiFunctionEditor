@@ -91,10 +91,10 @@ namespace kmfe.editor.scenarioConfig.editDialog
             }
         }
 
-        public override void Apply()
+        public override bool Apply()
         {
-            if (scenarioData == null) return;
-            if (cityLike == null) return;
+            if (scenarioData == null) return false;
+            if (cityLike == null) return false;
             // 读取界面数据
             HashSet<Neighbor> neighborSet = new();
             for (int i = 0; i < CityLike.neighborMax; i++)
@@ -129,7 +129,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                     // 如果超过上限，则添加失败
                     MessageBox.Show($"[{neighborCityLike.name}]相邻据点超出上限,修改失败!", "错误");
                     DialogResult = DialogResult.Cancel;
-                    return;
+                    return false;
                 }
             }
             // 去除的相邻据点
@@ -163,7 +163,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                         // 如果超过上限，则添加失败
                         MessageBox.Show($"[{adjCity.name}]相邻城市超出上限,修改失败!", "错误");
                         DialogResult = DialogResult.Cancel;
-                        return;
+                        return false;
                     }
 
                 }
@@ -181,6 +181,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             }
 
             OnApply?.Invoke(updatedIdList);
+            return true;
         }
 
         private void buttonApply_Click(object sender, EventArgs e)

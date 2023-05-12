@@ -12,7 +12,7 @@ namespace kmfe.core.xmlHelper
         const string mainNodeName = "skill";
         const string nodeName_name = "name";
         const string nodeName_desc = "desc";
-        const string nodeNameype = "type";
+        const string nodeName_type = "type";
         const string nodeName_level = "level";
         const string nodeName_bindSkills = "bind_skill";
         const string attrKey_value = "value";
@@ -51,7 +51,7 @@ namespace kmfe.core.xmlHelper
                 if (desc != null)
                     skill.desc = ParseDesc(desc);  // 去除颜色代码
 
-                string? type = skillNode.SelectSingleNode(nodeNameype)?.Attributes?[attrKey_value]?.Value;
+                string? type = skillNode.SelectSingleNode(nodeName_type)?.Attributes?[attrKey_value]?.Value;
                 if (type != null)
                     skill.type = (SkillType)int.Parse(type);
 
@@ -75,18 +75,8 @@ namespace kmfe.core.xmlHelper
 
         public override void Save(string xmlPath)
         {
-            #region common
             XmlDocument xmlDoc = new();
-            XmlDeclaration xmlDec = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
-            xmlDoc.AppendChild(xmlDec);
-            XmlElement rootEle = xmlDoc.CreateElement("pk");
-            rootEle.SetAttribute("trace", "false");
-            rootEle.SetAttribute("utf8", "true");
-
-            rootEle.AppendChild(xmlDoc.CreateComment("AUTHOR: keehl102"));
-            rootEle.AppendChild(xmlDoc.CreateComment($"TOOL: {AppInfo.shortNameVersion}(by {AppInfo.author})"));
-            rootEle.AppendChild(xmlDoc.CreateComment($"CREATETIME: {DateTime.Now.ToString()}"));
-            #endregion
+            XmlElement rootEle = CreateRootElement(xmlDoc);
 
             foreach (Skill skill in scenarioData.skillArray)
             {
@@ -101,7 +91,7 @@ namespace kmfe.core.xmlHelper
                 descEle.SetAttribute(attrKey_value, FormatColoredDesc(skill.desc));  // 添加数值高亮
                 skillEle.AppendChild(descEle);
 
-                XmlElement typeEle = xmlDoc.CreateElement(nodeNameype);
+                XmlElement typeEle = xmlDoc.CreateElement(nodeName_type);
                 typeEle.SetAttribute(attrKey_value, ((int)skill.type).ToString());
                 skillEle.AppendChild(typeEle);
 
@@ -121,10 +111,7 @@ namespace kmfe.core.xmlHelper
                 rootEle.AppendChild(skillEle);
             }
 
-            #region common
-            xmlDoc.AppendChild(rootEle);
             xmlDoc.Save(xmlPath);
-            #endregion
         }
 
         string ParseDesc(string desc)

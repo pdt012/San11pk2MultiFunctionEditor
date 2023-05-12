@@ -7,7 +7,7 @@ namespace kmfe.core.globalTypes
         public string name = "";
         public string desc = "";
         public SkillType type = SkillType.行军;
-        public int level;
+        public int level = 1;
         public List<int> bindSkillList = new();
 
         public Skill(int id) : base(id)

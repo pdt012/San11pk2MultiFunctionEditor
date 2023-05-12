@@ -36,14 +36,19 @@ namespace kmfe.editor.scenarioConfig.editDialog
             this.scenarioData = scenarioData;
         }
 
-        public virtual void Apply()
+        /// <summary>
+        /// 点击应用后的回调
+        /// </summary>
+        /// <returns>true=通过，false=驳回</returns>
+        public virtual bool Apply()
         {
+            return true;
         }
 
         protected void Confirm()
         {
-            Apply();
-            Hide();
+            if (Apply())
+                Hide();
         }
 
         protected void Cancel()

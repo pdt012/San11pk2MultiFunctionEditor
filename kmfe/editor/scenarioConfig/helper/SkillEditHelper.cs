@@ -21,11 +21,12 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
+            editDialog.StartPosition = FormStartPosition.CenterParent;
 
             contextMenu = new();
             menuEditSkill = new("编辑特技", null, onClick_menuEditSkill);
             menuDelSkill = new("删除特技", null, onClick_menuDelSkill);
-            menuNewSkill = new("新增特技", null, onClick_menuDelSkill);
+            menuNewSkill = new("新增特技", null, onClick_menuNewSkill);
             contextMenu.Items.AddRange(new ToolStripItem[] { menuEditSkill, menuDelSkill, menuNewSkill });
         }
 
@@ -115,8 +116,8 @@ namespace kmfe.editor.scenarioConfig.helper
             if (currentSkill != null)
             {
                 editDialog.Init(scenarioData);
-                editDialog.Setup(currentSkill);
-                editDialog.Show(Form.ActiveForm);
+                editDialog.Setup(currentSkill, currentRow);
+                editDialog.ShowDialog(listView);
             }
         }
 
@@ -138,15 +139,16 @@ namespace kmfe.editor.scenarioConfig.helper
             {
                 currentRow = IdToRow(skillId);
                 currentSkill = scenarioData.skillArray[skillId];
+                ListViewItem newItem = new() { Tag = currentSkill };
+                listView.Items.Insert(currentRow, newItem);  // 新建一行
                 // 打开特技编辑窗口
                 editDialog.Init(scenarioData);
-                editDialog.Setup(currentSkill);
-                editDialog.Show(listView);
-                /*if (editOneSkillInfo(this->skills->at(skill_id)))
-                {  // 只有确认了才新建
-                    this->insertRow(this->selected_row);
-                    this->UpdateOneSkillInfo(this->skills->at(skill_id), this->selected_row);
-                }*/
+                editDialog.Setup(currentSkill, currentRow);
+                DialogResult result = editDialog.ShowDialog(listView);
+                if (result != DialogResult.OK)
+                {  // 如果没有保存则删除该行
+                    listView.Items.RemoveAt(currentRow);
+                }
             }
         }
 

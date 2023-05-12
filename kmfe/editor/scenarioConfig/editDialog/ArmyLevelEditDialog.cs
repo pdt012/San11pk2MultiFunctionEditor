@@ -33,15 +33,16 @@ namespace kmfe.editor.scenarioConfig.editDialog
             value_stat_ratio.Value = (decimal)armyLevel.unitStatRatio;
         }
 
-        public override void Apply()
+        public override bool Apply()
         {
-            if (armyLevel == null) return;
+            if (armyLevel == null) return false;
             armyLevel.name = text_name.Text;
             armyLevel.exp = (int)value_exp.Value;
             armyLevel.tacticsChanceBuff = (int)value_tactic_chance.Value;
             armyLevel.unitStatRatio = (float)value_stat_ratio.Value;
 
             OnApply?.Invoke(new List<int>() { armyLevel.Id });
+            return true;
         }
 
         private void buttonApply_Click(object sender, EventArgs e)

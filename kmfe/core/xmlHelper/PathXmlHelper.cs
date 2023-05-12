@@ -98,18 +98,8 @@ namespace kmfe.core.xmlHelper
 
         public override void Save(string xmlPath)
         {
-            #region common
             XmlDocument xmlDoc = new();
-            XmlDeclaration xmlDec = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
-            xmlDoc.AppendChild(xmlDec);
-            XmlElement rootEle = xmlDoc.CreateElement("pk");
-            rootEle.SetAttribute("trace", "false");
-            rootEle.SetAttribute("utf8", "true");
-
-            rootEle.AppendChild(xmlDoc.CreateComment("AUTHOR: keehl102"));
-            rootEle.AppendChild(xmlDoc.CreateComment($"TOOL: {AppInfo.shortNameVersion}(by {AppInfo.author})"));
-            rootEle.AppendChild(xmlDoc.CreateComment($"CREATETIME: {DateTime.Now.ToString()}"));
-            #endregion
+            XmlElement rootEle = CreateRootElement(xmlDoc);
 
             for (int cityLikeId = 0; cityLikeId < ScenarioData.cityLikeCount; cityLikeId++)
             {
@@ -176,10 +166,7 @@ namespace kmfe.core.xmlHelper
                 rootEle.AppendChild(cityEle);
             }
 
-            #region common
-            xmlDoc.AppendChild(rootEle);
             xmlDoc.Save(xmlPath);
-            #endregion
         }
 
         /// <summary>
