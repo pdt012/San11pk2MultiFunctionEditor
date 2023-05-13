@@ -14,7 +14,7 @@
             toolTip = new()
             {
                 AutoPopDelay = 5000,
-                InitialDelay = 1000,
+                InitialDelay = 600,
                 ReshowDelay = 500
             };
             toolTip.SetToolTip(this, GetToolTopText());
