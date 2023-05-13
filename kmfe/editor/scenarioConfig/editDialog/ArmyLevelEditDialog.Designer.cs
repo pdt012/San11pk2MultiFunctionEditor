@@ -52,7 +52,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // text_name
             // 
             text_name.BorderStyle = BorderStyle.FixedSingle;
-            text_name.Location = new Point(96, 57);
+            text_name.Location = new Point(57, 42);
             text_name.Name = "text_name";
             text_name.Size = new Size(60, 27);
             text_name.TabIndex = 10;
@@ -60,7 +60,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(51, 59);
+            label2.Location = new Point(12, 44);
             label2.Name = "label2";
             label2.Size = new Size(39, 20);
             label2.TabIndex = 8;
@@ -69,7 +69,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(66, 26);
+            label1.Location = new Point(27, 11);
             label1.Name = "label1";
             label1.Size = new Size(24, 20);
             label1.TabIndex = 7;
@@ -78,7 +78,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(21, 126);
+            label3.Location = new Point(168, 77);
             label3.Name = "label3";
             label3.Size = new Size(69, 20);
             label3.TabIndex = 11;
@@ -87,7 +87,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(174, 59);
+            label4.Location = new Point(123, 11);
             label4.Name = "label4";
             label4.Size = new Size(114, 20);
             label4.TabIndex = 12;
@@ -96,7 +96,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(219, 92);
+            label5.Location = new Point(168, 44);
             label5.Name = "label5";
             label5.Size = new Size(69, 20);
             label5.TabIndex = 13;
@@ -105,7 +105,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // value_exp
             // 
             value_exp.BorderStyle = BorderStyle.FixedSingle;
-            value_exp.Location = new Point(96, 122);
+            value_exp.Location = new Point(243, 75);
             value_exp.Maximum = new decimal(new int[] { 256, 0, 0, 0 });
             value_exp.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             value_exp.Name = "value_exp";
@@ -116,7 +116,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // value_tactic_chance
             // 
             value_tactic_chance.BorderStyle = BorderStyle.FixedSingle;
-            value_tactic_chance.Location = new Point(294, 57);
+            value_tactic_chance.Location = new Point(243, 9);
             value_tactic_chance.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
             value_tactic_chance.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             value_tactic_chance.Name = "value_tactic_chance";
@@ -128,7 +128,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             value_stat_ratio.BorderStyle = BorderStyle.FixedSingle;
             value_stat_ratio.DecimalPlaces = 2;
             value_stat_ratio.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
-            value_stat_ratio.Location = new Point(294, 90);
+            value_stat_ratio.Location = new Point(243, 42);
             value_stat_ratio.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             value_stat_ratio.Minimum = new decimal(new int[] { 1, 0, 0, 65536 });
             value_stat_ratio.Name = "value_stat_ratio";
@@ -138,7 +138,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(293, 146);
+            buttonCancel.Location = new Point(233, 116);
             buttonCancel.Margin = new Padding(4, 5, 4, 5);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(96, 33);
@@ -149,7 +149,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // 
             // buttonApply
             // 
-            buttonApply.Location = new Point(189, 146);
+            buttonApply.Location = new Point(129, 116);
             buttonApply.Margin = new Padding(4, 5, 4, 5);
             buttonApply.Name = "buttonApply";
             buttonApply.Size = new Size(96, 33);
@@ -161,7 +161,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(357, 59);
+            label6.Location = new Point(306, 11);
             label6.Margin = new Padding(0, 0, 3, 0);
             label6.Name = "label6";
             label6.Size = new Size(22, 20);
@@ -172,7 +172,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // 
             check_reachable.AutoSize = true;
             check_reachable.CheckAlign = ContentAlignment.MiddleRight;
-            check_reachable.Location = new Point(21, 92);
+            check_reachable.Location = new Point(86, 76);
             check_reachable.Name = "check_reachable";
             check_reachable.Size = new Size(76, 24);
             check_reachable.TabIndex = 25;
@@ -185,7 +185,8 @@ namespace kmfe.editor.scenarioConfig.editDialog
             text_id.AutoSize = true;
             text_id.BackColor = SystemColors.Control;
             text_id.BorderStyle = BorderStyle.FixedSingle;
-            text_id.Location = new Point(96, 24);
+            text_id.Location = new Point(57, 9);
+            text_id.Margin = new Padding(3);
             text_id.MinimumSize = new Size(60, 27);
             text_id.Name = "text_id";
             text_id.Size = new Size(60, 27);
@@ -196,7 +197,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(402, 193);
+            ClientSize = new Size(342, 163);
             Controls.Add(text_id);
             Controls.Add(check_reachable);
             Controls.Add(label6);
