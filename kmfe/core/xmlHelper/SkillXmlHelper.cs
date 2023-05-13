@@ -41,6 +41,8 @@ namespace kmfe.core.xmlHelper
                 string? str_id = skillNode.Attributes?["id"]?.Value;
                 if (str_id == null) continue;
                 int id = int.Parse(str_id);
+
+                #region LoadById
                 Skill skill = scenarioData.skillArray[id];
 
                 string? name = skillNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
@@ -70,6 +72,7 @@ namespace kmfe.core.xmlHelper
                             skill.bindSkillList.Add(int.Parse(bindSkill.Trim()));
                     }
                 }
+                #endregion
             }
         }
 

@@ -53,8 +53,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
-            ArmyLevel? armyLevel = item.Tag as ArmyLevel;
-            if (armyLevel is null) return;
+            if (item.Tag is not ArmyLevel armyLevel) return;
             editDialog.Init(scenarioData);
             editDialog.Setup(armyLevel);
             editDialog.Show(Form.ActiveForm);

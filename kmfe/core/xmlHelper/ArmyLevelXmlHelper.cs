@@ -1,5 +1,4 @@
 ﻿using kmfe.core.globalTypes;
-using kmfe.s11.globalScenario;
 using System.Xml;
 
 namespace kmfe.core.xmlHelper
@@ -25,32 +24,35 @@ namespace kmfe.core.xmlHelper
             XmlElement? rootEle = xmlDoc.DocumentElement;
             #endregion
 
-            XmlNodeList? levelNodeList = rootEle?.SelectNodes(mainNodeName);
-            if (levelNodeList == null) return;
-            foreach (XmlNode levelNode in levelNodeList)
+            XmlNodeList? mainNodeList = rootEle?.SelectNodes(mainNodeName);
+            if (mainNodeList == null) return;
+            foreach (XmlNode mainNode in mainNodeList)
             {
-                if (levelNode is not XmlElement) continue;
+                if (mainNode is not XmlElement) continue;
 
-                string? str_id = levelNode.Attributes?["id"]?.Value;
+                string? str_id = mainNode.Attributes?["id"]?.Value;
                 if (str_id == null) continue;
                 int id = int.Parse(str_id);
+
+                #region LoadById
                 ArmyLevel armyLevel = scenarioData.armyLevelArray[id];
 
-                string? name = levelNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
+                string? name = mainNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
                 if (name != null)
                     armyLevel.name = name;
 
-                string? exp = levelNode.SelectSingleNode(nodeName_exp)?.Attributes?[attrKey_value]?.Value;
+                string? exp = mainNode.SelectSingleNode(nodeName_exp)?.Attributes?[attrKey_value]?.Value;
                 if (exp != null)
                     armyLevel.exp = int.Parse(exp);
 
-                string? tactics_chance = levelNode.SelectSingleNode(nodeName_tactics_chance)?.Attributes?[attrKey_value]?.Value;
+                string? tactics_chance = mainNode.SelectSingleNode(nodeName_tactics_chance)?.Attributes?[attrKey_value]?.Value;
                 if (tactics_chance != null)
                     armyLevel.tacticsChanceBuff = int.Parse(tactics_chance);
 
-                string? stat_ratio = levelNode.SelectSingleNode(nodeName_stat_ratio)?.Attributes?[attrKey_value]?.Value;
+                string? stat_ratio = mainNode.SelectSingleNode(nodeName_stat_ratio)?.Attributes?[attrKey_value]?.Value;
                 if (stat_ratio != null)
                     armyLevel.unitStatRatio = float.Parse(stat_ratio);
+                #endregion
             }
         }
 
@@ -59,28 +61,30 @@ namespace kmfe.core.xmlHelper
             XmlDocument xmlDoc = new();
             XmlElement rootEle = CreateRootElement(xmlDoc);
 
+            XmlElement mainElement;
+            XmlElement ele;
             foreach (ArmyLevel armyLevel in scenarioData.armyLevelArray)
             {
-                XmlElement armyLevelEle = xmlDoc.CreateElement(mainNodeName);
-                armyLevelEle.SetAttribute("id", armyLevel.Id.ToString());
+                mainElement = xmlDoc.CreateElement(mainNodeName);
+                mainElement.SetAttribute("id", armyLevel.Id.ToString());
 
-                XmlElement nameEle = xmlDoc.CreateElement(nodeName_name);
-                nameEle.SetAttribute(attrKey_value, armyLevel.name);
-                armyLevelEle.AppendChild(nameEle);
+                ele = xmlDoc.CreateElement(nodeName_name);
+                ele.SetAttribute(attrKey_value, armyLevel.name);
+                mainElement.AppendChild(ele);
 
-                XmlElement expEle = xmlDoc.CreateElement(nodeName_exp);
-                expEle.SetAttribute(attrKey_value, armyLevel.exp.ToString());
-                armyLevelEle.AppendChild(expEle);
+                ele = xmlDoc.CreateElement(nodeName_exp);
+                ele.SetAttribute(attrKey_value, armyLevel.exp.ToString());
+                mainElement.AppendChild(ele);
 
-                XmlElement tacticsChanceEle = xmlDoc.CreateElement(nodeName_tactics_chance);
-                tacticsChanceEle.SetAttribute(attrKey_value, armyLevel.tacticsChanceBuff.ToString());
-                armyLevelEle.AppendChild(tacticsChanceEle);
+                ele = xmlDoc.CreateElement(nodeName_tactics_chance);
+                ele.SetAttribute(attrKey_value, armyLevel.tacticsChanceBuff.ToString());
+                mainElement.AppendChild(ele);
 
-                XmlElement statRatioEle = xmlDoc.CreateElement(nodeName_stat_ratio);
-                statRatioEle.SetAttribute(attrKey_value, armyLevel.unitStatRatio.ToString("f2"));
-                armyLevelEle.AppendChild(statRatioEle);
+                ele = xmlDoc.CreateElement(nodeName_stat_ratio);
+                ele.SetAttribute(attrKey_value, armyLevel.unitStatRatio.ToString("f2"));
+                mainElement.AppendChild(ele);
 
-                rootEle.AppendChild(armyLevelEle);
+                rootEle.AppendChild(mainElement);
             }
 
             xmlDoc.Save(xmlPath);

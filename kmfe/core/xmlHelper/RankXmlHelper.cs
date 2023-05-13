@@ -1,5 +1,4 @@
 ﻿using kmfe.core.globalTypes;
-using kmfe.s11.enums;
 using System.Xml;
 
 namespace kmfe.core.xmlHelper
@@ -74,42 +73,42 @@ namespace kmfe.core.xmlHelper
             XmlDocument xmlDoc = new();
             XmlElement rootEle = CreateRootElement(xmlDoc);
 
-            XmlElement nodeElement;
+            XmlElement mainElement;
             XmlElement ele;
             foreach (Rank rank in scenarioData.rankArray)
             {
-                nodeElement = xmlDoc.CreateElement(mainNodeName);
-                nodeElement.SetAttribute("id", rank.Id.ToString());
+                mainElement = xmlDoc.CreateElement(mainNodeName);
+                mainElement.SetAttribute("id", rank.Id.ToString());
 
                 /*ele = xmlDoc.CreateElement(nodeName_name);
                 ele.SetAttribute(attrKey_value, rank.name);
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
                 ele = xmlDoc.CreateElement(nodeName_command);
                 ele.SetAttribute(attrKey_value, rank.command.ToString());
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
                 ele = xmlDoc.CreateElement(nodeName_stat_type);
                 ele.SetAttribute(attrKey_value, Enum.GetName(rank.statType));
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
                 ele = xmlDoc.CreateElement(nodeName_stat_increase);
                 ele.SetAttribute(attrKey_value, rank.statIncrease.ToString());
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
                 ele = xmlDoc.CreateElement(nodeName_salary);
                 ele.SetAttribute(attrKey_value, rank.salary.ToString());
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
                 ele = xmlDoc.CreateElement(nodeName_rank_level);
                 ele.SetAttribute(attrKey_value, rank.rankLevel.ToString());
-                nodeElement.AppendChild(ele);*/
+                mainElement.AppendChild(ele);*/
 
                 ele = xmlDoc.CreateElement(nodeName_merit);
                 ele.SetAttribute(attrKey_value, rank.merit.ToString());
-                nodeElement.AppendChild(ele);
+                mainElement.AppendChild(ele);
 
-                rootEle.AppendChild(nodeElement);
+                rootEle.AppendChild(mainElement);
             }
 
             xmlDoc.Save(xmlPath);
