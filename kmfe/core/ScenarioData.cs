@@ -1,4 +1,5 @@
 ﻿using kmfe.core.globalTypes;
+using kmfe.s11.enums;
 using kmfe.utils;
 using Region = kmfe.core.globalTypes.Region;
 
@@ -28,9 +29,9 @@ namespace kmfe.core
         public readonly Province[] provinceArray = new Province[12];
         public readonly Region[] regionArray = new Region[6];
         /*public readonly Facility[] facilityArray = new Facility[64];
-        public readonly Weapon[] weaponArray = new Weapon[12];
+        public readonly Weapon[] weaponArray = new Weapon[12];*/
         public readonly Title[] titleArray = new Title[10];
-        public readonly Rank[] rankArray = new Rank[81];*/
+        public readonly Rank[] rankArray = new Rank[81];
         public readonly Skill[] skillArray = new Skill[255];
         /*public readonly Technology[] techArray = new Technology[36];
         public readonly Tactic[] tacticArray = new Tactic[32];
@@ -52,11 +53,11 @@ namespace kmfe.core
             /*for (int id = 0; id < facilityArray.Length; id++)
                 facilityArray[id] = new();
             for (int id = 0; id < weaponArray.Length; id++)
-                weaponArray[id] = new();
+                weaponArray[id] = new();*/
             for (int id = 0; id < titleArray.Length; id++)
-                titleArray[id] = new();
+                titleArray[id] = new(id);
             for (int id = 0; id < rankArray.Length; id++)
-                rankArray[id] = new(id);*/
+                rankArray[id] = new(id);
             for (int id = 0; id < skillArray.Length; id++)
                 skillArray[id] = new(id);
             /*for (int id = 0; id < techArray.Length; id++)
@@ -119,6 +120,24 @@ namespace kmfe.core
                 s11.globalScenario.Region s11Region = globalScenario.regionArray[id];
                 Region region = regionArray[id];
                 region.name = CodeConvertHelper.Pk2Str(s11Region.name);
+            }
+            for (int id = 0; id < titleArray.Length; id++)
+            {
+                s11.globalScenario.Title s11Title = globalScenario.titleArray[id];
+                Title title = titleArray[id];
+                title.name = CodeConvertHelper.Pk2Str(s11Title.name);
+                title.command = s11Title.command;
+            }
+            for (int id = 0;id < rankArray.Length; id++)
+            {
+                s11.globalScenario.Rank s11Rank = globalScenario.rankArray[id];
+                Rank rank = rankArray[id];
+                rank.name = CodeConvertHelper.Pk2Str(s11Rank.name);
+                rank.command = s11Rank.command;
+                rank.statType = (StatType)s11Rank.stat;
+                rank.statIncrease = s11Rank.increase;
+                rank.salary = s11Rank.salary;
+                rank.rankLevel = s11Rank.rank;
             }
         }
 

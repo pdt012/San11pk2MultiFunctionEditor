@@ -173,12 +173,14 @@
             爵位ToolStripMenuItem.Name = "爵位ToolStripMenuItem";
             爵位ToolStripMenuItem.Size = new Size(224, 26);
             爵位ToolStripMenuItem.Text = "爵位";
+            爵位ToolStripMenuItem.Click += 爵位ToolStripMenuItem_Click;
             // 
             // 官职ToolStripMenuItem
             // 
             官职ToolStripMenuItem.Name = "官职ToolStripMenuItem";
             官职ToolStripMenuItem.Size = new Size(224, 26);
             官职ToolStripMenuItem.Text = "官职";
+            官职ToolStripMenuItem.Click += 官职ToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 

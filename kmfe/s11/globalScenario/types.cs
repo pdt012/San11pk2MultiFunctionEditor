@@ -194,11 +194,11 @@ public class Weapon : IBytesConvertable /*todo*/
 /// <summary>
 /// 爵位
 /// </summary>
-public class Title : IBytesConvertable /*todo*/
+public class Title : IBytesConvertable
 {
     public readonly byte[] name = new byte[11];
     readonly byte[] __b = new byte[31];
-    uint16 command;
+    public uint16 command;
 
     public const int Size = 44;
 
@@ -206,12 +206,20 @@ public class Title : IBytesConvertable /*todo*/
 
     public void FromBytes(byte[] array)
     {
-        throw new NotImplementedException();
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Read(name);
+        converter.Read(__b);
+        converter.Read(out command);
     }
 
     public void ToBytes(ref byte[] array)
     {
-        throw new NotImplementedException();
+        if (array.Length != Size) throw new IndexOutOfRangeException();
+        StreamConverter converter = new(array);
+        converter.Write(name);
+        converter.Write(__b);
+        converter.Write(command);
     }
 }
 
@@ -516,7 +524,8 @@ public class GlobalScenario : IBytesConvertable
         converter.Read(provinceArray);
         converter.Read(regionArray);
 
-        converter.Seek(0x4382, SeekOrigin.Begin);
+        converter.Seek(0x41ca, SeekOrigin.Begin);
+        converter.Read(titleArray);
         converter.Read(rankArray);
 
         converter.Seek(0x7664, SeekOrigin.Begin);
@@ -539,7 +548,8 @@ public class GlobalScenario : IBytesConvertable
         converter.Write(provinceArray);
         converter.Write(regionArray);
 
-        converter.Seek(0x4382, SeekOrigin.Begin);
+        converter.Seek(0x41ca, SeekOrigin.Begin);
+        converter.Write(titleArray);
         converter.Write(rankArray);
 
         converter.Seek(0x7664, SeekOrigin.Begin);
