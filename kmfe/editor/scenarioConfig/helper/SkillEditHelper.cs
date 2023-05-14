@@ -33,11 +33,16 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
-            listView.Columns.Add("名称", 80);
-            listView.Columns.Add("描述", 500);
-            listView.Columns.Add("类型", 60);
-            listView.Columns.Add("等级", 60);
+            listView.Columns.Add("名称", 50);
+            listView.Columns.Add("描述", 400);
+            listView.Columns.Add("类型", 50);
+            listView.Columns.Add("等级", 50);
             listView.Columns.Add("组合特技", 200);
+            listView.Columns.Add("参数0", 150);
+            listView.Columns.Add("参数1", 150);
+            listView.Columns.Add("参数2", 150);
+            listView.Columns.Add("参数3", 150);
+            listView.Columns.Add("参数4", 150);
         }
 
         public override void UpdateListView()
@@ -66,6 +71,13 @@ namespace kmfe.editor.scenarioConfig.helper
             item.SubItems.Add(Enum.GetName(skill.type));
             item.SubItems.Add(skill.level.ToString());
             item.SubItems.Add(GetBindSkillsNameString(skill));
+            foreach (SkillConstant constant in skill.constantArray)
+            {
+                if (constant.available)
+                    item.SubItems.Add($"{constant.desc} = {constant.value}");
+                else
+                    item.SubItems.Add("");
+            }
         }
 
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)

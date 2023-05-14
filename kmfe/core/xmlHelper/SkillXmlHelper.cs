@@ -15,6 +15,8 @@ namespace kmfe.core.xmlHelper
         const string nodeName_type = "type";
         const string nodeName_level = "level";
         const string nodeName_bindSkills = "bind_skill";
+        const string nodeName_constants = "constant";
+        const string nodeName_constantDesc = "c_label";
         const string attrKey_value = "value";
 
         static readonly string[] colorOfLevelList = { "", "\x1b[00x", "\x1b[23x", "\x1b[19x", "\x1b[22x" };
@@ -57,15 +59,34 @@ namespace kmfe.core.xmlHelper
                 if (level != null)
                     skill.level = int.Parse(level);
 
-                string? bind_skill = skillNode.SelectSingleNode(nodeName_bindSkills)?.Attributes?[attrKey_value]?.Value;
-                if (bind_skill != null)
+                XmlNode? bind_skill_node = skillNode.SelectSingleNode(nodeName_bindSkills);
+                if (bind_skill_node != null)
                 {
-                    string[] bindArray = bind_skill.Split(",");
                     skill.bindSkillList.Clear();
-                    foreach (string bindSkill in bindArray)
+                    for (int i = 0; i < Skill.maxSkillConstants;i++)
                     {
-                        if (bindSkill.Trim().Length > 0)
-                            skill.bindSkillList.Add(int.Parse(bindSkill.Trim()));
+                        string? bind_skill_id = bind_skill_node.Attributes?[$"_{i}"]?.Value;
+                        if (bind_skill_id != null && bind_skill_id.Length > 0)
+                            skill.bindSkillList.Add(int.Parse(bind_skill_id));
+                    }
+                }
+
+                XmlNode? constant_node = skillNode.SelectSingleNode(nodeName_constants);
+                XmlNode? constant_desc_node = skillNode.SelectSingleNode(nodeName_constantDesc);
+                if (constant_node != null)
+                {
+                    for (int i = 0; i < Skill.maxSkillConstants; i++)
+                    {
+                        string? constant = constant_node.Attributes?[$"_{i}"]?.Value;
+                        if (constant != null && constant.Length > 0)
+                        {
+                            string? constant_desc = constant_desc_node?.Attributes?[$"_{i}"]?.Value??"";
+                            skill.constantArray[i].Setup(constant_desc, int.Parse(constant));
+                        }
+                        else
+                        {
+                            skill.constantArray[i].Cancel();
+                        }
                     }
                 }
                 #endregion
@@ -98,14 +119,35 @@ namespace kmfe.core.xmlHelper
                 levelEle.SetAttribute(attrKey_value, skill.level.ToString());
                 skillEle.AppendChild(levelEle);
 
-                XmlElement bindSkillEle = xmlDoc.CreateElement(nodeName_bindSkills);
-                List<string> bindSkillStrList = new();
-                foreach (int bindSkill in skill.bindSkillList)
+                if (skill.bindSkillList.Count > 0)
                 {
-                    bindSkillStrList.Add(bindSkill.ToString());
+                    XmlElement bindSkillEle = xmlDoc.CreateElement(nodeName_bindSkills);
+                    for (int i = 0; i < skill.bindSkillList.Count; i++)
+                    {
+                        int bindSkillId = skill.bindSkillList[i];
+                        bindSkillEle.SetAttribute($"_{i}", bindSkillId.ToString());
+                    }
+                    skillEle.AppendChild(bindSkillEle);
                 }
-                bindSkillEle.SetAttribute(attrKey_value, string.Join(",", bindSkillStrList));
-                skillEle.AppendChild(bindSkillEle);
+
+                XmlElement constantEle = xmlDoc.CreateElement(nodeName_constants);
+                XmlElement constantDescEle = xmlDoc.CreateElement(nodeName_constantDesc);
+                bool flagHasConstant = false;
+                for (int i = 0; i < skill.constantArray.Length; i++)
+                {
+                    SkillConstant constant = skill.constantArray[i];
+                    if (constant.available)
+                    {
+                        flagHasConstant = true;
+                        constantEle.SetAttribute($"_{i}", constant.value.ToString());
+                        constantDescEle.SetAttribute($"_{i}", constant.desc);
+                    }
+                }
+                if (flagHasConstant)
+                {
+                    skillEle.AppendChild(constantEle);
+                    skillEle.AppendChild(constantDescEle);
+                }
 
                 rootEle.AppendChild(skillEle);
             }
