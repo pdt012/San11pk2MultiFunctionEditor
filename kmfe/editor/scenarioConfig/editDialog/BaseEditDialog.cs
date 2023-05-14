@@ -5,7 +5,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
     public class BaseEditDialog : Form  /*不能定义为abstract类，会导致设计器出错*/
     {
         public delegate void ApplyHandle(List<int>? updatedRowList);
-        protected ScenarioData? scenarioData;
 
         public BaseEditDialog()
         {
@@ -30,10 +29,9 @@ namespace kmfe.editor.scenarioConfig.editDialog
         /// 初始化对话框，如果已经初始化过则自动跳过
         /// </summary>
         /// <param name="scenarioData"></param>
-        public virtual void Init(ScenarioData scenarioData)
+        public virtual void Init()
         {
             if (Initialized) return;
-            this.scenarioData = scenarioData;
         }
 
         /// <summary>

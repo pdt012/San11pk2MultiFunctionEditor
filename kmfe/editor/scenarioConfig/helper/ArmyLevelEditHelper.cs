@@ -8,7 +8,7 @@ namespace kmfe.editor.scenarioConfig.helper
     {
         public readonly ArmyLevelEditDialog editDialog;
 
-        public ArmyLevelEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public ArmyLevelEditHelper(ListView listView) : base(listView)
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
@@ -26,7 +26,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (ArmyLevel armyLevel in scenarioData.armyLevelArray)
+            foreach (ArmyLevel armyLevel in AppEnvironment.scenarioData.armyLevelArray)
             {
                 ListViewItem item = new()
                 {
@@ -54,7 +54,7 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             if (item.Tag is not ArmyLevel armyLevel) return;
-            editDialog.Init(scenarioData);
+            editDialog.Init();
             editDialog.Setup(armyLevel);
             editDialog.Show(Form.ActiveForm);
         }

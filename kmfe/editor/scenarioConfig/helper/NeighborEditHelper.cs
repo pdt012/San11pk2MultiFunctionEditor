@@ -9,7 +9,7 @@ namespace kmfe.editor.scenarioConfig.helper
     {
         public readonly NeighborEditDialog editDialog;
 
-        public NeighborEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public NeighborEditHelper(ListView listView) : base(listView)
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
@@ -25,7 +25,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (City city in scenarioData.cityArray)
+            foreach (City city in AppEnvironment.scenarioData.cityArray)
             {
                 ListViewItem item = new()
                 {
@@ -34,7 +34,7 @@ namespace kmfe.editor.scenarioConfig.helper
                 UpdateRow(item);
                 listView.Items.Add(item);
             }
-            foreach (Town town in scenarioData.townArray)
+            foreach (Town town in AppEnvironment.scenarioData.townArray)
             {
                 ListViewItem item = new()
                 {
@@ -53,11 +53,11 @@ namespace kmfe.editor.scenarioConfig.helper
             item.Tag = cityLike;
             item.Text = cityLike.Id.ToString();
             item.SubItems.Add(cityLike.name);
-            List<string> neighborNames = scenarioData.GetNeighborNames(cityLike);
+            List<string> neighborNames = AppEnvironment.scenarioData.GetNeighborNames(cityLike);
             item.SubItems.Add(string.Join(", ", neighborNames));
             if (cityLike is City city)
             {
-                List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
+                List<string> adjacentCityNames = AppEnvironment.scenarioData.GetAdjacentCityNames(city);
                 item.SubItems.Add(string.Join(", ", adjacentCityNames));
             }
         }
@@ -65,7 +65,7 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             CityLike cityLike = (CityLike)item.Tag;
-            editDialog.Init(scenarioData);
+            editDialog.Init();
             editDialog.Setup(cityLike);
             editDialog.Show(parentForm);
         }

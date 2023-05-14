@@ -5,7 +5,7 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class CityEditHelper : BaseEditorHelper
     {
-        public CityEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public CityEditHelper(ListView listView) : base(listView)
         {
         }
 
@@ -18,7 +18,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (City city in scenarioData.cityArray)
+            foreach (City city in AppEnvironment.scenarioData.cityArray)
             {
                 ListViewItem item = new()
                 {
@@ -26,7 +26,7 @@ namespace kmfe.editor.scenarioConfig.helper
                     Text = city.Id.ToString()
                 };
                 item.SubItems.Add(city.name);
-                List<string> adjacentCityNames = scenarioData.GetAdjacentCityNames(city);
+                List<string> adjacentCityNames = AppEnvironment.scenarioData.GetAdjacentCityNames(city);
                 item.SubItems.Add(string.Join(", ", adjacentCityNames));
                 listView.Items.Add(item);
             }

@@ -1,16 +1,11 @@
-﻿using kmfe.core;
-using kmfe.editor.scenarioConfig.editDialog;
-
-namespace kmfe.editor.scenarioConfig.helper
+﻿namespace kmfe.editor.scenarioConfig.helper
 {
     internal abstract class BaseEditorHelper
     {
-        protected ScenarioData scenarioData;
         protected ListView listView;
 
-        public BaseEditorHelper(ScenarioData scenarioData, ListView listView)
+        public BaseEditorHelper(ListView listView)
         {
-            this.scenarioData = scenarioData;
             this.listView = listView;
         }
 

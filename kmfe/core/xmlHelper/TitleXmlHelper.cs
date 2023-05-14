@@ -10,10 +10,6 @@ namespace kmfe.core.xmlHelper
         const string nodeName_command = "command";
         const string attrKey_value = "value";
 
-        public TitleXmlHelper(ScenarioData scenarioData) : base(scenarioData)
-        {
-        }
-
         public override void Load(string xmlPath)
         {
             XmlDocument xmlDoc = new();
@@ -30,7 +26,7 @@ namespace kmfe.core.xmlHelper
                 int id = int.Parse(str_id);
 
                 #region LoadById
-                Title title = scenarioData.titleArray[id];
+                Title title = AppEnvironment.scenarioData.titleArray[id];
 
                 /*string? name = mainNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
                 if (name != null)
@@ -50,7 +46,7 @@ namespace kmfe.core.xmlHelper
 
             XmlElement mainElement;
             XmlElement ele;
-            foreach (Title title in scenarioData.titleArray)
+            foreach (Title title in AppEnvironment.scenarioData.titleArray)
             {
                 mainElement = xmlDoc.CreateElement(mainNodeName);
                 mainElement.SetAttribute("id", title.Id.ToString());

@@ -5,11 +5,9 @@ namespace kmfe.core.xmlHelper
 {
     public abstract class BaseXmlHelper
     {
-        protected readonly ScenarioData scenarioData;
 
-        public BaseXmlHelper(ScenarioData scenarioData)
+        public BaseXmlHelper()
         {
-            this.scenarioData = scenarioData;
         }
 
         public abstract void Load(string xmlPath);

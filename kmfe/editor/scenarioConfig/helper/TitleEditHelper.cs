@@ -8,7 +8,7 @@ namespace kmfe.editor.scenarioConfig.helper
     {
         public readonly TitleEditDialog editDialog;
 
-        public TitleEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public TitleEditHelper(ListView listView) : base(listView)
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
@@ -23,7 +23,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (Title title in scenarioData.titleArray)
+            foreach (Title title in AppEnvironment.scenarioData.titleArray)
             {
                 ListViewItem item = new()
                 {
@@ -47,7 +47,7 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             if (item.Tag is not Title title) return;
-            editDialog.Init(scenarioData);
+            editDialog.Init();
             editDialog.Setup(title);
             editDialog.Show(Form.ActiveForm);
         }

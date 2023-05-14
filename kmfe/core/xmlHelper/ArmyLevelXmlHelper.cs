@@ -12,10 +12,6 @@ namespace kmfe.core.xmlHelper
         const string nodeName_stat_ratio = "unit_stat";
         const string attrKey_value = "value";
 
-        public ArmyLevelXmlHelper(ScenarioData scenarioData) : base(scenarioData)
-        {
-        }
-
         public override void Load(string xmlPath)
         {
             #region common
@@ -35,7 +31,7 @@ namespace kmfe.core.xmlHelper
                 int id = int.Parse(str_id);
 
                 #region LoadById
-                ArmyLevel armyLevel = scenarioData.armyLevelArray[id];
+                ArmyLevel armyLevel = AppEnvironment.scenarioData.armyLevelArray[id];
 
                 string? name = mainNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
                 if (name != null)
@@ -63,7 +59,7 @@ namespace kmfe.core.xmlHelper
 
             XmlElement mainElement;
             XmlElement ele;
-            foreach (ArmyLevel armyLevel in scenarioData.armyLevelArray)
+            foreach (ArmyLevel armyLevel in AppEnvironment.scenarioData.armyLevelArray)
             {
                 mainElement = xmlDoc.CreateElement(mainNodeName);
                 mainElement.SetAttribute("id", armyLevel.Id.ToString());

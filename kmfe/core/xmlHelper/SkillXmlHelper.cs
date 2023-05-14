@@ -20,10 +20,6 @@ namespace kmfe.core.xmlHelper
         static readonly string[] colorOfLevelList = { "", "\x1b[00x", "\x1b[23x", "\x1b[19x", "\x1b[22x" };
         static readonly Regex regColorStart = new(@"(\x1b\[\d{1,2}x)");
 
-        public SkillXmlHelper(ScenarioData scenarioData) : base(scenarioData)
-        {
-        }
-
         public override void Load(string xmlPath)
         {
             #region common
@@ -43,7 +39,7 @@ namespace kmfe.core.xmlHelper
                 int id = int.Parse(str_id);
 
                 #region LoadById
-                Skill skill = scenarioData.skillArray[id];
+                Skill skill = AppEnvironment.scenarioData.skillArray[id];
 
                 string? name = skillNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
                 if (name != null)
@@ -81,7 +77,7 @@ namespace kmfe.core.xmlHelper
             XmlDocument xmlDoc = new();
             XmlElement rootEle = CreateRootElement(xmlDoc);
 
-            foreach (Skill skill in scenarioData.skillArray)
+            foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
             {
                 XmlElement skillEle = xmlDoc.CreateElement(mainNodeName);
                 skillEle.SetAttribute("id", skill.Id.ToString());

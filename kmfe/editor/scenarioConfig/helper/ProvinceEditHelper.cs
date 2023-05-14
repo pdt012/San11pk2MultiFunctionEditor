@@ -5,7 +5,7 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class ProvinceEditHelper : BaseEditorHelper
     {
-        public ProvinceEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public ProvinceEditHelper(ListView listView) : base(listView)
         {
         }
 
@@ -22,7 +22,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (Province province in scenarioData.provinceArray)
+            foreach (Province province in AppEnvironment.scenarioData.provinceArray)
             {
                 ListViewItem item = new()
                 {
@@ -33,8 +33,8 @@ namespace kmfe.editor.scenarioConfig.helper
                 item.SubItems.Add(province.read);
                 item.SubItems.Add(province.__12);
                 item.SubItems.Add(province.desc);
-                item.SubItems.Add(scenarioData.regionArray[province.regionId].name);
-                List<string> adjacentProvinceNames = scenarioData.GetAdjacentProvinceNames(province);
+                item.SubItems.Add(AppEnvironment.scenarioData.regionArray[province.regionId].name);
+                List<string> adjacentProvinceNames = AppEnvironment.scenarioData.GetAdjacentProvinceNames(province);
                 item.SubItems.Add(string.Join(", ", adjacentProvinceNames));
                 listView.Items.Add(item);
             }

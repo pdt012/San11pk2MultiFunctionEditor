@@ -19,14 +19,14 @@ namespace kmfe.editor.scenarioConfig.editDialog
             InitializeComponent();
         }
 
-        public override void Init(ScenarioData scenarioData)
+        public override void Init()
         {
-            base.Init(scenarioData);
+            base.Init();
             neighbors = new ComboBox[] { neighbor0, neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6 };
             foreach (ComboBox combo in neighbors)
             {
                 combo.Items.Clear();
-                combo.Items.AddRange(scenarioData.GetAllCityLikeNames());
+                combo.Items.AddRange(AppEnvironment.scenarioData.GetAllCityLikeNames());
                 combo.Items.Add("--");
             }
             routes = new ComboBox[] { route0, route1, route2, route3, route4, route5, route6 };
@@ -39,7 +39,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             foreach (ComboBox combo in adjacentCities)
             {
                 combo.Items.Clear();
-                combo.Items.AddRange(scenarioData.GetAllCityNames());
+                combo.Items.AddRange(AppEnvironment.scenarioData.GetAllCityNames());
                 combo.Items.Add("--");
             }
             Initialized = true;
@@ -93,7 +93,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public override bool Apply()
         {
-            if (scenarioData == null) return false;
             if (cityLike == null) return false;
             // 读取界面数据
             HashSet<Neighbor> neighborSet = new();
@@ -117,7 +116,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             var neighborAdd = neighborSet.Except(cityLike.neighborSet);
             foreach (Neighbor neighbor in neighborAdd)
             {
-                CityLike neighborCityLike = scenarioData.GetCityLike(neighbor.CityId);
+                CityLike neighborCityLike = AppEnvironment.scenarioData.GetCityLike(neighbor.CityId);
                 // 相邻的据点也添加相邻关系
                 if (neighborCityLike.neighborSet.Count < CityLike.neighborMax)
                 {
@@ -137,7 +136,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             foreach (Neighbor neighbor in neighborRemove)
             {
                 // 相邻关系被取消，则该相邻据点也取消相邻关系
-                CityLike neighborCityLike = scenarioData.GetCityLike(neighbor.CityId);
+                CityLike neighborCityLike = AppEnvironment.scenarioData.GetCityLike(neighbor.CityId);
                 neighborCityLike.neighborSet.Remove(new Neighbor(cityLike.Id, neighbor.Route));
                 updatedIdList.Add(neighborCityLike.Id);
             }
@@ -151,7 +150,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 var adjacentCityAdd = adjacentCityIdSet.Except(city.adjacentCityIdSet);
                 foreach (int cityId in adjacentCityAdd)
                 {
-                    City adjCity = scenarioData.cityArray[cityId];
+                    City adjCity = AppEnvironment.scenarioData.cityArray[cityId];
                     // 相邻的城市也添加相邻关系
                     if (adjCity.adjacentCityIdSet.Count < City.adjacentCityMax)
                     {
@@ -172,7 +171,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 foreach (int cityId in adjacentCityRemove)
                 {
                     // 相邻关系被取消，则该相邻城市也取消相邻关系
-                    City adjCity = scenarioData.cityArray[cityId];
+                    City adjCity = AppEnvironment.scenarioData.cityArray[cityId];
                     adjCity.adjacentCityIdSet.Remove(city.Id);
                     updatedIdList.Add(cityId);
                 }

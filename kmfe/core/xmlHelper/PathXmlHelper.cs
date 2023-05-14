@@ -43,10 +43,6 @@ namespace kmfe.core.xmlHelper
             return RouteToKeyDict[route];
         }
 
-        public PathXmlHelper(ScenarioData scenarioData) : base(scenarioData)
-        {
-        }
-
         public override void Load(string xmlPath)
         {
             #region common
@@ -65,7 +61,7 @@ namespace kmfe.core.xmlHelper
                 {
                     string cityKey = cityNode.Name;
                     int cityId = keyToCityIdDict[cityKey];
-                    CityLike cityLike = scenarioData.GetCityLike(cityId);
+                    CityLike cityLike = AppEnvironment.scenarioData.GetCityLike(cityId);
                     // neighbor
                     XmlNodeList? neighborNodeList = cityNode.SelectNodes(key_neighbor);
                     cityLike.neighborSet.Clear();
@@ -103,7 +99,7 @@ namespace kmfe.core.xmlHelper
 
             for (int cityLikeId = 0; cityLikeId < ScenarioData.cityLikeCount; cityLikeId++)
             {
-                CityLike cityLike = scenarioData.GetCityLike(cityLikeId);
+                CityLike cityLike = AppEnvironment.scenarioData.GetCityLike(cityLikeId);
                 XmlElement cityEle = xmlDoc.CreateElement(GetCityKeyName(cityLike.Id));
                 // neighbor
                 int id = 0;
@@ -187,7 +183,7 @@ namespace kmfe.core.xmlHelper
                     {
                         visited[neighbor.CityId] = true;
                         distance[neighbor.CityId] = distance[curCityLike.Id] + 1;
-                        queue.Enqueue(scenarioData.GetCityLike(neighbor.CityId));
+                        queue.Enqueue(AppEnvironment.scenarioData.GetCityLike(neighbor.CityId));
                     }
                 }
             }
@@ -212,7 +208,7 @@ namespace kmfe.core.xmlHelper
                     {
                         visited[adjCityId] = true;
                         cityDistance[adjCityId] = cityDistance[curCity.Id] + 1;
-                        queue.Enqueue(scenarioData.cityArray[adjCityId]);
+                        queue.Enqueue(AppEnvironment.scenarioData.cityArray[adjCityId]);
                     }
                 }
             }

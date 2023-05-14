@@ -18,9 +18,9 @@ namespace kmfe.editor.scenarioConfig.editDialog
             InitializeComponent();
         }
 
-        public override void Init(ScenarioData scenarioData)
+        public override void Init()
         {
-            base.Init(scenarioData);
+            base.Init();
             text_type.Items.Clear();
             text_type.Items.AddRange(Enum.GetNames<SkillType>());
             skill_binds.Choices = GetEnabledSkillNames();
@@ -65,7 +65,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
         private List<IntString> GetEnabledSkillNames()
         {
             List<IntString> names = new();
-            foreach (Skill skill in scenarioData.skillArray)
+            foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
             {
                 if (skill.Id < Constants.SKILL_CUSTOMIZE_BEGIN)
                     names.Add(new IntString(skill.Id, string.Format("{0}-{1}", skill.Id, skill.name)));

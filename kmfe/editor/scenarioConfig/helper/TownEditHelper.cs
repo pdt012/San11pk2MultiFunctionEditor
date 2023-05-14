@@ -5,7 +5,7 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class TownEditHelper : BaseEditorHelper
     {
-        public TownEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public TownEditHelper(ListView listView) : base(listView)
         {
         }
 
@@ -17,7 +17,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (Town town in scenarioData.townArray)
+            foreach (Town town in AppEnvironment.scenarioData.townArray)
             {
                 ListViewItem item = new()
                 {

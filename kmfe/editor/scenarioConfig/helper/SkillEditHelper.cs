@@ -17,7 +17,7 @@ namespace kmfe.editor.scenarioConfig.helper
         Skill? currentSkill;
         int currentRow = -1;
 
-        public SkillEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public SkillEditHelper(ListView listView) : base(listView)
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
@@ -42,7 +42,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (Skill skill in scenarioData.skillArray)
+            foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
             {
                 if (!skill.IsValid()) continue;
                 ListViewItem item = new()
@@ -115,7 +115,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             if (currentSkill != null)
             {
-                editDialog.Init(scenarioData);
+                editDialog.Init();
                 editDialog.Setup(currentSkill, currentRow);
                 editDialog.ShowDialog(listView);
             }
@@ -138,11 +138,11 @@ namespace kmfe.editor.scenarioConfig.helper
             if (skillId >= 0)
             {
                 currentRow = IdToRow(skillId);
-                currentSkill = scenarioData.skillArray[skillId];
+                currentSkill = AppEnvironment.scenarioData.skillArray[skillId];
                 ListViewItem newItem = new() { Tag = currentSkill };
                 listView.Items.Insert(currentRow, newItem);  // 新建一行
                 // 打开特技编辑窗口
-                editDialog.Init(scenarioData);
+                editDialog.Init();
                 editDialog.Setup(currentSkill, currentRow);
                 DialogResult result = editDialog.ShowDialog(listView);
                 if (result != DialogResult.OK)
@@ -172,7 +172,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             for (int id = Constants.SKILL_CUSTOMIZE_BEGIN; id < Constants.SKILL_CUSTOMIZE_END; id++)
             {
-                if (!scenarioData.skillArray[id].IsValid())
+                if (!AppEnvironment.scenarioData.skillArray[id].IsValid())
                 {
                     return id;
                 }
@@ -185,7 +185,7 @@ namespace kmfe.editor.scenarioConfig.helper
             List<string> nameList = new();
             foreach (int skillId in skill.bindSkillList)
             {
-                nameList.Add(scenarioData.skillArray[skillId].name);
+                nameList.Add(AppEnvironment.scenarioData.skillArray[skillId].name);
             }
             return string.Join(", ", nameList);
         }

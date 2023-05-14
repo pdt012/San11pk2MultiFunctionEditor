@@ -6,7 +6,7 @@ namespace kmfe.editor.scenarioConfig.helper
 {
     internal class RegionEditHelper : BaseEditorHelper
     {
-        public RegionEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public RegionEditHelper(ListView listView) : base(listView)
         {
         }
 
@@ -17,7 +17,7 @@ namespace kmfe.editor.scenarioConfig.helper
         }
         public override void UpdateListView()
         {
-            foreach (Region region in scenarioData.regionArray)
+            foreach (Region region in AppEnvironment.scenarioData.regionArray)
             {
                 ListViewItem item = new()
                 {

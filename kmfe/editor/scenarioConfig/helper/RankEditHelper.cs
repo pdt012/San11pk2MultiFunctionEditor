@@ -9,7 +9,7 @@ namespace kmfe.editor.scenarioConfig.helper
     {
         public readonly RankEditDialog editDialog;
 
-        public RankEditHelper(ScenarioData scenarioData, ListView listView) : base(scenarioData, listView)
+        public RankEditHelper(ListView listView) : base(listView)
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
@@ -29,7 +29,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
-            foreach (Rank rank in scenarioData.rankArray)
+            foreach (Rank rank in AppEnvironment.scenarioData.rankArray)
             {
                 ListViewItem item = new()
                 {
@@ -58,7 +58,7 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             if (item.Tag is not Rank rank) return;
-            editDialog.Init(scenarioData);
+            editDialog.Init();
             editDialog.Setup(rank);
             editDialog.Show(Form.ActiveForm);
         }

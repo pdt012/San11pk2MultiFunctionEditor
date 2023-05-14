@@ -15,10 +15,6 @@ namespace kmfe.core.xmlHelper
         const string nodeName_merit = "kouseki";
         const string attrKey_value = "value";
 
-        public RankXmlHelper(ScenarioData scenarioData) : base(scenarioData)
-        {
-        }
-
         public override void Load(string xmlPath)
         {
             XmlDocument xmlDoc = new();
@@ -35,7 +31,7 @@ namespace kmfe.core.xmlHelper
                 int id = int.Parse(str_id);
 
                 #region LoadById
-                Rank rank = scenarioData.rankArray[id];
+                Rank rank = AppEnvironment.scenarioData.rankArray[id];
 
                 /*string? name = mainNode.SelectSingleNode(nodeName_name)?.Attributes?[attrKey_value]?.Value;
                 if (name != null)
@@ -75,7 +71,7 @@ namespace kmfe.core.xmlHelper
 
             XmlElement mainElement;
             XmlElement ele;
-            foreach (Rank rank in scenarioData.rankArray)
+            foreach (Rank rank in AppEnvironment.scenarioData.rankArray)
             {
                 mainElement = xmlDoc.CreateElement(mainNodeName);
                 mainElement.SetAttribute("id", rank.Id.ToString());

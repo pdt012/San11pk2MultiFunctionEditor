@@ -14,9 +14,9 @@ namespace kmfe.editor.scenarioConfig.editDialog
             InitializeComponent();
         }
 
-        public override void Init(ScenarioData scenarioData)
+        public override void Init()
         {
-            base.Init(scenarioData);
+            base.Init();
             value_exp.Minimum = 0;
             value_exp.Maximum = ArmyLevel.UnreachableExp;
         }

@@ -133,35 +133,30 @@
             城市ToolStripMenuItem.Name = "城市ToolStripMenuItem";
             城市ToolStripMenuItem.Size = new Size(224, 26);
             城市ToolStripMenuItem.Text = "城市";
-            城市ToolStripMenuItem.Click += 城市ToolStripMenuItem_Click;
             // 
             // 港关ToolStripMenuItem
             // 
             港关ToolStripMenuItem.Name = "港关ToolStripMenuItem";
             港关ToolStripMenuItem.Size = new Size(224, 26);
             港关ToolStripMenuItem.Text = "港关";
-            港关ToolStripMenuItem.Click += 港关ToolStripMenuItem_Click;
             // 
             // 据点距离ToolStripMenuItem
             // 
             据点距离ToolStripMenuItem.Name = "据点距离ToolStripMenuItem";
             据点距离ToolStripMenuItem.Size = new Size(224, 26);
             据点距离ToolStripMenuItem.Text = "据点相邻";
-            据点距离ToolStripMenuItem.Click += 据点距离ToolStripMenuItem_Click;
             // 
             // 州ToolStripMenuItem
             // 
             州ToolStripMenuItem.Name = "州ToolStripMenuItem";
             州ToolStripMenuItem.Size = new Size(224, 26);
             州ToolStripMenuItem.Text = "州";
-            州ToolStripMenuItem.Click += 州ToolStripMenuItem_Click;
             // 
             // 地区ToolStripMenuItem
             // 
             地区ToolStripMenuItem.Name = "地区ToolStripMenuItem";
             地区ToolStripMenuItem.Size = new Size(224, 26);
             地区ToolStripMenuItem.Text = "地区";
-            地区ToolStripMenuItem.Click += 地区ToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
@@ -173,14 +168,12 @@
             爵位ToolStripMenuItem.Name = "爵位ToolStripMenuItem";
             爵位ToolStripMenuItem.Size = new Size(224, 26);
             爵位ToolStripMenuItem.Text = "爵位";
-            爵位ToolStripMenuItem.Click += 爵位ToolStripMenuItem_Click;
             // 
             // 官职ToolStripMenuItem
             // 
             官职ToolStripMenuItem.Name = "官职ToolStripMenuItem";
             官职ToolStripMenuItem.Size = new Size(224, 26);
             官职ToolStripMenuItem.Text = "官职";
-            官职ToolStripMenuItem.Click += 官职ToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
@@ -192,7 +185,6 @@
             特技ToolStripMenuItem.Name = "特技ToolStripMenuItem";
             特技ToolStripMenuItem.Size = new Size(224, 26);
             特技ToolStripMenuItem.Text = "特技";
-            特技ToolStripMenuItem.Click += 特技ToolStripMenuItem_Click;
             // 
             // toolStripSeparator3
             // 
@@ -204,7 +196,6 @@
             适性ToolStripMenuItem.Name = "适性ToolStripMenuItem";
             适性ToolStripMenuItem.Size = new Size(224, 26);
             适性ToolStripMenuItem.Text = "适性";
-            适性ToolStripMenuItem.Click += 适性ToolStripMenuItem_Click;
             // 
             // 地形ToolStripMenuItem
             // 
