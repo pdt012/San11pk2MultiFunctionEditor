@@ -3,7 +3,6 @@ using kmfe.core.globalTypes;
 using kmfe.s11.enums;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace kmfe.core.xmlHelper
 {
@@ -49,7 +48,7 @@ namespace kmfe.core.xmlHelper
 
                 string? desc = skillNode.SelectSingleNode(nodeName_desc)?.Attributes?[attrKey_value]?.Value;
                 if (desc != null)
-                    skill.desc = ParseDesc(desc);  // 去除颜色代码
+                    skill.desc = skill.ParseDesc(desc);  // 去除颜色格式化
 
                 string? type = skillNode.SelectSingleNode(nodeName_type)?.Attributes?[attrKey_value]?.Value;
                 if (type != null)
@@ -108,7 +107,7 @@ namespace kmfe.core.xmlHelper
                 skillEle.AppendChild(nameEle);
 
                 XmlElement descEle = xmlDoc.CreateElement(nodeName_desc);
-                descEle.SetAttribute(attrKey_value, FormatColoredDesc(skill.desc));  // 添加数值高亮
+                descEle.SetAttribute(attrKey_value, skill.GetColorFormattedDesc());  // 添加颜色格式化
                 skillEle.AppendChild(descEle);
 
                 XmlElement typeEle = xmlDoc.CreateElement(nodeName_type);
@@ -153,49 +152,6 @@ namespace kmfe.core.xmlHelper
             }
 
             xmlDoc.Save(xmlPath);
-        }
-
-        string ParseDesc(string desc)
-        {
-            string str = desc;
-            // 自动高亮部分
-            str = Regex.Replace(str, @"(\x1b\[2x\S*?\x1b\[0x)", "{}");
-            // 手动高亮部分
-            str = str.Replace("\x1b[1x", "<");
-            str = str.Replace("\x1b[0x", ">");
-            return str;
-        }
-
-        string FormatColoredDesc(string desc)
-        {
-            /*EditData* data_ = EditData::current();
-            if (data_ == NULL)
-                throw KRE_Error("EditData未初始化");
-            StringList constants = data_->getSkillConstants(this->id);*/
-
-            string str = desc;
-            // 手动高亮部分
-            str = str.Replace("<", "\x1b[1x");  // 手动高亮用1x，自动高亮用2x以便读取时能够区分
-            str = str.Replace(">", "\x1b[0x");
-            // 自动高亮部分
-            str = str.Replace("{}", "\x1b[2x{%}\x1b[0x");  // 自定义的替换符 {%}
-            /*for (int i = 0; i < constants.size(); i++)
-            {   // 以特技数值constants逐个填充
-                int index = str.indexOf("{%}");
-                if (index >= 0)
-                    str.replace(index, 3, constants[i]);
-            }*/
-            str = str.Replace("{%}", "O");   // TODO: 目前没有导入特技数值，所以先留空
-            return str;
-        }
-
-        string FormatDesc(string desc)
-        {
-            string str = desc;
-            // 自动高亮部分
-            str = str.Replace("{}", "{{%}}");  // 自定义的替换符 {%}
-            str = str.Replace("{%}", "O");   // TODO: 目前没有导入特技数值，所以先全部留空
-            return str;
         }
     }
 }

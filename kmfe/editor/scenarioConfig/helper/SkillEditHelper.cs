@@ -67,7 +67,7 @@ namespace kmfe.editor.scenarioConfig.helper
             item.Tag = skill;
             item.Text = skill.Id.ToString();
             item.SubItems.Add(skill.name);
-            item.SubItems.Add(skill.desc);
+            item.SubItems.Add(skill.GetFormattedDesc());
             item.SubItems.Add(Enum.GetName(skill.type));
             item.SubItems.Add(skill.level.ToString());
             item.SubItems.Add(GetBindSkillsNameString(skill));
