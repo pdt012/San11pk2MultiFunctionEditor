@@ -331,9 +331,7 @@
             Controls.Add(label3);
             Controls.Add(cityName);
             Controls.Add(label1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 5, 4, 5);
-            MaximizeBox = false;
             Name = "NeighborEditDialog";
             Text = "相邻据点编辑";
             ResumeLayout(false);

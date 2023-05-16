@@ -8,6 +8,9 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public BaseEditDialog()
         {
+            MaximizeBox = false;
+            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             FormClosing += BaseEditDialog_FormClosing;
         }
 
