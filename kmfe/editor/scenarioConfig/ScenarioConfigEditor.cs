@@ -1,9 +1,13 @@
-﻿using kmfe.core;
+﻿using ClosedXML.Excel;
+using kmfe.core;
+using kmfe.core.excelHelper;
 using kmfe.editor.scenarioConfig.helper;
 using System.Diagnostics;
 
 namespace kmfe.editor.scenarioConfig
 {
+    record EditTypeRecord(string Name, BaseEditorHelper EditorHelper, ToolStripMenuItem MenuBtn, BaseExcelHelper? ExcelHelper);
+
     internal enum EditType
     {
         None,
@@ -22,9 +26,8 @@ namespace kmfe.editor.scenarioConfig
     {
         EditType currentEditType = EditType.None;
 
-        readonly Dictionary<EditType, BaseEditorHelper> editHelperDict;
+        readonly Dictionary<EditType, EditTypeRecord> editTypeRecordDict;
         readonly List<DataXmlName> usingDataXmlList;
-        readonly Dictionary<EditType, ToolStripMenuItem> menuBtnDict;
         readonly List<ToolStripMenuItem> unusedMenuBtnList;
 
         public ScenarioConfigEditor()
@@ -33,31 +36,29 @@ namespace kmfe.editor.scenarioConfig
             保存修改ToolStripMenuItem.Enabled = false;
             全局修改ToolStripMenuItem.Enabled = false;
             剧本修改ToolStripMenuItem.Enabled = false;
+            导出到ExcelToolStripMenuItem.Enabled = false;
+            从Excel导入ToolStripMenuItem.Enabled = false;
 
-            editHelperDict = new()
+            editTypeRecordDict = new()
             {
-                { EditType.City, new CityEditHelper(listView) },
-                { EditType.Town, new TownEditHelper(listView) },
-                { EditType.CityLikeDistance, new NeighborEditHelper(listView) },
-                { EditType.Province, new ProvinceEditHelper(listView) },
-                { EditType.Region, new RegionEditHelper(listView) },
-                { EditType.Title, new TitleEditHelper(listView) },
-                { EditType.Rank, new RankEditHelper(listView) },
-                { EditType.Skill, new SkillEditHelper(listView) },
-                { EditType.ArmyLevel, new ArmyLevelEditHelper(listView) },
-            };
-            // 功能对应的菜单按钮
-            menuBtnDict = new()
-            {
-                { EditType.City, 城市ToolStripMenuItem },
-                { EditType.Town, 港关ToolStripMenuItem },
-                { EditType.CityLikeDistance, 据点距离ToolStripMenuItem },
-                { EditType.Province, 州ToolStripMenuItem },
-                { EditType.Region, 地区ToolStripMenuItem },
-                { EditType.Title, 爵位ToolStripMenuItem },
-                { EditType.Rank, 官职ToolStripMenuItem },
-                { EditType.Skill, 特技ToolStripMenuItem },
-                { EditType.ArmyLevel, 适性ToolStripMenuItem },
+                { EditType.City,
+                    new ("城市", new CityEditHelper(listView), 城市ToolStripMenuItem, null) },
+                { EditType.Town,
+                    new ("港关", new TownEditHelper(listView) ,港关ToolStripMenuItem, null) },
+                { EditType.CityLikeDistance,
+                    new ("据点距离", new NeighborEditHelper(listView), 据点距离ToolStripMenuItem, null) },
+                { EditType.Province,
+                    new ("州", new ProvinceEditHelper(listView), 州ToolStripMenuItem, null) },
+                { EditType.Region,
+                    new ("地区", new RegionEditHelper(listView), 地区ToolStripMenuItem, null) },
+                { EditType.Title,
+                    new ("爵位", new TitleEditHelper(listView), 爵位ToolStripMenuItem, null) },
+                { EditType.Rank,
+                    new ("官职", new RankEditHelper(listView), 官职ToolStripMenuItem, null) },
+                { EditType.Skill,
+                    new ("特技", new SkillEditHelper(listView), 特技ToolStripMenuItem, null) },
+                { EditType.ArmyLevel,
+                    new ("适性", new ArmyLevelEditHelper(listView), 适性ToolStripMenuItem, new ArmyLevelExcelHelper()) },
             };
 
             // 使用到的xml配置文件
@@ -71,14 +72,17 @@ namespace kmfe.editor.scenarioConfig
             };
 
             // 绑定菜单回调
-            foreach (KeyValuePair<EditType, ToolStripMenuItem> pair in menuBtnDict)
+            foreach (KeyValuePair<EditType, EditTypeRecord> pair in editTypeRecordDict)
             {
                 EditType editType = pair.Key;
-                ToolStripMenuItem toolStripMenuItem = pair.Value;
+                EditTypeRecord record = pair.Value;
+                ToolStripMenuItem toolStripMenuItem = record.MenuBtn;
                 toolStripMenuItem.Click += (object? sender, EventArgs e) =>
                 {
                     SetCurrentEditType(editType);
-                    statusLabel_currentType.Text = toolStripMenuItem.Text;
+                    statusLabel_currentType.Text = record.Name;
+                    导出到ExcelToolStripMenuItem.Enabled = true;
+                    从Excel导入ToolStripMenuItem.Enabled = true;
                 };
             }
 
@@ -113,15 +117,14 @@ namespace kmfe.editor.scenarioConfig
             if (editType == EditType.None) return;
             listView.Clear();
             listView.View = View.Details;
-            editHelperDict[editType].InitListView();
+            editTypeRecordDict[editType].EditorHelper.InitListView();
         }
 
         void UpdateListView(EditType editType)
         {
             if (editType == EditType.None) return;
             listView.BeginUpdate();
-            listView.Items.Clear();
-            editHelperDict[editType].UpdateListView();
+            editTypeRecordDict[editType].EditorHelper.UpdateListView();
             listView.EndUpdate();
         }
 
@@ -137,7 +140,7 @@ namespace kmfe.editor.scenarioConfig
             ListViewItem? listViewItem = listViewCityPathData.GetItemAt(e.X, e.Y);
             if (listViewItem == null)
                 return;
-            editHelperDict[currentEditType].OnDoubleClicked(this, listViewItem);
+            editTypeRecordDict[currentEditType].EditorHelper.OnDoubleClicked(this, listViewItem);
 #if DEBUG
             sw.Stop();
             TimeSpan ts = sw.Elapsed;
@@ -153,7 +156,7 @@ namespace kmfe.editor.scenarioConfig
             ListViewItem? listViewItem = listViewCityPathData.GetItemAt(e.X, e.Y);
             if (listViewItem == null)
                 return;
-            editHelperDict[currentEditType].OnRightClicked(this, listViewItem);
+            editTypeRecordDict[currentEditType].EditorHelper.OnRightClicked(this, listViewItem);
         }
 
         private void 载入ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -175,9 +178,9 @@ namespace kmfe.editor.scenarioConfig
                     }
                 }
 
-                foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
+                foreach (EditTypeRecord editTypeRecord in editTypeRecordDict.Values)
                 {
-                    editorHelper.OnLoaded();
+                    editTypeRecord.EditorHelper.OnLoaded();
                 }
             }
             catch (Exception exc)
@@ -210,9 +213,9 @@ namespace kmfe.editor.scenarioConfig
                     }
                 }
 
-                foreach (BaseEditorHelper editorHelper in editHelperDict.Values)
+                foreach (EditTypeRecord editTypeRecord in editTypeRecordDict.Values)
                 {
-                    editorHelper.OnSaved();
+                    editTypeRecord.EditorHelper.OnSaved();
                 }
             }
             catch (Exception exc)
@@ -228,6 +231,95 @@ namespace kmfe.editor.scenarioConfig
             SettingsDialog settingsDialog = SettingsDialog.GetInstance();
             settingsDialog.Setup();
             settingsDialog.ShowDialog();
+        }
+
+        private void 导出到ExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                EditTypeRecord editTypeRecord = editTypeRecordDict[currentEditType];
+                if (editTypeRecord == null) return;
+                BaseExcelHelper? excelHelper = editTypeRecord.ExcelHelper ?? throw new("此项目不支持Excel导出");
+                InExportToExcelDialog inExportToExcelDialog = new()
+                {
+                    Text = "导出到Excel",
+                    OkButtonText = "导出",
+                    Headers = excelHelper.ExcelHeaders,
+                    EditTypeName = editTypeRecord.Name
+                };
+                if (inExportToExcelDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // 打开Excel文档
+                    XLWorkbook workbook = new();
+                    if (excelHelper != null)
+                    {
+                        IXLWorksheet worksheet = workbook.Worksheets.Add(editTypeRecord.Name);
+                        excelHelper.WriteExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders, editTypeRecord.EditorHelper.GetCount());
+                    }
+                    SaveFileDialog saveFileDialog = new()
+                    {
+                        Title = "选择导出到的Excel文件",
+                        Filter = "Excel文件|*.xlsx",
+                        InitialDirectory = "."
+                    };
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        workbook.SaveAs(saveFileDialog.FileName);
+                        MessageBox.Show("导出成功！", "导出成功");
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "发生错误");
+                return;
+            }
+        }
+
+        private void 从Excel导入ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new()
+                {
+                    Title = "选择导入的Excel文件",
+                    Filter = "Excel文件|*.xlsx",
+                    InitialDirectory = "."
+                };
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    EditTypeRecord editTypeRecord = editTypeRecordDict[currentEditType];
+                    if (editTypeRecord == null) return;
+                    BaseExcelHelper? excelHelper = editTypeRecord.ExcelHelper ?? throw new("此项目不支持Excel导入");
+                    // 读取Excel文件
+                    XLWorkbook workbook = new(openFileDialog.FileName);
+                    if (!workbook.TryGetWorksheet(editTypeRecord.Name, out IXLWorksheet worksheet))
+                        throw new($"找不到对应的Excel表({editTypeRecord.Name})");
+                    // 读取表头
+                    string[] headers = excelHelper.ReadExcelSheetHeaders(worksheet);
+                    if (!headers.Contains("ID"))
+                        throw new($"Excel表({editTypeRecord.Name})中缺少ID列");
+                    InExportToExcelDialog inExportToExcelDialog = new()
+                    {
+                        Text = "从Excel导入",
+                        OkButtonText = "导入",
+                        Headers = headers,
+                        EditTypeName = editTypeRecord.Name
+                    };
+                    if (inExportToExcelDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        excelHelper.ReadExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders);
+                        MessageBox.Show("导入成功！", "导入成功");
+                        // 刷新表格
+                        editTypeRecord.EditorHelper.UpdateListView();
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "发生错误");
+                return;
+            }
         }
     }
 }

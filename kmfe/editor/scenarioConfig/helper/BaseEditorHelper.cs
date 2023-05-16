@@ -1,4 +1,9 @@
-﻿namespace kmfe.editor.scenarioConfig.helper
+﻿using ClosedXML.Excel;
+using kmfe.core.globalTypes;
+using kmfe.core;
+using System.Diagnostics;
+
+namespace kmfe.editor.scenarioConfig.helper
 {
     internal abstract class BaseEditorHelper
     {
@@ -13,7 +18,6 @@
         {
             if (updatedRowList == null)  // 更新整个表格
             {
-                listView.Items.Clear();
                 UpdateListView();
             }
             else
@@ -21,6 +25,12 @@
                 UpdateRows(updatedRowList);
             }
         }
+
+        /// <summary>
+        /// 获取数据行数
+        /// </summary>
+        /// <returns></returns>
+        public abstract int GetCount();
 
         /// <summary>
         /// 表格初始化（创建表头）

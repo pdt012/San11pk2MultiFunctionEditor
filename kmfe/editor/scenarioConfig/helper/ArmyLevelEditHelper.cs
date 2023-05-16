@@ -1,6 +1,8 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
 using kmfe.editor.scenarioConfig.editDialog;
+using ClosedXML.Excel;
+using kmfe.core.excelHelper;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
@@ -14,6 +16,8 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.OnApply += OnItemsApplyCallback;
         }
 
+        public override int GetCount() => ScenarioData.armyLevelCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -26,6 +30,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (ArmyLevel armyLevel in AppEnvironment.scenarioData.armyLevelArray)
             {
                 ListViewItem item = new()

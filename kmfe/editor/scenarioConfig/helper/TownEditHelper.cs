@@ -9,6 +9,8 @@ namespace kmfe.editor.scenarioConfig.helper
         {
         }
 
+        public override int GetCount() => ScenarioData.townCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -17,6 +19,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (Town town in AppEnvironment.scenarioData.townArray)
             {
                 ListViewItem item = new()

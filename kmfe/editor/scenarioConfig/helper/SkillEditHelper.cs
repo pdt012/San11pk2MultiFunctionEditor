@@ -30,6 +30,8 @@ namespace kmfe.editor.scenarioConfig.helper
             contextMenu.Items.AddRange(new ToolStripItem[] { menuEditSkill, menuDelSkill, menuNewSkill });
         }
 
+        public override int GetCount() => ScenarioData.skillCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -47,6 +49,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
             {
                 if (!skill.IsValid()) continue;

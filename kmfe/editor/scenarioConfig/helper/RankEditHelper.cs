@@ -15,6 +15,8 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.OnApply += OnItemsApplyCallback;
         }
 
+        public override int GetCount() => ScenarioData.rankCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -29,6 +31,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (Rank rank in AppEnvironment.scenarioData.rankArray)
             {
                 ListViewItem item = new()

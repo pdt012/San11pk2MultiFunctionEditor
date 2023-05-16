@@ -14,6 +14,8 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.OnApply += OnItemsApplyCallback;
         }
 
+        public override int GetCount() => ScenarioData.titleCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -23,6 +25,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (Title title in AppEnvironment.scenarioData.titleArray)
             {
                 ListViewItem item = new()

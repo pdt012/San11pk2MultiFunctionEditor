@@ -10,6 +10,8 @@ namespace kmfe.editor.scenarioConfig.helper
         {
         }
 
+        public override int GetCount() => ScenarioData.regionCount;
+
         public override void InitListView()
         {
             listView.Columns.Add("ID", 40);
@@ -17,6 +19,7 @@ namespace kmfe.editor.scenarioConfig.helper
         }
         public override void UpdateListView()
         {
+            listView.Items.Clear();
             foreach (Region region in AppEnvironment.scenarioData.regionArray)
             {
                 ListViewItem item = new()
