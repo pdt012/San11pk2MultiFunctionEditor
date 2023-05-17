@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace kmfe.core.xmlHelper
 {
-    public class SkillXmlHelper : BaseXmlHelper
+    internal class SkillXmlHelper : BaseXmlHelper
     {
         const string mainNodeName = "skill";
         const string nodeName_name = "name";

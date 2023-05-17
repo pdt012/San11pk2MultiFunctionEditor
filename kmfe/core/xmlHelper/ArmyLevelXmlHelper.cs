@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace kmfe.core.xmlHelper
 {
-    public class ArmyLevelXmlHelper : BaseXmlHelper
+    internal class ArmyLevelXmlHelper : BaseXmlHelper
     {
         const string mainNodeName = "tekisei";
         const string nodeName_name = "name";

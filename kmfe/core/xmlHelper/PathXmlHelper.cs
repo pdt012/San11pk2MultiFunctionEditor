@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace kmfe.core.xmlHelper
 {
-    public class PathXmlHelper : BaseXmlHelper
+    internal class PathXmlHelper : BaseXmlHelper
     {
         const string key_neighbor = "neighbor";
         const string attrKey_neighborIndex = "id";

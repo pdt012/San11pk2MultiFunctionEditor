@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace kmfe.core.xmlHelper
 {
-    public abstract class BaseXmlHelper
+    internal abstract class BaseXmlHelper
     {
 
         public BaseXmlHelper()
