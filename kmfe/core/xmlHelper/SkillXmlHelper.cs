@@ -31,6 +31,13 @@ namespace kmfe.core.xmlHelper
 
             XmlNodeList? skillNodeList = rootEle?.SelectNodes(mainNodeName);
             if (skillNodeList == null) return;
+
+            // 先重置
+            foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
+            {
+                skill.Reset();
+            }
+
             foreach (XmlNode skillNode in skillNodeList)
             {
                 if (skillNode is not XmlElement) continue;
