@@ -96,11 +96,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             skill.type = (SkillType)text_type.SelectedIndex;
             skill.level = (int)value_level.Value;
             // 组合特技
-            skill.bindSkillList.Clear();
-            foreach (int i in skill_binds.GetSelected())
-            {
-                skill.bindSkillList.Add(skill_binds.Choices[i].Num);
-            }
+            skill.bindSkillList = skill_binds.GetSelected().ToList();
             // 特技参数
             for (int i = 0; i < skill.constantArray.Length; i++)
             {
