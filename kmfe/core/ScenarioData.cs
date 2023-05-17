@@ -16,13 +16,18 @@ namespace kmfe.core
         public const int weaponCount = 12;
         public const int titleCount = 10;
         public const int rankCount = 81;
-        public const int skillCount = 100;
+        public const int skillCount = 2000;
         public const int techCount = 36;
         public const int tacticCount = 32;
         public const int terrainCount = 32;
         public const int familyCount = 400;
         public const int abilityCount = 98;
         public const int armyLevelCount = 14;
+
+        public const int skillBasicBegin = 0;
+        public const int skillBasicEnd = 1000;
+        public const int skillCustomizeBegin = 1000;
+        public const int skillCustomizeEnd = 2000;
 
         public readonly City[] cityArray = new City[42];
         public readonly Town[] townArray = new Town[45];
@@ -32,7 +37,7 @@ namespace kmfe.core
         public readonly Weapon[] weaponArray = new Weapon[12];*/
         public readonly Title[] titleArray = new Title[10];
         public readonly Rank[] rankArray = new Rank[81];
-        public readonly Skill[] skillArray = new Skill[255];
+        public readonly Skill[] skillArray = new Skill[skillCount];
         /*public readonly Technology[] techArray = new Technology[36];
         public readonly Tactic[] tacticArray = new Tactic[32];
         public readonly Terrain[] terrainArray = new Terrain[32];

@@ -106,6 +106,8 @@ namespace kmfe.core.xmlHelper
 
             foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
             {
+                if (!skill.IsValid()) continue;
+
                 XmlElement skillEle = xmlDoc.CreateElement(mainNodeName);
                 skillEle.SetAttribute("id", skill.Id.ToString());
 

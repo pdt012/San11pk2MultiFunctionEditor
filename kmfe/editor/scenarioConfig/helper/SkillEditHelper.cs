@@ -1,8 +1,6 @@
 ﻿using kmfe.core.globalTypes;
 using kmfe.core;
-using kmfe.common;
 using kmfe.editor.scenarioConfig.editDialog;
-using System.Windows.Forms;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
@@ -34,7 +32,7 @@ namespace kmfe.editor.scenarioConfig.helper
 
         public override void InitListView()
         {
-            listView.Columns.Add("ID", 40);
+            listView.Columns.Add("ID", 50);
             listView.Columns.Add("名称", 50);
             listView.Columns.Add("描述", 400);
             listView.Columns.Add("类型", 50);
@@ -96,7 +94,7 @@ namespace kmfe.editor.scenarioConfig.helper
             currentRow = listView.Items.IndexOf(item);
             currentSkill = item.Tag as Skill;
             if (currentSkill is null) return;
-            menuDelSkill.Enabled = currentSkill.Id >= Constants.SKILL_CUSTOMIZE_BEGIN;
+            menuDelSkill.Enabled = currentSkill.Id >= ScenarioData.skillCustomizeBegin;
             menuNewSkill.Enabled = FindEmptySlot() != -1;
             contextMenu.Show(Control.MousePosition);
         }
@@ -185,7 +183,7 @@ namespace kmfe.editor.scenarioConfig.helper
         /// <returns>没有空槽时返回-1</returns>
         private int FindEmptySlot()
         {
-            for (int id = Constants.SKILL_CUSTOMIZE_BEGIN; id < Constants.SKILL_CUSTOMIZE_END; id++)
+            for (int id = ScenarioData.skillCustomizeBegin; id < ScenarioData.skillCustomizeEnd; id++)
             {
                 if (!AppEnvironment.scenarioData.skillArray[id].IsValid())
                 {

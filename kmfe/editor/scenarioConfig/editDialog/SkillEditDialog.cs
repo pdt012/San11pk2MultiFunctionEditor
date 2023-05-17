@@ -1,5 +1,4 @@
-﻿using kmfe.common;
-using kmfe.core;
+﻿using kmfe.core;
 using kmfe.core.globalTypes;
 using kmfe.forms;
 using kmfe.s11.enums;
@@ -96,7 +95,13 @@ namespace kmfe.editor.scenarioConfig.editDialog
             skill.desc = text_desc.Text;
             skill.type = (SkillType)text_type.SelectedIndex;
             skill.level = (int)value_level.Value;
-            skill.bindSkillList = skill_binds.GetSelected().ToList();
+            // 组合特技
+            skill.bindSkillList.Clear();
+            foreach (int i in skill_binds.GetSelected())
+            {
+                skill.bindSkillList.Add(skill_binds.Choices[i].Num);
+            }
+            // 特技参数
             for (int i = 0; i < skill.constantArray.Length; i++)
             {
                 SkillConstant constant = skill.constantArray[i];
@@ -114,9 +119,10 @@ namespace kmfe.editor.scenarioConfig.editDialog
         private List<IntString> GetEnabledSkillNames()
         {
             List<IntString> names = new();
-            foreach (Skill skill in AppEnvironment.scenarioData.skillArray)
+            for (int id = ScenarioData.skillBasicBegin; id < ScenarioData.skillBasicEnd; id++)
             {
-                if (skill.Id < Constants.SKILL_CUSTOMIZE_BEGIN)
+                Skill skill = AppEnvironment.scenarioData.skillArray[id];
+                if (skill.IsValid())
                     names.Add(new IntString(skill.Id, string.Format("{0}-{1}", skill.Id, skill.name)));
             }
             return names;

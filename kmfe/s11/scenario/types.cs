@@ -1,4 +1,5 @@
-﻿using kmfe.utils.bytesConverter;
+﻿#define SKILL_AMOUNT_EXPAND  // 特技扩展
+using kmfe.utils.bytesConverter;
 
 namespace kmfe.s11.scenario;
 
@@ -135,8 +136,12 @@ public class Person : IBytesConvertable
     public readonly uint8[] base_stat = new uint8[5];   // 71 基础能力
     public readonly int8[] stat_aging = new int8[5];    // 76 能力成长
     public int8 birthplace;             // 7b 出生地
+#if SKILL_AMOUNT_EXPAND  // 特技扩展
+    public int16 skill;                  // 7c 特技
+#else
     public int8 skill;                  // 7c 特技
     public int8 argue_topic;              // 7d 舌战话题
+#endif
     public int8 loyal_mind;             // 7e 义理
     public int8 ambition;               // 7f 野心
     public int8 qiYong;                 // 80 起用
@@ -196,7 +201,9 @@ public class Person : IBytesConvertable
         converter.Read(stat_aging);
         converter.Read(out birthplace);
         converter.Read(out skill);
+#if !SKILL_AMOUNT_EXPAND
         converter.Read(out argue_topic);
+#endif
         converter.Read(out loyal_mind);
         converter.Read(out ambition);
         converter.Read(out qiYong);
@@ -252,7 +259,9 @@ public class Person : IBytesConvertable
         converter.Write(stat_aging);
         converter.Write(birthplace);
         converter.Write(skill);
+#if !SKILL_AMOUNT_EXPAND
         converter.Write(argue_topic);
+#endif
         converter.Write(loyal_mind);
         converter.Write(ambition);
         converter.Write(qiYong);
