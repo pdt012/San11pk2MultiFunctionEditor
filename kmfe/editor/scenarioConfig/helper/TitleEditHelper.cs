@@ -55,19 +55,9 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.Show(Form.ActiveForm);
         }
 
-        public override void OnRightClicked(Form parentForm, ListViewItem item)
-        {
-            ;
-        }
-
         public override void OnLoaded()
         {
             editDialog.Initialized = false;
-        }
-
-        public override void OnSaved()
-        {
-            ;
         }
     }
 }

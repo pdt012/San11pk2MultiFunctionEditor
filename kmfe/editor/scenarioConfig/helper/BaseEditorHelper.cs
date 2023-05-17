@@ -1,9 +1,4 @@
-﻿using ClosedXML.Excel;
-using kmfe.core.globalTypes;
-using kmfe.core;
-using System.Diagnostics;
-
-namespace kmfe.editor.scenarioConfig.helper
+﻿namespace kmfe.editor.scenarioConfig.helper
 {
     internal abstract class BaseEditorHelper
     {
@@ -80,24 +75,32 @@ namespace kmfe.editor.scenarioConfig.helper
         /// </summary>
         /// <param name="parentForm">父窗口</param>
         /// <param name="item">点击的行对象</param>
-        public abstract void OnDoubleClicked(Form parentForm, ListViewItem item);
+        public virtual void OnDoubleClicked(Form parentForm, ListViewItem item)
+        {
+        }
 
         /// <summary>
         /// 右键单击时回调
         /// </summary>
         /// <param name="parentForm"></param>
         /// <param name="item"></param>
-        public abstract void OnRightClicked(Form parentForm, ListViewItem item);
+        public virtual void OnRightClicked(Form parentForm, ListViewItem item)
+        {
+        }
 
         /// <summary>
         /// 载入时回调
         /// </summary>
-        public abstract void OnLoaded();
+        public virtual void OnLoaded()
+        {
+        }
 
         /// <summary>
         /// 保存时回调
         /// </summary>
-        public abstract void OnSaved();
+        public virtual void OnSaved()
+        {
+        }
 
     }
 }

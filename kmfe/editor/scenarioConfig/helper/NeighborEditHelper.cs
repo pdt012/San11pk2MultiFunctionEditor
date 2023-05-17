@@ -1,7 +1,6 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
 using kmfe.editor.scenarioConfig.editDialog;
-using System.Windows.Forms;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
@@ -73,19 +72,9 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.Show(parentForm);
         }
 
-        public override void OnRightClicked(Form parentForm, ListViewItem item)
-        {
-            ;
-        }
-
         public override void OnLoaded()
         {
             editDialog.Initialized = false;
-        }
-
-        public override void OnSaved()
-        {
-            ;
         }
     }
 }

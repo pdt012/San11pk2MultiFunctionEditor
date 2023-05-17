@@ -104,11 +104,6 @@ namespace kmfe.editor.scenarioConfig.helper
             editDialog.Initialized = false;
         }
 
-        public override void OnSaved()
-        {
-            ;
-        }
-
         private void onClick_menuEditSkill(object? sender, EventArgs e)
         {
             EditSkill();
