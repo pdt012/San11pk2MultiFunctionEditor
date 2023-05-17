@@ -1,13 +1,19 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
+using kmfe.editor.scenarioConfig.editDialog;
 using Region = kmfe.core.globalTypes.Region;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
     internal class RegionEditHelper : BaseEditorHelper
     {
+        public readonly RegionEditDialog editDialog;
+
         public RegionEditHelper(ListView listView) : base(listView)
         {
+            editDialog = new();
+            editDialog.OnApply += OnItemsApplyCallback;
+            baseEditDialog = editDialog;
         }
 
         public override int GetCount() => ScenarioData.regionCount;
@@ -16,6 +22,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             listView.Columns.Add("ID", 40);
             listView.Columns.Add("名称", 60);
+            listView.Columns.Add("读音", 100);
         }
         public override void UpdateListView()
         {
@@ -25,36 +32,27 @@ namespace kmfe.editor.scenarioConfig.helper
                 ListViewItem item = new()
                 {
                     Tag = region,
-                    Text = region.Id.ToString()
                 };
-                item.SubItems.Add(region.name);
+                UpdateRow(item);
                 listView.Items.Add(item);
             }
         }
 
         public override void UpdateRow(ListViewItem item)
         {
-            throw new NotImplementedException();
+            if (item.Tag is not Region region) return;
+
+            item.SubItems.Clear();
+            item.Text = region.Id.ToString();
+            item.SubItems.Add(region.name);
+            item.SubItems.Add(region.read);
         }
 
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
-            ;
-        }
-
-        public override void OnRightClicked(Form parentForm, ListViewItem item)
-        {
-            ;
-        }
-
-        public override void OnLoaded()
-        {
-            ;
-        }
-
-        public override void OnSaved()
-        {
-            ;
+            if (item.Tag is not Region region) return;
+            editDialog.Setup(region);
+            editDialog.Execute(Form.ActiveForm);
         }
     }
 }

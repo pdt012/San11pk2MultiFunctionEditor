@@ -21,7 +21,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public override void Init()
         {
-            base.Init();
             neighbors = new ComboBox[] { neighbor0, neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6 };
             foreach (ComboBox combo in neighbors)
             {
@@ -42,7 +41,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
                 combo.Items.AddRange(AppEnvironment.scenarioData.GetAllCityNames());
                 combo.Items.Add("--");
             }
-            Initialized = true;
         }
 
         public void Setup(CityLike cityLike)

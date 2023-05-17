@@ -38,7 +38,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public override void Init()
         {
-            base.Init();
             text_type.Items.Clear();
             text_type.Items.AddRange(Enum.GetNames<SkillType>());
             skill_binds.Choices = GetEnabledSkillNames();
@@ -126,13 +125,12 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            if (Apply())
-                DialogResult = DialogResult.OK;
+            Confirm();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            Cancel();
         }
     }
 

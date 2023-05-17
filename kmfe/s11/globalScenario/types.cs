@@ -122,7 +122,7 @@ public class Province : IBytesConvertable
 public class Region : IBytesConvertable
 {
     public readonly byte[] name = new byte[5];
-    public readonly byte[] __6 = new byte[13];
+    public readonly byte[] read = new byte[13];
 
     public const int Size = 18;
 
@@ -133,7 +133,7 @@ public class Region : IBytesConvertable
         if (array.Length != Size) throw new IndexOutOfRangeException();
         StreamConverter converter = new(array);
         converter.Read(name);
-        converter.Read(__6);
+        converter.Read(read);
     }
 
     public void ToBytes(ref byte[] array)
@@ -141,7 +141,7 @@ public class Region : IBytesConvertable
         if (array.Length != Size) throw new IndexOutOfRangeException();
         StreamConverter converter = new(array);
         converter.Write(name);
-        converter.Write(__6);
+        converter.Write(read);
     }
 }
 

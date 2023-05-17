@@ -80,9 +80,6 @@ namespace kmfe.editor.scenarioConfig
                 toolStripMenuItem.Click += (object? sender, EventArgs e) =>
                 {
                     SetCurrentEditType(editType);
-                    statusLabel_currentType.Text = record.Name;
-                    导出到ExcelToolStripMenuItem.Enabled = true;
-                    从Excel导入ToolStripMenuItem.Enabled = true;
                 };
             }
 
@@ -104,12 +101,21 @@ namespace kmfe.editor.scenarioConfig
             }
         }
 
-        void SetCurrentEditType(EditType editType)
+        void SetCurrentEditType(EditType newEditType)
         {
-            if (currentEditType == editType) return;
-            currentEditType = editType;
-            InitListView(editType);
-            UpdateListView(editType);
+            if (currentEditType == newEditType) return;
+            if (editTypeRecordDict.TryGetValue(currentEditType, out EditTypeRecord? currentEditTypeRecord))
+            {
+                currentEditTypeRecord?.EditorHelper.OnLeave();
+            }
+            currentEditType = newEditType;
+            EditTypeRecord newEditTypeRecord = editTypeRecordDict[newEditType];
+            newEditTypeRecord.EditorHelper.OnEnter();
+            statusLabel_currentType.Text = newEditTypeRecord.Name;
+            导出到ExcelToolStripMenuItem.Enabled = true;
+            从Excel导入ToolStripMenuItem.Enabled = true;
+            InitListView(newEditType);
+            UpdateListView(newEditType);
         }
 
         void InitListView(EditType editType)

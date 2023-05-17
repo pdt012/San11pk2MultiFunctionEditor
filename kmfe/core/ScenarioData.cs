@@ -125,6 +125,7 @@ namespace kmfe.core
                 s11.globalScenario.Region s11Region = globalScenario.regionArray[id];
                 Region region = regionArray[id];
                 region.name = CodeConvertHelper.Pk2Str(s11Region.name);
+                region.read = CodeConvertHelper.Pk2Str(s11Region.read);
             }
             for (int id = 0; id < titleArray.Length; id++)
             {
@@ -184,6 +185,7 @@ namespace kmfe.core
                 s11.globalScenario.Region s11Region = globalScenario.regionArray[id];
                 Region region = regionArray[id];
                 CodeConvertHelper.Str2Pk(region.name, s11Region.name);
+                CodeConvertHelper.Str2Pk(region.read, s11Region.read);
             }
 
             globalScenario.ToBytes(ref data);
@@ -228,9 +230,29 @@ namespace kmfe.core
         public string[] GetAllTownNames()
         {
             string[] names = new string[townCount];
-            for (int i = 0; i < cityCount; i++)
+            for (int i = 0; i < townCount; i++)
             {
                 names[i] = townArray[i].name;
+            }
+            return names;
+        }
+
+        public string[] GetAllProvinceNames()
+        {
+            string[] names = new string[provinceCount];
+            for (int i = 0; i < provinceCount; i++)
+            {
+                names[i] = provinceArray[i].name;
+            }
+            return names;
+        }
+
+        public string[] GetAllRegionNames()
+        {
+            string[] names = new string[regionCount];
+            for (int i = 0; i < regionCount; i++)
+            {
+                names[i] = regionArray[i].name;
             }
             return names;
         }

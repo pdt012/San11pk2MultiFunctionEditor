@@ -17,7 +17,6 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public override void Init()
         {
-            base.Init();
             combo_stat_type.Items.Clear();
             combo_stat_type.Items.AddRange(Enum.GetNames<StatType>());
         }

@@ -1,8 +1,11 @@
-﻿namespace kmfe.editor.scenarioConfig.helper
+﻿using kmfe.editor.scenarioConfig.editDialog;
+
+namespace kmfe.editor.scenarioConfig.helper
 {
     internal abstract class BaseEditorHelper
     {
         protected ListView listView;
+        protected BaseEditDialog? baseEditDialog;
 
         public BaseEditorHelper(ListView listView)
         {
@@ -86,6 +89,22 @@
         /// <param name="item"></param>
         public virtual void OnRightClicked(Form parentForm, ListViewItem item)
         {
+        }
+
+        /// <summary>
+        /// 进入该项目修改时
+        /// </summary>
+        public virtual void OnEnter()
+        {
+            baseEditDialog?.Init();
+        }
+
+        /// <summary>
+        /// 退出该项目修改时
+        /// </summary>
+        public virtual void OnLeave()
+        {
+            baseEditDialog?.Hide();
         }
 
         /// <summary>

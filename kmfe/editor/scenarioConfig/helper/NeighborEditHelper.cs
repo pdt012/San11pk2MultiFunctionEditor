@@ -12,6 +12,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
+            baseEditDialog = editDialog;
         }
 
         public override int GetCount() => ScenarioData.cityLikeCount;
@@ -67,14 +68,8 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             CityLike cityLike = (CityLike)item.Tag;
-            editDialog.Init();
             editDialog.Setup(cityLike);
-            editDialog.Show(parentForm);
-        }
-
-        public override void OnLoaded()
-        {
-            editDialog.Initialized = false;
+            editDialog.Execute(parentForm);
         }
     }
 }

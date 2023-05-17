@@ -14,10 +14,7 @@ namespace kmfe.editor.scenarioConfig.editDialog
             FormClosing += BaseEditDialog_FormClosing;
         }
 
-        /// <summary>
-        /// 是否已经初始化
-        /// </summary>
-        public bool Initialized { get; set; } = false;
+        public bool ModalMode { get; set; } = false;
 
         private void BaseEditDialog_FormClosing(object? sender, FormClosingEventArgs e)
         {
@@ -29,12 +26,11 @@ namespace kmfe.editor.scenarioConfig.editDialog
         }
 
         /// <summary>
-        /// 初始化对话框，如果已经初始化过则自动跳过
+        /// 初始化对话框
         /// </summary>
         /// <param name="scenarioData"></param>
         public virtual void Init()
         {
-            if (Initialized) return;
         }
 
         /// <summary>
@@ -49,16 +45,29 @@ namespace kmfe.editor.scenarioConfig.editDialog
         protected void Confirm()
         {
             if (Apply())
-                Hide();
+            {
+                if (Modal)
+                    DialogResult = DialogResult.OK;
+                else
+                    Hide();
+            }
         }
 
         protected void Cancel()
         {
-            Hide();
+            if (Modal)
+                DialogResult = DialogResult.Cancel;
+            else
+                Hide();
         }
 
-        public void Show(Form? parent)
+        public void Execute(Form? parent)
         {
+            if (ModalMode) {
+                StartPosition = FormStartPosition.CenterParent;
+                ShowDialog(parent);
+            }
+            else
             if (!Visible)
             {
                 if (parent != null)  // 居中显示

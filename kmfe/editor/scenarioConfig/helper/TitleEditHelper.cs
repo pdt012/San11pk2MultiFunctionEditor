@@ -12,6 +12,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
+            baseEditDialog = editDialog;
         }
 
         public override int GetCount() => ScenarioData.titleCount;
@@ -50,14 +51,8 @@ namespace kmfe.editor.scenarioConfig.helper
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
             if (item.Tag is not Title title) return;
-            editDialog.Init();
             editDialog.Setup(title);
-            editDialog.Show(Form.ActiveForm);
-        }
-
-        public override void OnLoaded()
-        {
-            editDialog.Initialized = false;
+            editDialog.Execute(Form.ActiveForm);
         }
     }
 }

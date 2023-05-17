@@ -1,12 +1,18 @@
 ﻿using kmfe.core;
 using kmfe.core.globalTypes;
+using kmfe.editor.scenarioConfig.editDialog;
 
 namespace kmfe.editor.scenarioConfig.helper
 {
     internal class ProvinceEditHelper : BaseEditorHelper
     {
+        public readonly ProvinceEditDialog editDialog;
+
         public ProvinceEditHelper(ListView listView) : base(listView)
         {
+            editDialog = new();
+            editDialog.OnApply += OnItemsApplyCallback;
+            baseEditDialog = editDialog;
         }
 
         public override int GetCount() => ScenarioData.provinceCount;
@@ -30,42 +36,32 @@ namespace kmfe.editor.scenarioConfig.helper
                 ListViewItem item = new()
                 {
                     Tag = province,
-                    Text = province.Id.ToString()
                 };
-                item.SubItems.Add(province.name);
-                item.SubItems.Add(province.read);
-                item.SubItems.Add(province.__12);
-                item.SubItems.Add(province.desc);
-                item.SubItems.Add(AppEnvironment.scenarioData.regionArray[province.regionId].name);
-                List<string> adjacentProvinceNames = AppEnvironment.scenarioData.GetAdjacentProvinceNames(province);
-                item.SubItems.Add(string.Join(", ", adjacentProvinceNames));
+                UpdateRow(item);
                 listView.Items.Add(item);
             }
         }
 
         public override void UpdateRow(ListViewItem item)
         {
-            throw new NotImplementedException();
+            if (item.Tag is not Province province) return;
+
+            item.SubItems.Clear();
+            item.Text = province.Id.ToString();
+            item.SubItems.Add(province.name);
+            item.SubItems.Add(province.read);
+            item.SubItems.Add(province.__12);
+            item.SubItems.Add(province.desc);
+            item.SubItems.Add(AppEnvironment.scenarioData.regionArray[province.regionId].name);
+            List<string> adjacentProvinceNames = AppEnvironment.scenarioData.GetAdjacentProvinceNames(province);
+            item.SubItems.Add(string.Join(", ", adjacentProvinceNames));
         }
 
         public override void OnDoubleClicked(Form parentForm, ListViewItem item)
         {
-            ;
-        }
-
-        public override void OnRightClicked(Form parentForm, ListViewItem item)
-        {
-            ;
-        }
-
-        public override void OnLoaded()
-        {
-            ;
-        }
-
-        public override void OnSaved()
-        {
-            ;
+            if (item.Tag is not Province province) return;
+            editDialog.Setup(province);
+            editDialog.Execute(Form.ActiveForm);
         }
     }
 }

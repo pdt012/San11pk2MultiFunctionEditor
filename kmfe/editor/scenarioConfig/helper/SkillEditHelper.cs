@@ -19,7 +19,7 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             editDialog = new();
             editDialog.OnApply += OnItemsApplyCallback;
-            editDialog.StartPosition = FormStartPosition.CenterParent;
+            baseEditDialog = editDialog;
 
             contextMenu = new();
             menuEditSkill = new("编辑特技", null, onClick_menuEditSkill);
@@ -99,11 +99,6 @@ namespace kmfe.editor.scenarioConfig.helper
             contextMenu.Show(Control.MousePosition);
         }
 
-        public override void OnLoaded()
-        {
-            editDialog.Initialized = false;
-        }
-
         private void onClick_menuEditSkill(object? sender, EventArgs e)
         {
             EditSkill();
@@ -123,9 +118,8 @@ namespace kmfe.editor.scenarioConfig.helper
         {
             if (currentSkill != null)
             {
-                editDialog.Init();
                 editDialog.Setup(currentSkill, currentRow);
-                editDialog.ShowDialog(listView);
+                editDialog.Execute(Form.ActiveForm);
             }
         }
 
