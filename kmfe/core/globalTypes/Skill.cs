@@ -40,6 +40,7 @@ namespace kmfe.core.globalTypes
             if (bindSkills.Length > 0)
             {
                 string[] temp = bindSkills.Split(",");
+                bindSkillList.Clear();
                 foreach (string sk in temp)
                     bindSkillList.Add(int.Parse(sk.Trim()));
             }
