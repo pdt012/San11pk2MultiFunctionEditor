@@ -1,0 +1,31 @@
+﻿namespace kmfe.Core
+{
+    internal enum DataXmlName
+    {
+        path,
+        terrain,
+        facility,
+        area,
+        hex,
+        equipment,
+        armyLevel,
+        tactic,
+        treasure,
+        title,
+        rank,
+        person,
+        voice,
+        ai,
+        canmera,
+        hotkey,
+        other,
+        skill,
+        halo,
+        msg,
+        face,
+        personModel,
+        treasureModel,
+        weaponHorseModel,
+        bgm
+    }
+}
