@@ -56,7 +56,7 @@ namespace kmfe.editor.scenarioConfig
                 { EditType.Rank,
                     new ("官职", new RankEditHelper(listView), 官职ToolStripMenuItem, null) },
                 { EditType.Skill,
-                    new ("特技", new SkillEditHelper(listView), 特技ToolStripMenuItem, null) },
+                    new ("特技", new SkillEditHelper(listView), 特技ToolStripMenuItem, new SkillExcelHelper()) },
                 { EditType.ArmyLevel,
                     new ("适性", new ArmyLevelEditHelper(listView), 适性ToolStripMenuItem, new ArmyLevelExcelHelper()) },
             };

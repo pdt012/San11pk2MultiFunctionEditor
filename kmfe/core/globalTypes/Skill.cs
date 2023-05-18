@@ -46,6 +46,17 @@ namespace kmfe.core.globalTypes
             }
         }
 
+        public string GetBindSkillsString()
+        {
+            List<string> list = new();
+            foreach (int skillId in bindSkillList)
+            {
+                list.Add(skillId.ToString());
+            }
+            return string.Join(",", list);
+        }
+
+
         public string ParseDesc(string formattedDesc)
         {
             string str = formattedDesc;
