@@ -113,16 +113,19 @@ namespace kmfe.Core.XmlHelper
                     cityEle.AppendChild(neighborEle);
                     id++;
                 }
-                for (int i = id; i < 6; i++)  // 彻底覆盖游戏原有的相邻信息
+                if (cityLike.neighborSet.Count > 0)  // 可能存在没有相邻的据点
                 {
-                    Neighbor neighborCity = cityLike.neighborSet.First();
-                    XmlElement neighborEle = xmlDoc.CreateElement(key_neighbor);
-                    neighborEle.SetAttribute(attrKey_neighborIndex, i.ToString());
-                    neighborEle.SetAttribute(attrKey_neighborBase, GetCityKeyName(neighborCity.CityId));
-                    neighborEle.SetAttribute(attrKey_neighborRoute, GetRouteKeyName(neighborCity.Route));
-                    neighborEle.SetAttribute("x", "-1");
-                    neighborEle.SetAttribute("y", "-1");
-                    cityEle.AppendChild(neighborEle);
+                    for (int i = id; i < 6; i++)  // 彻底覆盖游戏原有的相邻信息
+                    {
+                        Neighbor neighborCity = cityLike.neighborSet.First();
+                        XmlElement neighborEle = xmlDoc.CreateElement(key_neighbor);
+                        neighborEle.SetAttribute(attrKey_neighborIndex, i.ToString());
+                        neighborEle.SetAttribute(attrKey_neighborBase, GetCityKeyName(neighborCity.CityId));
+                        neighborEle.SetAttribute(attrKey_neighborRoute, GetRouteKeyName(neighborCity.Route));
+                        neighborEle.SetAttribute("x", "-1");
+                        neighborEle.SetAttribute("y", "-1");
+                        cityEle.AppendChild(neighborEle);
+                    }
                 }
                 // distance & short_distance
                 XmlElement distanceEle = xmlDoc.CreateElement(nodeName_distance);
