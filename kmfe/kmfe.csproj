@@ -11,9 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="core\scriptHelper\" />
-    <Folder Include="Resources\" />
-    <Folder Include="s11\memory\" />
+    <Folder Include="Core\ScriptHelper\" />
   </ItemGroup>
 
   <ItemGroup>

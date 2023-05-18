@@ -1,6 +1,6 @@
-﻿using kmfe.common;
-using kmfe.editor.scenarioConfig;
-using kmfe.utils;
+﻿using kmfe.Common;
+using kmfe.Core;
+using kmfe.Editor.ScenarioConfig;
 
 namespace kmfe
 {
