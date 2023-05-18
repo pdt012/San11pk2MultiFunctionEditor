@@ -11,10 +11,24 @@ namespace kmfe.editor.scenarioConfig.editDialog
             MaximizeBox = false;
             MinimizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            KeyPreview = true;
+            KeyPress += BaseEditDialog_KeyPress;
             FormClosing += BaseEditDialog_FormClosing;
         }
 
         public bool ModalMode { get; set; } = false;
+
+        private void BaseEditDialog_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                Cancel();
+            }
+            else if (e.KeyChar == (char)Keys.Return)
+            {
+                Confirm();
+            }
+        }
 
         private void BaseEditDialog_FormClosing(object? sender, FormClosingEventArgs e)
         {
@@ -63,7 +77,8 @@ namespace kmfe.editor.scenarioConfig.editDialog
 
         public void Execute(Form? parent)
         {
-            if (ModalMode) {
+            if (ModalMode)
+            {
                 StartPosition = FormStartPosition.CenterParent;
                 ShowDialog(parent);
             }
