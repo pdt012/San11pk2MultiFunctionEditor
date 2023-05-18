@@ -202,7 +202,7 @@
             int index = chosen_list.IndexFromPoint(e.Location);
             if (index != ListBox.NoMatches)
             {
-                UnselectItem(1);
+                UnselectItem(index);
             }
         }
 
