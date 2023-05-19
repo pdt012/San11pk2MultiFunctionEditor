@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using kmfe.Core;
 using kmfe.Core.ExcelHelper;
 using kmfe.Editor.ScenarioConfig.EditHelper;
@@ -37,8 +38,8 @@ namespace kmfe.Editor.ScenarioConfig
             保存修改ToolStripMenuItem.Enabled = false;
             全局修改ToolStripMenuItem.Enabled = false;
             剧本修改ToolStripMenuItem.Enabled = false;
-            导出到ExcelToolStripMenuItem.Enabled = false;
-            从Excel导入ToolStripMenuItem.Enabled = false;
+            导出ToolStripMenuItem.Enabled = false;
+            导入ToolStripMenuItem.Enabled = false;
 
             editTypeRecordDict = new()
             {
@@ -116,8 +117,6 @@ namespace kmfe.Editor.ScenarioConfig
             EditTypeRecord newEditTypeRecord = editTypeRecordDict[newEditType];
             newEditTypeRecord.EditorHelper.OnEnter();
             statusLabel_currentType.Text = newEditTypeRecord.Name;
-            导出到ExcelToolStripMenuItem.Enabled = true;
-            从Excel导入ToolStripMenuItem.Enabled = true;
             InitListView(newEditType);
             UpdateListView(newEditType);
         }
@@ -202,6 +201,8 @@ namespace kmfe.Editor.ScenarioConfig
             UpdateListView(currentEditType);
             保存修改ToolStripMenuItem.Enabled = true;
             全局修改ToolStripMenuItem.Enabled = true;
+            导出ToolStripMenuItem.Enabled = true;
+            导入ToolStripMenuItem.Enabled = true;
         }
 
         private void 保存修改ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,7 +244,7 @@ namespace kmfe.Editor.ScenarioConfig
             settingsDialog.ShowDialog();
         }
 
-        private void 导出到ExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 导出到Excel此页ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -259,13 +260,6 @@ namespace kmfe.Editor.ScenarioConfig
                 };
                 if (inExportToExcelDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // 打开Excel文档
-                    XLWorkbook workbook = new();
-                    if (excelHelper != null)
-                    {
-                        IXLWorksheet worksheet = workbook.Worksheets.Add(editTypeRecord.Name);
-                        excelHelper.WriteExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders, editTypeRecord.EditorHelper.GetCount());
-                    }
                     SaveFileDialog saveFileDialog = new()
                     {
                         Title = "选择导出到的Excel文件",
@@ -274,6 +268,13 @@ namespace kmfe.Editor.ScenarioConfig
                     };
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
+                        // 打开Excel文档
+                        XLWorkbook workbook = new();
+                        if (excelHelper != null)
+                        {
+                            IXLWorksheet worksheet = workbook.Worksheets.Add(editTypeRecord.Name);
+                            excelHelper.WriteExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders, editTypeRecord.EditorHelper.GetCount());
+                        }
                         workbook.SaveAs(saveFileDialog.FileName);
                         MessageBox.Show("导出成功！", "导出成功");
                     }
@@ -286,7 +287,43 @@ namespace kmfe.Editor.ScenarioConfig
             }
         }
 
-        private void 从Excel导入ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 导出到Excel全局配置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("此操作将全部全局配置导出到Excel文件，可能需要较长时间，是否继续？", "全部全局配置导出到Excel", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    return;
+                SaveFileDialog saveFileDialog = new()
+                {
+                    Title = "选择导出到的Excel文件",
+                    Filter = "Excel文件|*.xlsx",
+                    InitialDirectory = "."
+                };
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // 打开Excel文档
+                    XLWorkbook workbook = new();
+                    foreach (EditTypeRecord editTypeRecord in editTypeRecordDict.Values)
+                    {
+                        BaseExcelHelper? excelHelper = editTypeRecord.ExcelHelper;
+                        if (excelHelper != null)
+                        {
+                            IXLWorksheet worksheet = workbook.Worksheets.Add(editTypeRecord.Name);
+                            excelHelper.WriteExcelSheet(worksheet, excelHelper.ExcelHeaders, editTypeRecord.EditorHelper.GetCount());
+                        }
+                    }
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("导出成功！", "导出成功");
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "发生错误");
+                return;
+            }
+        }
+
+        private void 从Excel导入ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             try
             {

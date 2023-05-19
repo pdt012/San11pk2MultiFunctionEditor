@@ -34,8 +34,6 @@
             载入ToolStripMenuItem = new ToolStripMenuItem();
             保存修改ToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
-            导出到ExcelToolStripMenuItem = new ToolStripMenuItem();
-            从Excel导入ToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator6 = new ToolStripSeparator();
             设置ToolStripMenuItem = new ToolStripMenuItem();
             全局修改ToolStripMenuItem = new ToolStripMenuItem();
@@ -49,6 +47,7 @@
             官职ToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             特技ToolStripMenuItem = new ToolStripMenuItem();
+            宝物ToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             适性ToolStripMenuItem = new ToolStripMenuItem();
             地形ToolStripMenuItem = new ToolStripMenuItem();
@@ -57,10 +56,14 @@
             战法ToolStripMenuItem = new ToolStripMenuItem();
             技术ToolStripMenuItem = new ToolStripMenuItem();
             能力ToolStripMenuItem = new ToolStripMenuItem();
-            宝物ToolStripMenuItem = new ToolStripMenuItem();
             剧本修改ToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             statusLabel_currentType = new ToolStripStatusLabel();
+            导入ToolStripMenuItem = new ToolStripMenuItem();
+            导出ToolStripMenuItem = new ToolStripMenuItem();
+            导出到Excel此页ToolStripMenuItem = new ToolStripMenuItem();
+            导出到Excel全局配置ToolStripMenuItem = new ToolStripMenuItem();
+            从Excel导入ToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -92,7 +95,7 @@
             // 
             // 菜单ToolStripMenuItem
             // 
-            菜单ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 载入ToolStripMenuItem, 保存修改ToolStripMenuItem, toolStripSeparator5, 导出到ExcelToolStripMenuItem, 从Excel导入ToolStripMenuItem, toolStripSeparator6, 设置ToolStripMenuItem });
+            菜单ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 载入ToolStripMenuItem, 保存修改ToolStripMenuItem, toolStripSeparator5, 导出ToolStripMenuItem, 导入ToolStripMenuItem, toolStripSeparator6, 设置ToolStripMenuItem });
             菜单ToolStripMenuItem.Name = "菜单ToolStripMenuItem";
             菜单ToolStripMenuItem.Size = new Size(53, 24);
             菜单ToolStripMenuItem.Text = "菜单";
@@ -100,45 +103,31 @@
             // 载入ToolStripMenuItem
             // 
             载入ToolStripMenuItem.Name = "载入ToolStripMenuItem";
-            载入ToolStripMenuItem.Size = new Size(174, 26);
+            载入ToolStripMenuItem.Size = new Size(224, 26);
             载入ToolStripMenuItem.Text = "载入";
             载入ToolStripMenuItem.Click += 载入ToolStripMenuItem_Click;
             // 
             // 保存修改ToolStripMenuItem
             // 
             保存修改ToolStripMenuItem.Name = "保存修改ToolStripMenuItem";
-            保存修改ToolStripMenuItem.Size = new Size(174, 26);
+            保存修改ToolStripMenuItem.Size = new Size(224, 26);
             保存修改ToolStripMenuItem.Text = "保存修改";
             保存修改ToolStripMenuItem.Click += 保存修改ToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(171, 6);
-            // 
-            // 导出到ExcelToolStripMenuItem
-            // 
-            导出到ExcelToolStripMenuItem.Name = "导出到ExcelToolStripMenuItem";
-            导出到ExcelToolStripMenuItem.Size = new Size(174, 26);
-            导出到ExcelToolStripMenuItem.Text = "导出到Excel";
-            导出到ExcelToolStripMenuItem.Click += 导出到ExcelToolStripMenuItem_Click;
-            // 
-            // 从Excel导入ToolStripMenuItem
-            // 
-            从Excel导入ToolStripMenuItem.Name = "从Excel导入ToolStripMenuItem";
-            从Excel导入ToolStripMenuItem.Size = new Size(174, 26);
-            从Excel导入ToolStripMenuItem.Text = "从Excel导入";
-            从Excel导入ToolStripMenuItem.Click += 从Excel导入ToolStripMenuItem_Click;
+            toolStripSeparator5.Size = new Size(221, 6);
             // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(171, 6);
+            toolStripSeparator6.Size = new Size(221, 6);
             // 
             // 设置ToolStripMenuItem
             // 
             设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
-            设置ToolStripMenuItem.Size = new Size(174, 26);
+            设置ToolStripMenuItem.Size = new Size(224, 26);
             设置ToolStripMenuItem.Text = "设置";
             设置ToolStripMenuItem.Click += 设置ToolStripMenuItem_Click;
             // 
@@ -152,113 +141,113 @@
             // 城市ToolStripMenuItem
             // 
             城市ToolStripMenuItem.Name = "城市ToolStripMenuItem";
-            城市ToolStripMenuItem.Size = new Size(224, 26);
+            城市ToolStripMenuItem.Size = new Size(152, 26);
             城市ToolStripMenuItem.Text = "城市";
             // 
             // 港关ToolStripMenuItem
             // 
             港关ToolStripMenuItem.Name = "港关ToolStripMenuItem";
-            港关ToolStripMenuItem.Size = new Size(224, 26);
+            港关ToolStripMenuItem.Size = new Size(152, 26);
             港关ToolStripMenuItem.Text = "港关";
             // 
             // 据点距离ToolStripMenuItem
             // 
             据点距离ToolStripMenuItem.Name = "据点距离ToolStripMenuItem";
-            据点距离ToolStripMenuItem.Size = new Size(224, 26);
+            据点距离ToolStripMenuItem.Size = new Size(152, 26);
             据点距离ToolStripMenuItem.Text = "据点相邻";
             // 
             // 州ToolStripMenuItem
             // 
             州ToolStripMenuItem.Name = "州ToolStripMenuItem";
-            州ToolStripMenuItem.Size = new Size(224, 26);
+            州ToolStripMenuItem.Size = new Size(152, 26);
             州ToolStripMenuItem.Text = "州";
             // 
             // 地区ToolStripMenuItem
             // 
             地区ToolStripMenuItem.Name = "地区ToolStripMenuItem";
-            地区ToolStripMenuItem.Size = new Size(224, 26);
+            地区ToolStripMenuItem.Size = new Size(152, 26);
             地区ToolStripMenuItem.Text = "地区";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(221, 6);
+            toolStripSeparator1.Size = new Size(149, 6);
             // 
             // 爵位ToolStripMenuItem
             // 
             爵位ToolStripMenuItem.Name = "爵位ToolStripMenuItem";
-            爵位ToolStripMenuItem.Size = new Size(224, 26);
+            爵位ToolStripMenuItem.Size = new Size(152, 26);
             爵位ToolStripMenuItem.Text = "爵位";
             // 
             // 官职ToolStripMenuItem
             // 
             官职ToolStripMenuItem.Name = "官职ToolStripMenuItem";
-            官职ToolStripMenuItem.Size = new Size(224, 26);
+            官职ToolStripMenuItem.Size = new Size(152, 26);
             官职ToolStripMenuItem.Text = "官职";
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(221, 6);
+            toolStripSeparator2.Size = new Size(149, 6);
             // 
             // 特技ToolStripMenuItem
             // 
             特技ToolStripMenuItem.Name = "特技ToolStripMenuItem";
-            特技ToolStripMenuItem.Size = new Size(224, 26);
+            特技ToolStripMenuItem.Size = new Size(152, 26);
             特技ToolStripMenuItem.Text = "特技";
+            // 
+            // 宝物ToolStripMenuItem
+            // 
+            宝物ToolStripMenuItem.Name = "宝物ToolStripMenuItem";
+            宝物ToolStripMenuItem.Size = new Size(152, 26);
+            宝物ToolStripMenuItem.Text = "宝物";
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(221, 6);
+            toolStripSeparator3.Size = new Size(149, 6);
             // 
             // 适性ToolStripMenuItem
             // 
             适性ToolStripMenuItem.Name = "适性ToolStripMenuItem";
-            适性ToolStripMenuItem.Size = new Size(224, 26);
+            适性ToolStripMenuItem.Size = new Size(152, 26);
             适性ToolStripMenuItem.Text = "适性";
             // 
             // 地形ToolStripMenuItem
             // 
             地形ToolStripMenuItem.Name = "地形ToolStripMenuItem";
-            地形ToolStripMenuItem.Size = new Size(224, 26);
+            地形ToolStripMenuItem.Size = new Size(152, 26);
             地形ToolStripMenuItem.Text = "地形";
             // 
             // 设施ToolStripMenuItem
             // 
             设施ToolStripMenuItem.Name = "设施ToolStripMenuItem";
-            设施ToolStripMenuItem.Size = new Size(224, 26);
+            设施ToolStripMenuItem.Size = new Size(152, 26);
             设施ToolStripMenuItem.Text = "设施";
             // 
             // 兵器ToolStripMenuItem
             // 
             兵器ToolStripMenuItem.Name = "兵器ToolStripMenuItem";
-            兵器ToolStripMenuItem.Size = new Size(224, 26);
+            兵器ToolStripMenuItem.Size = new Size(152, 26);
             兵器ToolStripMenuItem.Text = "兵器";
             // 
             // 战法ToolStripMenuItem
             // 
             战法ToolStripMenuItem.Name = "战法ToolStripMenuItem";
-            战法ToolStripMenuItem.Size = new Size(224, 26);
+            战法ToolStripMenuItem.Size = new Size(152, 26);
             战法ToolStripMenuItem.Text = "战法";
             // 
             // 技术ToolStripMenuItem
             // 
             技术ToolStripMenuItem.Name = "技术ToolStripMenuItem";
-            技术ToolStripMenuItem.Size = new Size(224, 26);
+            技术ToolStripMenuItem.Size = new Size(152, 26);
             技术ToolStripMenuItem.Text = "技术";
             // 
             // 能力ToolStripMenuItem
             // 
             能力ToolStripMenuItem.Name = "能力ToolStripMenuItem";
-            能力ToolStripMenuItem.Size = new Size(224, 26);
+            能力ToolStripMenuItem.Size = new Size(152, 26);
             能力ToolStripMenuItem.Text = "能力";
-            // 
-            // 宝物ToolStripMenuItem
-            // 
-            宝物ToolStripMenuItem.Name = "宝物ToolStripMenuItem";
-            宝物ToolStripMenuItem.Size = new Size(224, 26);
-            宝物ToolStripMenuItem.Text = "宝物";
             // 
             // 剧本修改ToolStripMenuItem
             // 
@@ -282,6 +271,41 @@
             statusLabel_currentType.Name = "statusLabel_currentType";
             statusLabel_currentType.Size = new Size(39, 20);
             statusLabel_currentType.Text = "首页";
+            // 
+            // 导入ToolStripMenuItem
+            // 
+            导入ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 从Excel导入ToolStripMenuItem1 });
+            导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
+            导入ToolStripMenuItem.Size = new Size(224, 26);
+            导入ToolStripMenuItem.Text = "导入";
+            // 
+            // 导出ToolStripMenuItem
+            // 
+            导出ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 导出到Excel此页ToolStripMenuItem, 导出到Excel全局配置ToolStripMenuItem });
+            导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
+            导出ToolStripMenuItem.Size = new Size(224, 26);
+            导出ToolStripMenuItem.Text = "导出";
+            // 
+            // 导出到Excel此页ToolStripMenuItem
+            // 
+            导出到Excel此页ToolStripMenuItem.Name = "导出到Excel此页ToolStripMenuItem";
+            导出到Excel此页ToolStripMenuItem.Size = new Size(264, 26);
+            导出到Excel此页ToolStripMenuItem.Text = "导出到Excel（此页）";
+            导出到Excel此页ToolStripMenuItem.Click += 导出到Excel此页ToolStripMenuItem_Click;
+            // 
+            // 导出到Excel全局配置ToolStripMenuItem
+            // 
+            导出到Excel全局配置ToolStripMenuItem.Name = "导出到Excel全局配置ToolStripMenuItem";
+            导出到Excel全局配置ToolStripMenuItem.Size = new Size(264, 26);
+            导出到Excel全局配置ToolStripMenuItem.Text = "导出到Excel（全局配置）";
+            导出到Excel全局配置ToolStripMenuItem.Click += 导出到Excel全局配置ToolStripMenuItem_Click;
+            // 
+            // 从Excel导入ToolStripMenuItem1
+            // 
+            从Excel导入ToolStripMenuItem1.Name = "从Excel导入ToolStripMenuItem1";
+            从Excel导入ToolStripMenuItem1.Size = new Size(224, 26);
+            从Excel导入ToolStripMenuItem1.Text = "从Excel导入";
+            从Excel导入ToolStripMenuItem1.Click += 从Excel导入ToolStripMenuItem1_Click;
             // 
             // ScenarioConfigEditor
             // 
@@ -335,8 +359,11 @@
         private ToolStripMenuItem 能力ToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem 设置ToolStripMenuItem;
-        private ToolStripMenuItem 导出到ExcelToolStripMenuItem;
-        private ToolStripMenuItem 从Excel导入ToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator6;
+        private ToolStripMenuItem 导出ToolStripMenuItem;
+        private ToolStripMenuItem 导出到Excel此页ToolStripMenuItem;
+        private ToolStripMenuItem 导出到Excel全局配置ToolStripMenuItem;
+        private ToolStripMenuItem 导入ToolStripMenuItem;
+        private ToolStripMenuItem 从Excel导入ToolStripMenuItem1;
     }
 }
