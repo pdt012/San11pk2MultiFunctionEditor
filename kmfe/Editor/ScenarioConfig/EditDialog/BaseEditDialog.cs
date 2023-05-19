@@ -30,10 +30,12 @@
 
         private void BaseEditDialog_FormClosing(object? sender, FormClosingEventArgs e)
         {
+            // 点击右上X时会触发两次，不知道为什么
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 Cancel();
+                Hide();  // 确保窗体被关闭
             }
         }
 
@@ -77,6 +79,7 @@
         {
             if (ModalMode)
             {
+                Hide();  // 确保窗口已不可见（否则无法打开模态窗口）
                 StartPosition = FormStartPosition.CenterParent;
                 ShowDialog(parent);
             }
