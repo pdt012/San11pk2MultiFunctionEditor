@@ -26,6 +26,18 @@ namespace kmfe.Utils.ExcelReadWriteHelper
                 attr = (int)xlRow.Cell(value).GetDouble();
         }
 
+        public void SetAttrByHeader(string header, ref int attr, int defaultValue)
+        {
+            if (headerToColumnDict.TryGetValue(header, out int value))
+            {
+                XLCellValue cellValue = xlRow.Cell(value).Value;
+                if (cellValue.IsBlank)  // 单元格为空时返回默认值
+                    attr = defaultValue;
+                else
+                    attr = (int)xlRow.Cell(value).GetDouble();
+            }
+        }
+
         public void SetAttrByHeader(string header, ref float attr)
         {
             if (headerToColumnDict.TryGetValue(header, out int value))
