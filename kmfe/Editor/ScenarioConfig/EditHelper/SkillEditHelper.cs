@@ -146,8 +146,12 @@ namespace kmfe.Editor.ScenarioConfig.EditHelper
                 // 打开特技编辑窗口
                 editDialog.Init();
                 editDialog.Setup(currentSkill, currentRow);
-                DialogResult result = editDialog.ShowDialog(listView);
-                if (result != DialogResult.OK)
+                // 强制以模态弹出
+                bool modalMode = editDialog.ModalMode;
+                editDialog.ModalMode = true;
+                editDialog.Execute(Form.ActiveForm);
+                editDialog.ModalMode = modalMode;
+                if (editDialog.DialogResult != DialogResult.OK)
                 {  // 如果没有保存则删除该行
                     listView.Items.RemoveAt(currentRow);
                 }

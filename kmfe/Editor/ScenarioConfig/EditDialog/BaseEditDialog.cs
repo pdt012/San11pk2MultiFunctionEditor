@@ -58,7 +58,7 @@
         {
             if (Apply())
             {
-                if (Modal)
+                if (ModalMode)
                     DialogResult = DialogResult.OK;
                 else
                     Hide();
@@ -67,7 +67,7 @@
 
         protected void Cancel()
         {
-            if (Modal)
+            if (ModalMode)
                 DialogResult = DialogResult.Cancel;
             else
                 Hide();

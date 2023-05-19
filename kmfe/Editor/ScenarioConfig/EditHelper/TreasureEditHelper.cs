@@ -156,8 +156,12 @@ namespace kmfe.Editor.ScenarioConfig.EditHelper
                 // 打开宝物编辑窗口
                 editDialog.Init();
                 editDialog.Setup(currentTreasure, currentRow);
-                DialogResult result = editDialog.ShowDialog(Form.ActiveForm);
-                if (result != DialogResult.OK)
+                // 强制以模态弹出
+                bool modalMode = editDialog.ModalMode;
+                editDialog.ModalMode = true;
+                editDialog.Execute(Form.ActiveForm);
+                editDialog.ModalMode = modalMode;
+                if (editDialog.DialogResult != DialogResult.OK)
                 {  // 如果没有保存则删除该行
                     listView.Items.RemoveAt(currentRow);
                 }
