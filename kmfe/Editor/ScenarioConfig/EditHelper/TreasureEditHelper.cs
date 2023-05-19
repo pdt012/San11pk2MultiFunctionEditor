@@ -104,7 +104,7 @@ namespace kmfe.Editor.ScenarioConfig.EditHelper
             currentRow = listView.Items.IndexOf(item);
             currentTreasure = item.Tag as Treasure;
             if (currentTreasure is null) return;
-            menuDelTreasure.Enabled = currentTreasure.Id >= ScenarioData.skillCustomizeBegin;
+            menuDelTreasure.Enabled = currentTreasure.Id >= ScenarioData.treasureCustomizeBegin && currentTreasure.Id < ScenarioData.treasureCustomizeEnd;
             menuNewTreasure.Enabled = FindEmptySlot() != -1;
             contextMenu.Show(Control.MousePosition);
         }

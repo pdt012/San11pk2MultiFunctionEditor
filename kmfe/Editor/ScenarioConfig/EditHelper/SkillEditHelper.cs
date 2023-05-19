@@ -94,7 +94,7 @@ namespace kmfe.Editor.ScenarioConfig.EditHelper
             currentRow = listView.Items.IndexOf(item);
             currentSkill = item.Tag as Skill;
             if (currentSkill is null) return;
-            menuDelSkill.Enabled = currentSkill.Id >= ScenarioData.skillCustomizeBegin;
+            menuDelSkill.Enabled = currentSkill.Id >= ScenarioData.skillCustomizeBegin && currentSkill.Id < ScenarioData.skillCustomizeEnd;
             menuNewSkill.Enabled = FindEmptySlot() != -1;
             contextMenu.Show(Control.MousePosition);
         }
