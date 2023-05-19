@@ -98,6 +98,11 @@ namespace kmfe.Core.GlobalTypes
             }
             return str;
         }
+
+        public override string ToString()
+        {
+            return $"{Id}-{name}";
+        }
     }
 
     public class SkillConstant

@@ -22,11 +22,14 @@ namespace kmfe.Core
         public const int familyCount = 400;
         public const int abilityCount = 98;
         public const int armyLevelCount = 14;
+        public const int treasureCount = 900;
 
         public const int skillBasicBegin = 0;
         public const int skillBasicEnd = 1000;
         public const int skillCustomizeBegin = 1000;
         public const int skillCustomizeEnd = 2000;
+        public const int treasureCustomizeBegin = 0;
+        public const int treasureCustomizeEnd = 100;
 
         public readonly City[] cityArray = new City[42];
         public readonly Town[] townArray = new Town[45];
@@ -43,6 +46,7 @@ namespace kmfe.Core
         public readonly Family[] familyArray = new Family[400];
         public readonly Ability[] abilityArray = new Ability[98];*/
         public readonly ArmyLevel[] armyLevelArray = new ArmyLevel[armyLevelCount];
+        public readonly Treasure[] treasureArray = new Treasure[treasureCount];
 
         public ScenarioData()
         {
@@ -76,6 +80,8 @@ namespace kmfe.Core
                 abilityArray[id] = new();*/
             for (int id = 0; id < armyLevelArray.Length; id++)
                 armyLevelArray[id] = new(id);
+            for (int id = 0; id < treasureArray.Length; id++)
+                treasureArray[id] = new(id);
         }
 
         public void LoadFromGlobalScenario(string scenarioPath)

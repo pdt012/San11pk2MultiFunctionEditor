@@ -14,6 +14,8 @@ namespace kmfe.Core
             { DataXmlName.title, "11 title.xml" },
             { DataXmlName.rank, "12 rank.xml" },
             { DataXmlName.skill, "19 skill.xml" },
+            { DataXmlName.treasure, "10 item.xml" },
+            { DataXmlName.treasureModel, "25 item_model.xml" },
         };
 
         public static readonly Dictionary<DataXmlName, BaseXmlHelper> xmlHelperDict = new()
@@ -23,11 +25,18 @@ namespace kmfe.Core
             { DataXmlName.title, new TitleXmlHelper() },
             { DataXmlName.rank, new RankXmlHelper() },
             { DataXmlName.skill, new SkillXmlHelper() },
+            { DataXmlName.treasure, new TreasureXmlHelper() },
+            { DataXmlName.treasureModel, new TreasureModelXmlHelper() },
         };
 
         public static string GetGlobalScenarioPath()
         {
             return Path.Combine(Settings.PkPath, "Media/scenario/scenario.s11");
+        }
+
+        public static string GetDataPath()
+        {
+            return Path.Combine(Settings.Pk2Path, "data");
         }
 
         public static string GetDataXmlPath(DataXmlName dataXmlName)

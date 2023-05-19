@@ -19,6 +19,7 @@ namespace kmfe.Editor.ScenarioConfig
         Title,
         Rank,
         Skill,
+        Treasure,
         ArmyLevel,
     }
 
@@ -57,6 +58,8 @@ namespace kmfe.Editor.ScenarioConfig
                     new ("官职", new RankEditHelper(listView), 官职ToolStripMenuItem, null) },
                 { EditType.Skill,
                     new ("特技", new SkillEditHelper(listView), 特技ToolStripMenuItem, new SkillExcelHelper()) },
+                { EditType.Treasure,
+                    new ("宝物", new TreasureEditHelper(listView), 宝物ToolStripMenuItem, null) },
                 { EditType.ArmyLevel,
                     new ("适性", new ArmyLevelEditHelper(listView), 适性ToolStripMenuItem, new ArmyLevelExcelHelper()) },
             };
@@ -69,6 +72,8 @@ namespace kmfe.Editor.ScenarioConfig
                 DataXmlName.title,
                 DataXmlName.rank,
                 DataXmlName.skill,
+                DataXmlName.treasure,
+                DataXmlName.treasureModel,
             };
 
             // 绑定菜单回调
@@ -92,7 +97,6 @@ namespace kmfe.Editor.ScenarioConfig
                 战法ToolStripMenuItem,
                 技术ToolStripMenuItem,
                 能力ToolStripMenuItem,
-                宝物ToolStripMenuItem,
             };
             // 未完成功能禁用菜单
             foreach (ToolStripMenuItem toolStripMenuItem in unusedMenuBtnList)
