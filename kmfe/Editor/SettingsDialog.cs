@@ -48,12 +48,12 @@ namespace kmfe.Editor
                     }
                     else
                     {
-                        MessageBox.Show("当前路径找不到PK文件夹！", "路径选择错误");
+                        AppFormUtils.WarningBox("当前路径找不到PK文件夹！", "路径选择错误");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("请选择pk2.2文件夹！", "路径选择错误");
+                    AppFormUtils.WarningBox("请选择pk2.2文件夹！", "路径选择错误");
                 }
             }
             text_pk2path.Text = Settings.Pk2Path;

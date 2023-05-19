@@ -125,7 +125,7 @@ namespace kmfe.Editor.ScenarioConfig.EditDialog
                 else
                 {
                     // 如果超过上限，则添加失败
-                    MessageBox.Show($"[{neighborCityLike.name}]相邻据点超出上限,修改失败!", "错误");
+                    AppFormUtils.WarningBox($"[{neighborCityLike.name}]相邻据点超出上限,修改失败!", "错误");
                     DialogResult = DialogResult.Cancel;
                     return false;
                 }
@@ -159,7 +159,7 @@ namespace kmfe.Editor.ScenarioConfig.EditDialog
                     else
                     {
                         // 如果超过上限，则添加失败
-                        MessageBox.Show($"[{adjCity.name}]相邻城市超出上限,修改失败!", "错误");
+                        AppFormUtils.WarningBox($"[{adjCity.name}]相邻城市超出上限,修改失败!", "修改失败");
                         DialogResult = DialogResult.Cancel;
                         return false;
                     }

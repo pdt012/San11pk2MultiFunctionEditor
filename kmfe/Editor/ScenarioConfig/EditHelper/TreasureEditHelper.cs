@@ -135,8 +135,7 @@ namespace kmfe.Editor.ScenarioConfig.EditHelper
 
         private void DelTreasure()
         {
-            DialogResult result = MessageBox.Show("确认删除宝物？", "删除宝物", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (AppFormUtils.QuestionBox("确认删除宝物？", "删除宝物"))
             {
                 listView.Items.RemoveAt(currentRow);
                 currentTreasure?.Reset();

@@ -82,12 +82,12 @@ namespace kmfe.Editor.ScenarioConfig.EditDialog
             if (skill == null) return false;
             if (text_name.Text.Length == 0)
             {
-                MessageBox.Show("名称不可以为空.");
+                AppFormUtils.WarningBox("名称不可以为空！", "修改失败");
                 return false;
             }
             if (text_desc.Text.Length == 0)
             {
-                MessageBox.Show("描述不可以为空.");
+                AppFormUtils.WarningBox("描述不可以为空！", "修改失败");
                 return false;
             }
             skill.name = text_name.Text;

@@ -101,7 +101,7 @@
             }
             else
             {
-                MessageBox.Show("必须选择ID项！", "无法导出");
+                AppFormUtils.WarningBox("必须选择ID项！", "无法导出");
             }
 
         }

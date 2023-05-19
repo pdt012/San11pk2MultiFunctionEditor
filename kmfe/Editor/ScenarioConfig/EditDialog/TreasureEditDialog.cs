@@ -67,7 +67,7 @@ namespace kmfe.Editor.ScenarioConfig.EditDialog
             if (treasure == null) return false;
             if (text_name.Text.Length == 0)
             {
-                MessageBox.Show("名称不可以为空.");
+                AppFormUtils.WarningBox("名称不可以为空！", "修改失败");
                 return false;
             }
             treasure.name = text_name.Text;
@@ -108,7 +108,7 @@ namespace kmfe.Editor.ScenarioConfig.EditDialog
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (!openFileDialog.FileName.StartsWith(AppEnvironment.GetDataPath())) { 
-                    MessageBox.Show("请选择data目录下的图片文件！", "非法图片路径");
+                    AppFormUtils.WarningBox("请选择data目录下的图片文件！", "非法图片路径");
                     return;
             }
                 string relativePath = openFileDialog.FileName.Replace(AppEnvironment.GetDataPath(), "");

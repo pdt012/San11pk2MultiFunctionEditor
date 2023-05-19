@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using kmfe.Core;
 using kmfe.Core.ExcelHelper;
 using kmfe.Editor.ScenarioConfig.EditHelper;
@@ -194,7 +193,7 @@ namespace kmfe.Editor.ScenarioConfig
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString(), "发生错误");
+                AppFormUtils.ErrorBox(exc.ToString(), "发生错误");
                 return;
             }
             statusLabel_currentType.Text = "载入成功";
@@ -231,10 +230,10 @@ namespace kmfe.Editor.ScenarioConfig
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString(), "发生错误");
+                AppFormUtils.ErrorBox(exc.ToString(), "发生错误");
                 return;
             }
-            MessageBox.Show("保存完毕！", "保存完毕");
+            AppFormUtils.InformationBox("保存完毕！", "保存完毕");
         }
 
         private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -276,13 +275,13 @@ namespace kmfe.Editor.ScenarioConfig
                             excelHelper.WriteExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders, editTypeRecord.EditorHelper.GetCount());
                         }
                         workbook.SaveAs(saveFileDialog.FileName);
-                        MessageBox.Show("导出成功！", "导出成功");
+                        AppFormUtils.InformationBox("导出成功！", "导出成功");
                     }
                 }
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString(), "发生错误");
+                AppFormUtils.ErrorBox(exc.ToString(), "发生错误");
                 return;
             }
         }
@@ -291,7 +290,7 @@ namespace kmfe.Editor.ScenarioConfig
         {
             try
             {
-                if (MessageBox.Show("此操作将全部全局配置导出到Excel文件，可能需要较长时间，是否继续？", "全部全局配置导出到Excel", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                if (!AppFormUtils.QuestionBox("此操作将全部全局配置导出到Excel文件，可能需要较长时间，是否继续？", "全部全局配置导出到Excel"))
                     return;
                 SaveFileDialog saveFileDialog = new()
                 {
@@ -313,12 +312,12 @@ namespace kmfe.Editor.ScenarioConfig
                         }
                     }
                     workbook.SaveAs(saveFileDialog.FileName);
-                    MessageBox.Show("导出成功！", "导出成功");
+                    AppFormUtils.InformationBox("导出成功！", "导出成功");
                 }
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString(), "发生错误");
+                AppFormUtils.ErrorBox(exc.ToString(), "发生错误");
                 return;
             }
         }
@@ -356,7 +355,7 @@ namespace kmfe.Editor.ScenarioConfig
                     if (inExportToExcelDialog.ShowDialog() == DialogResult.OK)
                     {
                         excelHelper.ReadExcelSheet(worksheet, inExportToExcelDialog.CheckedHeaders);
-                        MessageBox.Show("导入成功！", "导入成功");
+                        AppFormUtils.InformationBox("导入成功！", "导入成功");
                         // 刷新表格
                         editTypeRecord.EditorHelper.UpdateListView();
                     }
@@ -364,7 +363,7 @@ namespace kmfe.Editor.ScenarioConfig
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString(), "发生错误");
+                AppFormUtils.ErrorBox(exc.ToString(), "发生错误");
                 return;
             }
         }
